@@ -1,6 +1,17 @@
-## Container > Container Registry  > 릴리스 노트
+## Container > NHN Container Registry(NCR)  > 릴리스 노트
+
+### 2022. 03. 29.
+
+#### 기능 추가
+
+* 리전간 복제 기능을 추가하였습니다.
+
+#### 기능 개선
+
+* Container Registry 서비스의 이름이 NHN Container Registry(NCR)로 변경되었습니다.
 
 ### 2022. 01. 25.
+
 #### 버그 수정
 * 간헐적으로 서비스 활성화가 실패하던 문제를 수정하였습니다.
 * 토큰의 유효시간이 의도한 것보다 짧게 설정되었던 문제를 수정했습니다.
