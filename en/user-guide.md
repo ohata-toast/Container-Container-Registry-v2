@@ -1,8 +1,8 @@
-## Container > Container Registry > User Guide
+## Container > NHN Container Registry (NCR) > User Guide
 
 ## Prerequisites
 ### Install Docker
-The Container Registry service is a service for storing and deploying Docker container images. To work with container images, you must first have Docker installed in your environment.
+The NHN Container Registry (NCR) service is a service for storing and deploying Docker container images. To work with container images, you must first have Docker installed in your environment.
 
 #### Windows
 Download and install [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows) from Docker Hub.
@@ -60,7 +60,7 @@ $ sudo systemctl start docker
 
 ### Check the User Access Key and Secret Key
 
-You need User Access Key and Secret Key to log in to your user registry using the Docker command-line tool. User Access Key and Secret Key can be created in Account > **API Security Setting** in the NHN Cloud Console.
+You need User Access Key and Secret Key to log in to your user registry using the Docker command-line tool. User Access Key and Secret Key can be created in Account > **API Security Setting** page of the NHN Cloud Console.
 
 * Only one User Access Key ID can be issued for a NHN Cloud ID.
 
@@ -77,10 +77,10 @@ You need User Access Key and Secret Key to log in to your user registry using th
 
 ### Create a User Registry
 
-To use the registry service for the first time, you must first create a registry in the NHN Cloud Console. Go to the **Container > Container Registry > Management** service page and click the **Create Registry** button. After entering the name of the registry you want to create, click the OK button to create the registry.
+To use the registry service for the first time, you must first create a registry in the NCR Console. Go to the **Container > NHN Container Registry (NCR) > Management** service page and click the **Create Registry** button. After entering the name of the registry you want to create, click the OK button to create the registry.
 
 ### Check the User Registry Address
-The address of the registry you created can be found in the registry list on the **Container > Container Registry > Management** service page.
+The address of the registry you created can be found in the registry list on the **Container > NHN Container Registry (NCR) > Management** service page.
 
 ### Log in to the User Registry
 You need to use the Docker command-line tool to store container images or import them into your environment of choice. You must be logged in to access the user registry using the Docker command-line tool. After using the `docker login` command, enter the User Access Key of your NHN Cloud user account in `Username` and the Secret Key in `Password`.
@@ -132,10 +132,10 @@ c8be1b8f4d60: Pushed
 ```
 
 ### View a Container Image
-Stored container images can be viewed on the NHN Cloud Console.
+Stored container images can be viewed on the NCR Console.
 
 * Image list
-    You can view the list of container images by clicking the **View Image** button of the uploaded registry in the registry list on the **Container > Container Registry > Management** service page.
+    You can view the list of container images by clicking the **View Image** button of the uploaded registry in the registry list on the **Container > NHN Container Registry (NCR) > Management** service page.
 
 * Artifact list
     You can view the list of artifacts of an image by clicking the **View Artifact** button of the image in the image list. You can select a specific artifact from the artifact list to see details and a tag list.
@@ -144,7 +144,7 @@ Stored container images can be viewed on the NHN Cloud Console.
     You can view the list of tags assigned to an artifact by clicking the artifact in the artifact list. You can create a new tag or search for a tag and delete it.
 
 ### Download a Container Image (Pull)
-You can download an image using the **pull** command of the Docker command-line tool. Before that, you need to check the information of the image to download from the NHN Cloud Console.
+You can download an image using the **pull** command of the Docker command-line tool. Before that, you need to check the information of the image to download from the NCR Console.
 
 ```bash
 docker pull {user registry address}/{image name}:{tag name}
@@ -173,21 +173,25 @@ example-kr1-registry.container.cloud.toast.com/ubuntu   18.04   4e5021d210f6    
 
 ### Delete Container Images and Artifacts
 
-If you no longer use an image stored in the registry, you can delete it from the NHN Cloud Console. To delete an image, select the image to delete on the image list view and click the **Delete Image** button. Likewise, to delete an artifact, select the artifact to delete in the artifact list view and click the **Delete Artifact** button.
+If you no longer use an image stored in the registry, you can delete it from the NCR Console. To delete an image, select the image to delete on the image list view and click the **Delete Image** button. Likewise, to delete an artifact, select the artifact to delete in the artifact list view and click the **Delete Artifact** button.
 
 ### Create a Container Image Tag
 
-You can create tags in the NHN Cloud Console without using the Docker command-line tool. On the artifact list view, select an artifact to add a tag to, and then select the **Tag** tab on the detailed information view at the bottom. You will then see a list of tags assigned to the currently selected artifact. If you click the **Create Tag** button, the **Create Tag** pop-up appears, and you can create a new tag by entering the tag name of your choice.
+You can create tags in the NCR Console without using the Docker command-line tool. On the artifact list view, select an artifact to add a tag to, and then select the **Tag** tab on the detailed information view at the bottom. You will then see a list of tags assigned to the currently selected artifact. If you click the **Create Tag** button, the **Create Tag** dialog box appears, and you can create a new tag by entering the tag name of your choice.
 
 ### Delete a Container Image Tag
 
-Likewise, if you have tags that you no longer use, you can delete them in the NHN Cloud Console. Similar to creating a tag, go to the tag list view and select a tag to delete. If there are many tags and the tag does not appear in the tag list, you can use the tag search function to find the tags you want to delete. Select the tag to delete and click the **Delete Tag** button to delete the selected tag.
+Likewise, if you have tags that you no longer use, you can delete them in the NCR Console. Similar to creating a tag, go to the tag list view and select a tag to delete. If there are many tags and the tag does not appear in the tag list, you can use the tag search function to find the tags you want to delete. Select the tag to delete and click the **Delete Tag** button to delete the selected tag.
+
+### Registry Webhook Settings
+
+To receive notifications on image changes, register your webhook settings in the NCR Console. Select the registry to configure the webhook on, and select the **Webhook** tab on the details pane at the bottom. Click the **Create Webhook** button. When the **Create Webhook** dialog box appears, set the properties and click the **OK** button. Currently, notification settings using HTTP(S) calls and Slack messenger are supported.
 
 
 
 ### Garbage Collection
 
-When you delete a registry, image, or artifact, storage space is not immediately returned because only the metadata is deleted. Therefore, you must use the garbage collection feature to free up storage space after deleting resources. To use the garbage collection feature in the NHN Cloud Console, go to the **Container > Container Registry > Garbage Collection** page.
+When you delete a registry, image, or artifact, storage space is not immediately returned because only the metadata is deleted. Therefore, you must use the garbage collection feature to free up storage space after deleting resources. To use the garbage collection feature in the NHN Cloud Console, go to the **Container > NHN Container Registry (NCR) > Garbage Collection** page.
 
 Before running the actual garbage collection, you can use **Run Test** to check the list of deletion targets and the estimation of freed-up storage space. You can run the feature by clicking the **Run Now** or **Run Test** button on the **Garbage Collection** page. Depending on the execution result, the **Success** or **Failure** will be displayed in **Run Status**. Click the View Log button to check the garbage collection results.
 
