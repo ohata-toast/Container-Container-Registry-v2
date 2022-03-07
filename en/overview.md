@@ -34,8 +34,8 @@ The main features of the NHN Cloud Container Registry service are as follows:
 * Enhanced security through HTTPS encryption, NHN Cloud authentication and permission management
 * Scalability and stability based on NHN Cloud Object Storage
 * Registry management using the web console
-  * Create, delete, and view registries
-  * View, search, and delete images and artifacts
-  * Create, view, and delete tags
-  * Webhook setup for deployment pipeline configuration
-  * Garbage collection feature for cost reduction
+    * Create, delete, and view registries
+    * View, search, and delete images and artifacts
+    * Create, view, and delete tags
+    * Webhook setup for deployment pipeline configuration
+    * Garbage collection feature for cost reduction
