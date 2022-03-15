@@ -1,6 +1,17 @@
-## Container > Container Registry > Release Notes
+## Container > NHN Container Registry (NCR) > Release Notes
+
+### March 29, 2022
+
+#### Added Features
+
+* Added the inter-region replication feature.
+
+#### Features Updates
+
+* Changed the name of the Container Registry service to NHN Container Registry (NCR).
 
 ### January 25, 2022
+
 #### Bug Fixes
 * Fixed an issue where service activation failed intermittently.
 * Fixed an issue where the token validity period was set shorter than intended.
