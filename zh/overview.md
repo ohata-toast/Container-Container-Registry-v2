@@ -1,16 +1,16 @@
-## Container > Container Registry > Overview
+## Container > NHN Container Registry (NCR) > Overview
 
-A container registry service that allows you to easily and securely store, manage, and deploy Docker container images. You can integrate the NHN Cloud Container Registry service with the NHN Cloud Kubernetes service to build your application in a container environment easily.
+A container registry service that allows you to easily and securely store, manage, and deploy Docker container images. You can integrate the NHN Container Registry (NCR) service with the NHN Kubernetes service (NKS) to build your application in a container environment easily.
 
 
 
 ### Components
 
-The NHN Cloud Container Registry service has four components:
+The NCR service has the following four components.
 
 #### Registry
 
-A registry is a unit for storing and managing container images. In the NHN Cloud Container Registry service, all images must belong to one registry. You can specify management settings per registry. Currently, you can set up a webhook per registry to be notified of each event that occurs. In the future, various settings will be added. The name of the registry must start with a lowercase letter or number, followed by lowercase letters, numbers, underscores (\_), periods (.), or dashes (-). Registry names can be up to 255 characters.
+A registry is a unit for storing and managing container images. In the NCR service, all images must belong to one registry. You can specify management settings per registry. Currently, you can set up a webhook per registry to be notified of each event that occurs. In the future, various settings will be added. The name of the registry must start with a lowercase letter or number, followed by lowercase letters, numbers, underscores (\_), periods (.), or dashes (-). Registry names can be up to 255 characters.
 
 #### Image
 
@@ -28,7 +28,7 @@ A tag is a kind of identifier for identifying artifacts. Users can use tags to g
 
 ### Main Features
 
-The main features of the NHN Cloud Container Registry service are as follows:
+The main features of the NCR service are as follows:
 
 * Docker command-line tool support with Docker Image Manifest v2 compatibility
 * Enhanced security through HTTPS encryption, NHN Cloud authentication and permission management
