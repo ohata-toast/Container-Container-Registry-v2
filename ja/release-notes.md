@@ -1,4 +1,4 @@
-## Container > Container Registry  > リリースノート
+## Container > NHN Container Registry(NCR)  > リリースノート
 
 ### 2022. 03. 29.
 

@@ -1,8 +1,8 @@
-## Container > Container Registry > 使用ガイド
+## Container > NHN Container Registry(NCR) > 使用ガイド
 
 ## 事前準備
 ### Dockerインストール
-Container Registryサービスは、Dockerコンテナイメージを保存して配布するためのサービスです。コンテナイメージを扱うにはまずユーザーの環境にDockerをインストールする必要があります。
+NHN Container Registry（以下、NCR) サービスは、Dockerコンテナイメージを保存して配布するためのサービスです。コンテナイメージを扱うにはまずユーザーの環境にDockerをインストールする必要があります。
 
 #### Windows
 Docker Hubから[Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)をダウンロードしてインストールします。
@@ -77,10 +77,10 @@ Dockerコマンドラインツールを利用してユーザーレジストリ�
 
 ### ユーザーレジストリの作成
 
-レジストリサービスを初めて使用するには、まずNHN Cloud Consoleでレジストリを作成する必要があります。**Container > Container Registry > Management**サービスページに移動して**レジストリ作成**ボタンをクリックします。作成するレジストリの名前を入力したら、確認ボタンをクリックしてレジストリを作成できます。
+レジストリサービスを初めて使用するには、まずNHN Cloud Consoleでレジストリを作成する必要があります。**Container > NHN Container Registry(NCR) > Management**サービスページに移動して**レジストリ作成**ボタンをクリックします。作成するレジストリの名前を入力したら、確認ボタンをクリックしてレジストリを作成できます。
 
 ### ユーザーレジストリアドレスの確認
-作成したレジストリのアドレスは**Container > Container Registry > Management**サービスページのレジストリリストで確認できます。
+作成したレジストリのアドレスは**Container > NHN Container Registry(NCR) > Management**サービスページのレジストリリストで確認できます。
 
 ### ユーザーレジストリログイン
 コンテナイメージを保存したり、任意の環境にインポートするには、Dockerコマンドラインツールを利用する必要があります。Dockerコマンドラインツールを利用してユーザーレジストリにアクセスするにはログインする必要があります。 `docker login`コマンドを使用した後、`Username`にはNHN CloudユーザーアカウントのUser Access Keyを、`Password`にはSecert Keyをそれぞれ入力します。
@@ -135,7 +135,7 @@ c8be1b8f4d60: Pushed
 保存されたコンテナイメージは、NHN Cloud Consoleで照会できます。
 
 * イメージリスト
-**Container > Container Registry > Management**サービスページのレジストリリストからアップロードしたレジストリの**イメージ表示**ボタンをクリックすると、コンテナイメージリストが表示されます。
+**Container > NHN Container Registry(NCR) > Management**サービスページのレジストリリストからアップロードしたレジストリの**イメージ表示**ボタンをクリックすると、コンテナイメージリストが表示されます。
 
 * アーティファクトリスト
 
@@ -188,7 +188,7 @@ Dockerコマンドラインツールを使わずにNHN Cloud Consoleからタグ
 
 ### Garbage Collection
 
-レジストリ、イメージまたはアーティファクトを削除する場合、メタデータのみ削除されるため、ストレージはすぐに解放されません。そのためリソースを削除した後、ストレージ容量を確保するにはGarbage Collection機能を使用する必要があります。NHN Cloud ConsoleでGarbage Collectionを使用するには**Container > Container Registry > Garbage Collection**ページに移動します。
+レジストリ、イメージまたはアーティファクトを削除する場合、メタデータのみ削除されるため、ストレージはすぐに解放されません。そのためリソースを削除した後、ストレージ容量を確保するにはGarbage Collection機能を使用する必要があります。NHN Cloud ConsoleでGarbage Collectionを使用するには**Container > NHN Container Registry(NCR) > Garbage Collection**ページに移動します。
 
 Garbage Collectionを本格的に実行する前に**テスト実行**を通して削除対象リストとストレージ容量の確保予想値を確認できます。**Garbage Collection**ページで**今すぐ実行**または**テスト実行**ボタンをクリックすると実行できます。実行結果に応じて**実行状態**項目に**成功**または**失敗**と表示されます。ログ表示ボタンをクリックするとGarbage Collectionの結果を確認できます。
 
