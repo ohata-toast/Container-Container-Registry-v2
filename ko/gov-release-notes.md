@@ -1,4 +1,10 @@
-## Container > Container Registry  > 릴리스 노트
+## Container > NHN Container Registry(NCR)  > 릴리스 노트
+
+### 2022. 03. 29.
+
+#### 기능 개선
+
+* Container Registry 서비스의 이름이 NHN Container Registry(NCR)로 변경되었습니다.
 
 ### 2022. 02. 22.
 #### 신규 서비스 출시
