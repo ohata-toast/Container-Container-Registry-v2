@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry(NCR)  > 릴리스 노트
 
+### 2022. 04. 26.
+
+#### 기능 개선
+
+* Garbage Collection 기능을 사용자에게 노출하지 않도록 수정했습니다.
+
 ### 2022. 03. 29.
 
 #### 기능 추가
