@@ -62,7 +62,7 @@ $ sudo systemctl start docker
 
 You need User Access Key and Secret Key to log in to your user registry using the Docker command-line tool. User Access Key and Secret Key can be created in Account > **API Security Setting** page of the NHN Cloud Console.
 
-* Only one User Access Key ID can be issued for a NHN Cloud ID.
+* You can create up to 5 User Access Key IDs per NHN Cloud ID and 5 per IAM ID.
 
 * If the User Secret Key is lost, it cannot be verified again and must be regenerated. For security, please keep the issued key in a safe place.
 
