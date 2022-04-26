@@ -62,7 +62,7 @@ $ sudo systemctl start docker
 
 Dockerコマンドラインツールを利用してユーザーレジストリにログインするには、User Access KeyとSecret Keyが必要です。 User Access KeyとSecret KeyはNHN Cloud Consoleでアカウント > **APIセキュリティ設定**で作成できます。
 
-* User Access Key IDはNHN Cloud IDに1つのみ発行可能です。 
+* User Access Key IDはNHN Cloud ID1つ当たり5個、 IAM ID1当たり5個まで作成できます。
 
 * User Secret Keyは二度と確認できないため、、紛失した場合は再作成する必要があります。セキュリティのために発行されたキーは安全な場所に保管してください。
 
