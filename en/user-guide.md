@@ -108,7 +108,7 @@ docker tag {image name}:{tag} {user registry address}/{image name}:{tag}
 * Example
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 ```
 
 > [Note]
@@ -122,8 +122,8 @@ docker push {user registry address}/{image name}:{tag name}
 
 * Example
 ```bash
-$ docker push example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.cloud.toast.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -152,19 +152,19 @@ docker pull {user registry address}/{image name}:{tag name}
 
 * Example
 ```bash
-$ docker pull example-en1-registry.container.cloud.toast.com/ubuntu:18.04
+$ docker pull example-en1-registry.container.nhncloud.com/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
-example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 
 $ docker images
 REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.cloud.toast.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
@@ -187,14 +187,3 @@ Likewise, if you have tags that you no longer use, you can delete them in the NC
 
 To receive notifications on image changes, register your webhook settings in the NCR Console. Select the registry to configure the webhook on, and select the **Webhook** tab on the details pane at the bottom. Click the **Create Webhook** button. When the **Create Webhook** dialog box appears, set the properties and click the **OK** button. Currently, notification settings using HTTP(S) calls and Slack messenger are supported.
 
-
-
-### Garbage Collection
-
-When you delete a registry, image, or artifact, storage space is not immediately returned because only the metadata is deleted. Therefore, you must use the garbage collection feature to free up storage space after deleting resources. To use the garbage collection feature in the NHN Cloud Console, go to the **Container > NHN Container Registry (NCR) > Garbage Collection** page.
-
-Before running the actual garbage collection, you can use **Run Test** to check the list of deletion targets and the estimation of freed-up storage space. You can run the feature by clicking the **Run Now** or **Run Test** button on the **Garbage Collection** page. Depending on the execution result, the **Success** or **Failure** will be displayed in **Run Status**. Click the View Log button to check the garbage collection results.
-
-> [Note]
->
-> To avoid damaging images or artifacts being uploaded, images or artifacts uploaded within the last 2 hours are not cleaned up even if garbage collection is executed.

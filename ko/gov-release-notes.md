@@ -1,5 +1,9 @@
 ## Container > NHN Container Registry(NCR)  > 릴리스 노트
 
+### 2022. 05. 31.
+
+* 레지스트리 도메인으로 nhncloud.com을 사용하도록 수정했습니다.
+
 ### 2022. 05. 03.
 
 #### 기능 개선

@@ -108,7 +108,7 @@ docker tag {이미지 이름}:{태그} {사용자 레지스트리 주소}/{이�
 * 예시
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 ```
 
 > [참고]
@@ -122,8 +122,8 @@ docker push {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름
 
 * 예시
 ```bash
-$ docker push example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.cloud.toast.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -152,19 +152,19 @@ docker pull {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름
 
 * 예시
 ```bash
-$ docker pull example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
-example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 
 $ docker images
 REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.cloud.toast.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
@@ -187,14 +187,3 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 
 이미지 변경 사항 알림을 받으려면 NCR Console에서 웹훅 설정을 등록합니다. 웹훅을 설정할 레지스트리를 선택하고 하단의 상세 정보 보기 화면에서 **웹훅** 탭을 선택합니다. **웹훅 생성** 버튼을 클릭합니다. **웹훅 생성** 대화 상자가 나타나면 속성을 지정한 후 **확인** 버튼을 클릭합니다. 현재는 HTTP(S) 호출과 Slack 메신저를 이용한 알림 설정을 지원합니다.
 
-
-
-### Garbage Collection
-
-레지스트리, 이미지 또는 아티팩트를 삭제할 경우 메타데이터만 삭제되기 때문에 저장 공간은 바로 반환되지 않습니다. 그러므로 리소스를 삭제한 뒤 저장 공간을 확보하려면 Garbage Collection 기능을 사용해야 합니다. NHN Cloud Console에서 Garbage Collection을 사용하려면 **Container > NHN Container Registry(NCR) > Garbage Collection** 페이지로 이동합니다.
-
-Garbage Collection을 본격적으로 실행하기 전 **테스트 실행**을 통해 삭제 대상 목록과 저장 공간 확보 예상값을 확인할 수 있습니다. **Garbage Collection** 페이지에서 **지금 실행** 또는 **테스트 실행** 버튼을 클릭하면 실행할 수 있습니다. 실행 결과에 따라 **실행 상태** 항목에 **성공** 또는 **실패**로 나타납니다. 로그 보기 버튼을 클릭하면 Garbage Collection 결과를 확인할 수 있습니다.
-
-> [참고]
->
-> 업로드 중인 이미지 또는 아티팩트에 손상을 가하지 않도록, Garbage Collection을 실행하더라도 최근 2시간 이내에 업로드된 이미지 또는 아티팩트는 정리하지 않습니다.
