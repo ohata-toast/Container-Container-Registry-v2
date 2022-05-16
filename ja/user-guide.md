@@ -108,7 +108,7 @@ docker tag {イメージ名}:{タグ} {ユーザーレジストリアドレス}/
 * 例
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 ```
 
 > [参考]
@@ -122,8 +122,8 @@ docker push {ユーザーレジストリアドレス}/{イメージ名}:{タグ�
 
 * 例
 ```bash
-$ docker push example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.cloud.toast.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -153,19 +153,19 @@ docker pull {ユーザーレジストリアドレス}/{イメージ名}:{タグ�
 
 * 例
 ```bash
-$ docker pull example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
-example-kr1-registry.container.cloud.toast.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/ubuntu:18.04
 
 $ docker images
 REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.cloud.toast.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
@@ -184,14 +184,3 @@ Dockerコマンドラインツールを使わずにNHN Cloud Consoleからタグ
 
 使用しないタグがある場合は、同様にNHN Cloud Consoleでタグを削除できます。タグを作成する時と同様に、タグリスト表示画面に移動して削除するタグを選択します。タグが多くてタグリストにすぐに表示されない場合は、タグ検索機能を活用して削除したいタグを検索できます。削除するタグを選択して**タグ削除**ボタンをクリックすると選択したタグを削除できます。
 
-
-
-### Garbage Collection
-
-レジストリ、イメージまたはアーティファクトを削除する場合、メタデータのみ削除されるため、ストレージはすぐに解放されません。そのためリソースを削除した後、ストレージ容量を確保するにはGarbage Collection機能を使用する必要があります。NHN Cloud ConsoleでGarbage Collectionを使用するには**Container > NHN Container Registry(NCR) > Garbage Collection**ページに移動します。
-
-Garbage Collectionを本格的に実行する前に**テスト実行**を通して削除対象リストとストレージ容量の確保予想値を確認できます。**Garbage Collection**ページで**今すぐ実行**または**テスト実行**ボタンをクリックすると実行できます。実行結果に応じて**実行状態**項目に**成功**または**失敗**と表示されます。ログ表示ボタンをクリックするとGarbage Collectionの結果を確認できます。
-
-> [参考]
->
-> アップロード中のイメージやアーティファクトが損傷しないように、Garbage Collectionを実行しても、直近2時間以内にアップロードされたイメージやアーティファクトはクリーンアップしません。
