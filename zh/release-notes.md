@@ -1,12 +1,30 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### July 26, 2022
+
+#### Added Features
+
+* Added image cleanup and image protection features.
+
+### May 24, 2022
+
+#### Feature Updates
+
+* Made modifications so that nhncloud.com is used as the registry domain.
+
+### April 26, 2022
+
+#### Feature Updates
+
+* Made modifications so that the Garbage Collection feature is not exposed to users.
+
 ### March 29, 2022
 
 #### Added Features
 
 * Added the inter-region replication feature.
 
-#### Features Updates
+#### Feature Updates
 
 * Changed the name of the Container Registry service to NHN Container Registry (NCR).
 
