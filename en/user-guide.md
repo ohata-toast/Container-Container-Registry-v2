@@ -188,17 +188,18 @@ Likewise, if you have tags that you no longer use, you can delete them in the NC
 To receive notifications on image changes, register your webhook settings in the NCR Console. Select the registry to configure the webhook on, and select the **Webhook** tab on the details pane at the bottom. Click the **Create Webhook** button. When the **Create Webhook** dialog box appears, set the properties and click the **OK** button. Currently, notification settings using HTTP(S) calls and Slack messenger are supported.
 
 
-
 ### Container Image Cleanup
 
-You can make settings to clean up (delete) the images and artifacts stored in a registry according to policies in the NCR Console. To use the image cleanup policy, select a repository to apply and click the **Image Cleanup** tab on the details pane at the bottom. Up to 15 image cleanup policies can be registered.
+You can make settings to clean up (delete) the images and artifacts stored in a registry according to policies in the NCR Console. To use the image cleanup policy, select a repository to apply and click the **Image Cleanup** tab on the details pane at the bottom. 
+Up to 15 image cleanup policies can be registered.
 
 > [Caution] 
 If the same policy is set for image cleanup and image protection, the image protection policy takes priority and the image cleanup feature may not work properly.
 
 #### Image Cleanup Policy Setting
 
-If you click the **Add Cleanup Policy** button in the **Policy Setting** tab, the **Add Cleanup Policy** dialog box appears, and you can set a new cleanup policy by entering the desired image, tag, and policy. The image cleanup policy is enabled and created. If you want to temporarily disable the policy, you can use the **Enable/Disable feature**.
+If you click the **Add Cleanup Policy** button in the **Policy Setting** tab, the **Add Cleanup Policy** dialog box appears, and you can set a new cleanup policy by entering the desired image, tag, and policy. 
+The image cleanup policy is enabled and created. If you want to temporarily disable the policy, you can use the **Enable/Disable feature**.
 
 * If a cleanup policy is added or deleted during the image cleanup operation, it will be reflected from the next image cleanup execution.
 
@@ -206,7 +207,8 @@ Images, tags, and cleanup policies are treated as AND conditions.
 
 * Example of deleting all artifacts: `the entire image + unused tag names + the corresponding artifacts all excluded, and clean up`
 
-> [Note] You cannot add duplicate cleanup policies with the same image, tag, and policy to the registry.
+> [Note] 
+You cannot add duplicate cleanup policies with the same image, tag, and policy to the registry.
 >
 > `Except for artifacts with the pushed and pulled date of N, the cleanup` policy deletes artifacts that have been pushed and pulled after the date of N.
 
@@ -216,15 +218,18 @@ You can delete a cleanup policy by selecting it at the bottom of the **Policy Se
 
 #### Test Run
 
-You can test the image cleanup policy you have set by clicking the **Test Run** button on the **Policy Setting** tab. You can check the test run results in the **View History** tab.
+You can test the image cleanup policy you have set by clicking the **Test Run** button on the **Policy Setting** tab. 
+You can check the test run results in the **View History** tab.
 
 #### Run Immediately
 
-On the **Policy Setting** tab, click the **Run Immediately** button to manually run the image cleanup policy you have set. Execution results can be found in the **View History** tab.
+On the **Policy Setting** tab, click the **Run Immediately** button to manually run the image cleanup policy you have set. 
+Execution results can be found in the **View History** tab.
 
 #### Cleanup Cycle Setting
 
-You can set a image cleanup policy to run cleanup automatically on a periodic basis. Repeat cycle uses cron expression (\* \* \* \* \*) and the meaning of each field is as follows.
+You can set a image cleanup policy to run cleanup automatically on a periodic basis. 
+Repeat cycle uses cron expression (\* \* \* \* \*) and the meaning of each field is as follows.
 
 | Field name | Acceptable range of values | Allowed special characters |
 | --- | --- | --- |
@@ -236,11 +241,13 @@ You can set a image cleanup policy to run cleanup automatically on a periodic ba
 
 #### View History
 
-You can view the image cleanup history in the **View History** tab. You can check the history details by clicking the queried information at the bottom.
+You can view the image cleanup history in the **View History** tab. 
+You can check the history details by clicking the queried information at the bottom.
 
 ### Container Image Protection
 
-You can set the image protection feature to protect the images and artifacts stored in a registry from deletion and change in the NCR Console. To use the image protection feature, select a registry to apply and click the **Image Protection** tab on the details pane at the bottom. Up to 15 image protection policies can be registered.
+You can set the image protection feature to protect the images and artifacts stored in a registry from deletion and change in the NCR Console. To use the image protection feature, select a registry to apply and click the **Image Protection** tab on the details pane at the bottom. 
+Up to 15 image protection policies can be registered.
 
 #### Add Image Protection Policy
 
