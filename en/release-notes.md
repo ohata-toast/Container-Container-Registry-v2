@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### July 26, 2022
+
+#### Added Features
+
+* Added image cleanup and image protection features.
+
 ### May 24, 2022
 
 #### Feature Updates

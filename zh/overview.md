@@ -38,3 +38,5 @@ The main features of the NCR service are as follows:
     * View, search, and delete images and artifacts
     * Create, view, and delete tags
     * Webhook setup for deployment pipeline configuration
+    * Image cleanup and protection setup
+* Inter-region registry replication feature
