@@ -260,3 +260,93 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 #### 이미지 보호 정책 삭제
 
 **이미지 보호** 탭 하단에서 삭제할 보호 정책을 선택하고 **보호 정책 삭제** 버튼을 클릭하여 삭제할 수 있습니다.
+
+<span id="private-uri"></span>
+## Private URI 사용
+Private URI는 NHN Cloud의 VPC 네트워크 내에서 사용할 수 있는 NCR 주소입니다. 보안성을 강화하기 위해 인터넷 게이트웨이에 연결하지 않고 외부 네트워크를 단절시킨 인스턴스에서 NCR 서비스를 사용하고 싶은 경우 아래 내용에 따라 Private URI 기능을 활용할 수 있습니다.
+
+> [참고]
+> 인터넷 게이트웨이에 연결되지 않은 인스턴스에서 Private URI를 이용하기 위해서는 NCR과 Object Storage 서비스 게이트웨이를 생성해야 합니다.
+
+> [참고]
+> 인스턴스, 서비스 게이트웨이, Object Storage와 NCR은 모두 동일한 리전을 사용해야 합니다.
+
+### NCR 서비스 게이트웨이 생성
+**Network > Service Gateway** 서비스 페이지로 이동하여 **서비스 게이트웨이 생성** 버튼을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 이름, VPC와 서브넷을 입력하고 서비스는 NCR로 선택한 후, 확인 버튼을 클릭하면 NCR 서비스 게이트웨이를 생성할 수 있습니다.
+![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
+
+### Object Storage 서비스 게이트웨이 생성
+NCR에서 Private URI를 이용하여 이미지를 가져오려면 Object Storage에 대한 서비스 게이트웨이를 생성해야 합니다. NCR은 Object Storage를 사용하여 이미지 계층을 저장하기 때문에 서비스 게이트웨이가 필요합니다. 이미지를 다운로드할 때도 NCR에 액세스하여 이미지 매니페스트를 가져온 다음 Object Storage에 액세스하여 실제 이미지 계층을 다운로드합니다.
+
+**Network > Service Gateway** 서비스 페이지로 이동하여 **서비스 게이트웨이 생성** 버튼을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 이름, VPC와 서브넷을 입력하고 서비스는 Object Storage로 선택한 후, 확인 버튼을 클릭하여 Object Storage 서비스 게이트웨이를 생성합니다.
+![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
+
+### 호스트 등록
+인터넷 게이트웨이에 연결되지 않은 인스턴스에서 Private URI를 사용하여 NCR 레지스트리를 사용할 수 있도록 호스트 파일에 도메인과 IP를 설정해야 합니다.
+인스턴스에서 Private Endpoint의 IP를 찾을 수 있도록 호스트 파일에 NCR 서비스 게이트웨이 IP 주소와 NCR Private Endpoint, Object Storage 서비스 게이트웨이 IP 주소와 Object Storage 도메인을 입력합니다.
+
+NCR과 Object Storage 서비스 게이트웨이의 IP 주소는 **Network > Service Gateway** 서비스 페이지에서 확인할 수 있습니다.
+![ncr_c003_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c003.png)
+
+NCR Private URI는 **Container > NHN Container Registry(NCR) > 관리** 페이지에서 레지스트리를 선택 후 하단의 **기본 정보** 탭에서 확인할 수 있습니다. Private Endpoint는 Private URI에서 레지스트리 이름을 제외한 경로입니다.
+![ncr_c004_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c004.png)
+
+* 예시
+```
+Private URI: private-example-kr1-registry.container.nhncloud.com/hello-world
+Private Endpoint: private-example-kr1-registry.container.nhncloud.com
+```
+
+**Windows**
+`C:\Windows\System32\drivers\etc\hosts` 파일을 열고 다음 내용을 추가합니다.
+```
+{NCR 서비스 게이트웨이 IP 주소} {NCR Private Endpoint}
+{Object Storage 서비스 게이트웨이 IP 주소} {Object Storage 도메인}
+```
+
+**Linux**
+`/etc/hosts` 파일을 열고 다음 내용을 추가합니다.
+```
+{NCR 서비스 게이트웨이 IP 주소} {NCR Private Endpoint}
+{Object Storage 서비스 게이트웨이 IP 주소} {Object Storage 도메인}
+```
+
+
+### Private URI를 통한 레지스트리 작업
+인스턴스에 접속하고 `docker login` 명령을 실행하여 레지스트리에 로그인합니다. 인스턴스 구성에 따라 다음 명령에 `sudo`를 접두사로 붙여야 할 수도 있습니다.
+```shell
+$ docker login {사용자 Private 레지스트리 주소}
+Username: {NHN Cloud 사용자 계정 User Access Key}
+Password: {NHN Cloud 사용자 계정 User Secret Key}
+Login Succeeded
+```
+
+* 예시
+```shell
+$ docker login private-example-kr1-registry.container.nhncloud.com
+Username: hello-world
+Password:
+Login Succeeded
+```
+
+`docker pull`과 같은 레지스트리 작업을 수행하여 레지스트리에서 샘플 이미지를 다운로드합니다. NCR Console에서 가져올 이미지의 정보를 확인합니다.
+```shell
+$ docker pull {사용자 Private URI}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+```
+$ docker pull private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+18.04: Pulling from ubuntu
+5bed26d33875: Pull complete
+f11b29a9c730: Pull complete
+930bda195c84: Pull complete
+78bf9a5ad49e: Pull complete
+Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
+Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+
+$ docker images
+REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+```
