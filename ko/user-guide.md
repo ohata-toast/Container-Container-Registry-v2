@@ -263,32 +263,32 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 
 <span id="private-uri"></span>
 ## Private URI 사용
-Private URI는 NHN Cloud의 VPC 네트워크 내에서 사용할 수 있는 NCR 주소입니다. 보안성을 강화하기 위해 인터넷 게이트웨이에 연결하지 않고 외부 네트워크를 단절시킨 인스턴스에서 NCR 서비스를 사용하고 싶은 경우 아래 내용에 따라 Private URI 기능을 활용할 수 있습니다.
+Private URI는 NHN Cloud의 VPC 네트워크 내에서 사용할 수 있는 NCR 주소입니다. 보안을 강화하기 위해 인터넷 게이트웨이에 연결하지 않고 외부 네트워크를 단절한 인스턴스에서 NCR 서비스를 사용하고자 할 때 Private URI 기능을 활용할 수 있습니다.
 
 > [참고]
-> 인터넷 게이트웨이에 연결되지 않은 인스턴스에서 Private URI를 이용하기 위해서는 NCR과 Object Storage 서비스 게이트웨이를 생성해야 합니다.
+> 인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 이용하려면 NCR과 Object Storage 서비스 게이트웨이를 생성해야 합니다.
 
 > [참고]
 > 인스턴스, 서비스 게이트웨이, Object Storage와 NCR은 모두 동일한 리전을 사용해야 합니다.
 
 ### NCR 서비스 게이트웨이 생성
-**Network > Service Gateway** 서비스 페이지로 이동하여 **서비스 게이트웨이 생성** 버튼을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 이름, VPC와 서브넷을 입력하고 서비스는 NCR로 선택한 후, 확인 버튼을 클릭하면 NCR 서비스 게이트웨이를 생성할 수 있습니다.
+**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **NCR**로 선택한 뒤 **확인**을 클릭하면 NCR 서비스 게이트웨이가 생성됩니다.
 ![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
 
 ### Object Storage 서비스 게이트웨이 생성
-NCR에서 Private URI를 이용하여 이미지를 가져오려면 Object Storage에 대한 서비스 게이트웨이를 생성해야 합니다. NCR은 Object Storage를 사용하여 이미지 계층을 저장하기 때문에 서비스 게이트웨이가 필요합니다. 이미지를 다운로드할 때도 NCR에 액세스하여 이미지 매니페스트를 가져온 다음 Object Storage에 액세스하여 실제 이미지 계층을 다운로드합니다.
+NCR에서 Private URI를 이용하여 이미지를 가져오려면 Object Storage에 대한 서비스 게이트웨이를 생성해야 합니다. NCR은 Object Storage를 사용하여 이미지 계층을 저장하기 때문에 서비스 게이트웨이가 필요합니다. 이미지를 다운로드할 때도 NCR에 접근하여 이미지 매니페스트를 가져온 뒤 Object Storage에 접근하여 실제 이미지 계층을 다운로드합니다.
 
-**Network > Service Gateway** 서비스 페이지로 이동하여 **서비스 게이트웨이 생성** 버튼을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 이름, VPC와 서브넷을 입력하고 서비스는 Object Storage로 선택한 후, 확인 버튼을 클릭하여 Object Storage 서비스 게이트웨이를 생성합니다.
+**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **Object Storage**로 선택한 뒤 **확인**을 클릭하면 Object Storage 서비스 게이트웨이가 생성됩니다.
 ![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
 
 ### 호스트 등록
-인터넷 게이트웨이에 연결되지 않은 인스턴스에서 Private URI를 사용하여 NCR 레지스트리를 사용할 수 있도록 호스트 파일에 도메인과 IP를 설정해야 합니다.
+인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 통해 NCR 레지스트리를 사용할 수 있도록 호스트 파일에 도메인과 IP를 설정해야 합니다.
 인스턴스에서 Private Endpoint의 IP를 찾을 수 있도록 호스트 파일에 NCR 서비스 게이트웨이 IP 주소와 NCR Private Endpoint, Object Storage 서비스 게이트웨이 IP 주소와 Object Storage 도메인을 입력합니다.
 
-NCR과 Object Storage 서비스 게이트웨이의 IP 주소는 **Network > Service Gateway** 서비스 페이지에서 확인할 수 있습니다.
+NCR과 Object Storage 서비스 게이트웨이의 IP 주소는 **Network > Service Gateway** 페이지에서 확인할 수 있습니다.
 ![ncr_c003_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c003.png)
 
-NCR Private URI는 **Container > NHN Container Registry(NCR) > 관리** 페이지에서 레지스트리를 선택 후 하단의 **기본 정보** 탭에서 확인할 수 있습니다. Private Endpoint는 Private URI에서 레지스트리 이름을 제외한 경로입니다.
+NCR Private URI는 **Container > NHN Container Registry(NCR) > 관리** 페이지에서 레지스트리를 선택 후 하단의 **기본 정보** 탭에서 확인할 수 있습니다. Private Endpoint는 Private URI에서 레지스트리 이름을 제외한 경로입니다.
 ![ncr_c004_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c004.png)
 
 * 예시
@@ -365,31 +365,31 @@ NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다.
 
 ### 복제 구성 설정
 
-**복제 생성** 버튼을 클릭하면 **복제 생성** 대화 상자가 나타나고, 복제 구성 생성에 필요한 정보를 입력합니다.
+**복제 생성**을 클릭한 뒤 **복제 생성** 대화 상자에서 복제 구성에 필요한 정보를 입력합니다.
 
-> 참고
-> 복제 생성 직후에는 활성 상태가 비활성으로 표시될 수 있습니다. 복제 준비가 완료되면 활성화로 표시됩니다.
-> 수 분 후에도 상태가 변경되지 않는 경우 **새로 고침** 버튼을 클릭합니다.
+> [참고]
+> 복제 생성 직후에는 활성 상태가 **비활성화**으로 표시될 수 있습니다. 복제 준비가 완료되면 **활성화**로 표시됩니다.
+> 수 분 후에도 상태가 변경되지 않는 경우 **새로 고침**을 클릭합니다.
 
 ### 자동 복제
 
-복제 구성이 완료되면 리전에 이미지 업로드될 때 자동으로 대상 리전으로 복제가 실행됩니다.
+복제 구성이 완료되면 리전에 이미지가 업로드될 때 자동으로 대상 리전으로 복제가 실행됩니다.
 
-> 주의
-> 자동 복제는 새로 업로드되는 이미지만 복제됩니다.
-> 복제 구성 전에 업로드된 이미지를 복제하고 싶은 경우 **수동 복제** 기능을 이용합니다.
+> [주의]
+> 새로 업로드되는 이미지만 자동 복제가 실행됩니다.
+> 복제 구성 전에 업로드된 이미지를 복제하려면 **수동 복제** 기능을 이용합니다.
 
 ### 수동 복제
 
-**복제 실행** 버튼을 클릭하면 **복제 실행** 대화 상자가 나타나고, 확인 버튼을 클릭하면 복제가 실행됩니다.
+**복제 실행**을 클릭한 뒤 **복제 실행** 대화 상자에서 **확인**을 클릭하면 복제가 실행됩니다.
 
-> 주의
-> Garbage Collection 기능 수행 전에 복제를 실행하는 경우 대상 리전(B)에 복제된 이미지의 용량이 원본 이미지의 용량보다 작을 수 있습니다.
-> 일정 시간 이후 원본 이미지의 이미지 용량이 작아집니다.
+> [주의]
+> Garbage Collection 기능이 수행하기 전에 복제를 실행하는 경우 대상 리전(B)에 복제된 이미지의 용량이 원본보다 작을 수 있습니다.
+> 일정 시간 이후 원본 이미지의 용량이 작아집니다.
 
 ### 복제 히스토리
 
-복제 히스토리에서 복제 진행 상황, 이력을 확인할 수 있습니다. 복제 히스토리를 확인하려면 구성한 복제를 클릭하고 하단의 상세 정보 보기 화면에서 **복제 히스토리** 탭을 클릭합니다.
+복제 히스토리에서 복제 진행 상황 및 이력을 확인할 수 있습니다. 복제 히스토리를 확인하려면 구성한 복제를 클릭하고 하단의 **상세 정보 보기** 화면에서 **복제 히스토리** 탭을 클릭합니다.
 하단의 조회된 정보를 클릭하여 히스토리 상세 정보를 확인할 수 있습니다.
 
 ## 서비스 이용 권한
@@ -402,8 +402,8 @@ NCR 서비스 이용 권한은 다음과 같습니다.
 
 | 권한 | 설명 |
 | --- | --- |
-| Project Admin<br>Project Member<br>Service Admin | NHN Container Registry (NCR) 서비스 Create(생성), Read(읽기), Update(갱신), Delete(삭제) |
-| Service Viewer | NHN Container Registry (NCR) 서비스 Read(읽기) |
+| Project Admin<br>Project Member<br>Service Admin | NHN Container Registry(NCR) 서비스 Create(생성), Read(읽기), Update(갱신), Delete(삭제) |
+| Service Viewer | NHN Container Registry(NCR) 서비스 Read(읽기) |
 
 NCR 서비스 이용 권한에 의해 사용할 수 있는 기능은 다음과 같습니다.
 
