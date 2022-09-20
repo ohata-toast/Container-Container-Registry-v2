@@ -238,6 +238,9 @@ Dockerコマンドラインツールを使わずにNHN Cloud Consoleからタグ
 | 月 | 1-12<br>JAN-DEC | `*` `/` `,` `-` |
 | 曜日 | 0-6<br>SUN-SAT | `*` `/` `,` `?` |
 
+> [参考]
+> Cron式で使用する時間帯は協定世界時(UTC)です。
+
 #### ヒストリー照会
 
 **ヒストリー照会** タブでイメージ整理ヒストリーを照会できます。
@@ -258,3 +261,173 @@ Dockerコマンドラインツールを使わずにNHN Cloud Consoleからタグ
 #### イメージ保護ポリシー削除
 
 **イメージ保護** タブ下部で削除する保護ポリシーを選択し、**保護ポリシー削除**ボタンをクリックして削除できます。
+
+<span id="private-uri"></span>
+## Private URI使用
+Private URIはNHN CloudのVPCネットワーク内で使用できるNCRアドレスです。セキュリティを強化するためにインターネットゲートウェイに接続せずに外部ネットワークを切断したインスタンスでNCRサービスを使用したい場合はPrivate URI機能を活用できます。
+
+> [参考]
+> インターネットゲートウェイに接続していないインスタンスでPrivate URIを利用するには、NCRとObject Storageサービスゲートウェイを作成する必要があります。
+
+> [参考]
+> インスタンス、サービスゲートウェイ、 Object StorageとNCRはすべて同じリージョンを使用する必要があります。
+
+### NCRサービスゲートウェイの作成
+**Network > Service Gateway**ページに移動し、**サービスゲートウェイの作成**をクリックします。作成したいサービスゲートウェイの**名前**、**VPC**、**サブネット**を入力し、**サービス**を**NCR**に選択して**確認**をクリックするとNCRサービスゲートウェイが作成されます。
+![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
+
+### Object Storageサービスゲートウェイの作成
+NCRでPrivate URIを利用してイメージをインポートするには、Object Storageのサービスゲートウェイを作成する必要があります。NCRはObject Storageを使用してイメージ階層を保存するため、サービスゲートウェイが必要です。イメージをダウンロードする時もNCRにアクセスしてイメージマニフェストをインポートし、Object Storageにアクセスして実際のイメージレイヤーをダウンロードします。
+
+**Network > Service Gateway**ページに移動して**サービスゲートウェイの作成**をクリックします。作成したいサービスゲートウェイの**名前**、**VPC**、**サブネット**を入力し、**サービス**を**Object Storage**に選択して**確認**をクリックするとObject Storageサービスゲートウェイが作成されます。
+![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
+
+### ホスト登録
+インターネットゲートウェイに接続していないインスタンスでPrivate URIを利用してNCRレジストリを使用できるように、ホストファイルにドメインとIPを設定する必要があります。
+インスタンスでPrivate EndpointのIPを見つけるためにホストファイルにNCRサービスゲートウェイIPアドレスとNCR Private Endpoint, Object StorageサービスゲートウェイIPアドレスとObject Storageドメインを入力します。
+
+NCRとObject StorageサービスゲートウェイのIPアドレスは**Network > Service Gateway**ページで確認できます。
+![ncr_c003_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c003.png)
+
+NCR Private URIは**Container > NHN Container Registry(NCR) > 管理**ページでレジストリを選択した後、下部の**基本情報**タブで確認できます。Private EndpointはPrivate URIからレジストリ名を除いたパスです。
+![ncr_c004_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c004.png)
+
+* 例
+```
+Private URI: private-example-kr1-registry.container.nhncloud.com/hello-world
+Private Endpoint: private-example-kr1-registry.container.nhncloud.com
+```
+
+**Windows**
+`C:\Windows\System32\drivers\etc\hosts`ファイルを開き、次の内容を追加します。
+```
+{NCRサービスゲートウェイIPアドレス} {NCR Private Endpoint}
+{Object StorageサービスゲートウェイIPアドレス} {Object Storageドメイン}
+```
+
+**Linux**
+`/etc/hosts`ファイルを開き、次の内容を追加します。
+```
+{NCRサービスゲートウェイIPアドレス} {NCR Private Endpoint}
+{Object StorageサービスゲートウェイIPアドレス} {Object Storageドメイン}
+```
+
+
+### Private URIによるレジストリ作業
+インスタンスに接続し、`docker login`コマンドを実行してレジストリにログインします。インスタンス構成によっては、次のコマンドに`sudo`を付ける必要があります。
+```shell
+$ docker login {ユーザーPrivateレジストリアドレス}
+Username: {NHN CloudユーザーアカウントUser Access Key}
+Password: {NHN CloudユーザーアカウントUser Secret Key}
+Login Succeeded
+```
+
+* 例
+```shell
+$ docker login private-example-kr1-registry.container.nhncloud.com
+Username: hello-world
+Password:
+Login Succeeded
+```
+
+`docker pull`などのレジストリ作業を実行し、レジストリからサンプルイメージをダウンロードします。 NCR Consoleでインポートするイメージの情報を確認します。
+```shell
+$ docker pull {ユーザーPrivate URI}/{イメージ名}:{タグ名}
+```
+
+* 例
+```
+$ docker pull private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+18.04: Pulling from ubuntu
+5bed26d33875: Pull complete
+f11b29a9c730: Pull complete
+930bda195c84: Pull complete
+78bf9a5ad49e: Pull complete
+Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
+Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+
+$ docker images
+REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+```
+
+## コンテナイメージの複製
+
+NCRで提供する複製機能はリージョン間イメージを複製します。複製機能の具体的な特徴は次のとおりです。
+
+* リージョン(A)から対象リージョン(B)に一方向のイメージ複製をします。
+* リージョン(A)にイメージがアップロードされる時、自動的に対象リージョン(B)に複製が実行されます。
+* ユーザーが望む場合は直接複製作業を開始できます。
+* 対象リージョン(B)にすでに同じイメージが存在する場合は複製しません。
+* リージョン(A)から複製イメージの原本が削除されても対象リージョン(B)に複製されたイメージは削除しません。
+
+イメージ複製機能を使用するにはNCR Consoleで**複製**タブをクリックします。
+
+### 複製構成設定
+
+**複製作成**をクリックし、**複製作成**ダイアログボックスで複製構成に必要な情報を入力します。
+
+> [参考]
+> 複製作成直後は状態が**無効**と表示される場合があります。複製準備が完了すると**有効**と表示されます。
+> 数分経っても状態が変更されない場合は**更新**をクリックします。
+
+### 自動複製
+
+複製の構成が完了すると、リージョンにイメージがアップロードされる時、自動的に対象リージョンに複製が実行されます。
+
+> [注意]
+> 新たにアップロードされるイメージのみ自動複製が実行されます。
+> 複製構成前にアップロードされたイメージを複製するには**手動複製**機能を利用します。
+
+### 手動複製
+
+**複製実行**をクリックした後、**複製実行**ダイアログボックスで**確認**をクリックすると複製が実行されます。
+
+> [注意]
+> Garbage Collection機能が実行される前に複製を実行する場合、対象リージョン(B)に複製されたイメージの容量が原本よりも小さくなる可能性があります。
+> 一定時間後に原本イメージの容量が小さくなります。
+
+### 複製ヒストリー
+
+複製ヒストリーで複製進行状況および履歴を確認できます。複製ヒストリーを確認するには構成した複製をクリックし、下部の**詳細情報表示**画面で**複製ヒストリー**タブをクリックします。
+下部の照会された情報をクリックしてヒストリー詳細情報を確認できます。
+
+## サービス利用権限
+
+サービス利用権限を利用してユーザーごとにNCRの使用を制御できます。
+
+### 権限別使用機能
+
+NCRサービスの利用権限は次のとおりです。
+
+| 権限 | 説明 |
+| --- | --- |
+| Project Admin<br>Project Member<br>Service Admin | NHN Container Registry(NCR)サービスCreate(作成)、Read(読み取り)、Update(更新)、Delete(削除) |
+| Service Viewer | NHN Container Registry(NCR)サービスRead(読み取り) |
+
+NCRサービス利用権限により使用できる機能は次のとおりです。
+
+| Action | Project Admin<br>Project Member<br>Service Admin | Service Viewer |
+| --- | --- | --- |
+| レジストリの照会 | ✓ | ✓ |
+| レジストリの作成/削除 | ✓ |  |
+| レジストリ複製リストの照会 | ✓ | ✓ |
+| レジストリ複製の作成/修正/削除/実行 | ✓ |  |
+| レジストリ複製ヒストリーの照会 | ✓ | ✓ |
+| イメージの表示 | ✓ | ✓ |
+| イメージPull | ✓ | ✓ |
+| イメージPush | ✓ |  |
+| イメージの削除 | ✓ |  |
+| アーティファクトの表示 | ✓ | ✓ |
+| アーティファクトの削除 | ✓ |  |
+| アーティファクトタグの照会 | ✓ | ✓ |
+| アーティファクトタグの作成/削除 | ✓ |  |
+| Webフックの照会 | ✓ | ✓ |
+| Webフックの作成/修正/削除 | ✓ |  |
+| イメージ整理ポリシーの照会 | ✓ | ✓ |
+| イメージ整理ヒストリーの照会 | ✓ | ✓ |
+| イメージ整理ポリシーの作成/削除/実行 | ✓ |  |
+| イメージ整理ルールの有効化/無効化 | ✓ |  |
+| イメージ保護ポリシーの照会 | ✓ | ✓ |
+| イメージ保護ポリシーの追加/削除 | ✓ |  |
