@@ -77,7 +77,7 @@ You need User Access Key and Secret Key to log in to your user registry using th
 
 ### Create a User Registry
 
-To use the registry service for the first time, you must first create a registry in the NCR Console. Go to the **Container > NHN Container Registry (NCR) > Management** service page and click the **Create Registry** button. After entering the name of the registry you want to create, click the OK button to create the registry.
+To use the registry service for the first time, you must first create a registry in the NCR Console. Go to the **Container > NHN Container Registry (NCR) > Management** service page and click the **Create Registry** button. After entering the name of the registry you want to create, click the Confirm button to create the registry.
 
 ### Check the User Registry Address
 The address of the registry you created can be found in the registry list on the **Container > NHN Container Registry (NCR) > Management** service page.
@@ -185,7 +185,7 @@ Likewise, if you have tags that you no longer use, you can delete them in the NC
 
 ### Registry Webhook Settings
 
-To receive notifications on image changes, register your webhook settings in the NCR Console. Select the registry to configure the webhook on, and select the **Webhook** tab on the details pane at the bottom. Click the **Create Webhook** button. When the **Create Webhook** dialog box appears, set the properties and click the **OK** button. Currently, notification settings using HTTP(S) calls and Slack messenger are supported.
+To receive notifications on image changes, register your webhook settings in the NCR Console. Select the registry to configure the webhook on, and select the **Webhook** tab on the details pane at the bottom. Click the **Create Webhook** button. When the **Create Webhook** dialog box appears, set the properties and click the **Confirm** button. Currently, notification settings using HTTP(S) calls and Slack messenger are supported.
 
 
 ### Container Image Cleanup
@@ -272,19 +272,24 @@ You need to create NCR and Object Storage service gateway to use the Private URI
 Instance, Service Gateway, Object Storage and NCR must all use the same region.
 
 ### Create an NCR Service Gateway
-Go to the **Network > Service Gateway** page and click **Create Service Gateway**. Enter **Name**, **VPC**, and **Subnet** of the service gateway to create, and select **NCR**in **Service** and click **OK** to create the NCR service gateway. ![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
+Go to the **Network > Service Gateway** page and click **Create Service Gateway**. Enter **Name**, **VPC**, and **Subnet** of the service gateway to create, and select **NCR**in **Service** and click **Confirm** to create the NCR service gateway. 
+![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
 
 ### Create an Object Storage Service Gateway
 To import images from NCR using Private URI, you need to create a service gateway for Object Storage. The service gateway is required because NCR uses Object Storage to store image layers. When downloading images, NCR is accessed to import the image manifest before accessing Object Storage to download the actual image layer.
 
-Go to the **Network > Service Gateway** page and click **Create Service Gateway**. Enter **Name**, **VPC**, and **Subnet** of the service gateway to create, select **Object Storage** in **Service** and click **OK** to create the Object Storage service gateway. ![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
+Go to the **Network > Service Gateway** page and click **Create Service Gateway**. Enter **Name**, **VPC**, and **Subnet** of the service gateway to create, select **Object Storage** in **Service** and click **Confirm** to create the Object Storage service gateway. 
+![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
 
 ### Register Host
-You must configure the domain and IP in the host file so that the NCR registry can be used through Private URI from an instance unconnected with the internet gateway. Enter the IP address of  the NCR service gateway, NCR Private Endpoint, the IP address of Object storage service gateway, and the Object Storage domain in the host file so that the IP of Private Endpoint can be found from the instance.
+You must configure the domain and IP in the host file so that the NCR registry can be used through Private URI from an instance unconnected with the internet gateway. 
+Enter the IP address of  the NCR service gateway, NCR Private Endpoint, the IP address of Object storage service gateway, and the Object Storage domain in the host file so that the IP of Private Endpoint can be found from the instance.
 
-The IP addresses of NCR and the Object Storage service gateway can be found on the **Network > Service Gateway** page. ![ncr_c003_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c003.png)
+The IP addresses of NCR and the Object Storage service gateway can be found on the **Network > Service Gateway** page. 
+![ncr_c003_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c003.png)
 
-The NCR Private URI can be found on the **Basic Information** tab under the  **Container > NHN Container Registry (NCR) > Management** page by selecting the registry. The private endpoint is the private URI path excluding the registry name. ![ncr_c004_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c004.png)
+The NCR Private URI can be found on the **Basic Information** tab under the  **Container > NHN Container Registry (NCR) > Management** page by selecting the registry. The private endpoint is the private URI path excluding the registry name. 
+![ncr_c004_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c004.png)
 
 * Example
 ```
@@ -292,15 +297,18 @@ Private URI: private-example-kr1-registry.container.nhncloud.com/hello-world
 Private Endpoint: private-example-kr1-registry.container.nhncloud.com
 ```
 
-Open the **Windows** `C:\Windows\System32\drivers\etc\hosts` file and add the following content:
+**Windows** 
+Open `C:\Windows\System32\drivers\etc\hosts` and add the following content:
 ```
-{NCR Services Gateway IP Address} {NCR Private Endpoint} {Object Storage Services Gateway IP Address} {Object Storage Domain}
+{NCR Services Gateway IP Address} {NCR Private Endpoint}
+{Object Storage Services Gateway IP Address} {Object Storage Domain}
 ```
 
 **Linux**
-Open the `/etc/hosts` file and add the following content.
+Open `/etc/hosts` and add the following content.
 ```
-{NCR Services Gateway IP Address} {NCR Private Endpoint} {Object Storage Services Gateway IP Address} {Object Storage Domain}
+{NCR Services Gateway IP Address} {NCR Private Endpoint} 
+Object Storage Services Gateway IP Address} {Object Storage Domain}
 ```
 
 
@@ -360,18 +368,20 @@ To use the image replication feature, click the **Replication** tab in the NCR C
 Click **Create Replication** and enter the required information to configure replication in the **Create Replication** dialog box.
 
 > [Note]
-The status can be displayed as **Disabled** immediately after creating replication. When replication is set ready, the status turns to **Enabled**. If the status doesn’t change after a few minutes, click **Refresh**.
+The status can be displayed as **Disabled** immediately after creating replication. When replication is set ready, the status turns to **Enabled**. 
+If the status doesn’t change after a few minutes, click **Refresh**.
 
 ### Auto Replication
 
 Once replication configuration is complete, when an image is uploaded to a region, it is automatically replicated to the target region.
 
 > [Caution] 
-Only newly uploaded images are automatically replicated. If you want to replicate the uploaded image before configuring replication, use the **Manual Replication** feature.
+Only newly uploaded images are automatically replicated. 
+If you want to replicate the uploaded image before configuring replication, use the **Manual Replication** feature.
 
 ### Manual Replication
 
-After clicking **Run Replication** , click **OK** in the **Run Replication** dialog box to start replication.
+After clicking **Run Replication** , click **Confirm** in the **Run Replication** dialog box to start replication.
 
 > [Caution] 
 If replication is executed before the Garbage Collection feature is run, the capacity of the image replicated in the target region (B) may be smaller than that of the original image. 
@@ -379,7 +389,8 @@ After a certain period of time, the capacity of the original image becomes small
 
 ### Replication History
 
-You can check the replication progress and history in the replication history. To check the replication history, click the configured replication and click the **Replication History** tab on the**View Details** page at the bottom. You can find the history details by clicking the searched information at the bottom.
+You can check the replication progress and history in the replication history. To check the replication history, click the configured replication and click the **Replication History** tab on the**View Details** page at the bottom. 
+You can find the history details by clicking the searched information at the bottom.
 
 ## Service Permission
 
