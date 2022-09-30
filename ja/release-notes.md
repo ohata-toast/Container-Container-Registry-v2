@@ -1,5 +1,13 @@
 ## Container > NHN Container Registry(NCR)  > リリースノート
 
+### 2022. 09. 27.
+
+#### 機能追加
+
+* Private URI機能追加
+  * インターネットゲートウェイに接続されていないインスタンスでNCRサービスを利用できるPrivate URI機能を追加しました。
+  * 詳細については[Private URI使用ガイド](./user-guide/#private-uri)を参照してください。
+
 ### 2022. 07. 26.
 
 #### 機能追加
