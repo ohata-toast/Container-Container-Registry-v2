@@ -239,6 +239,9 @@ Repeat cycle uses cron expression (\* \* \* \* \*) and the meaning of each field
 | Month | 1-12<br>JAN-DEC | `*` `/` `,` `-` |
 | Day | 0-6<br>SUN-SAT | `*` `/` `,` `?` |
 
+> [Note]
+> The time zone used with cron expressions is Coordinated Universal Time (UTC).
+
 #### View History
 
 You can view the image cleanup history in the **View History** tab. 
