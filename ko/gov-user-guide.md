@@ -262,3 +262,110 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 #### 이미지 보호 정책 삭제
 
 **이미지 보호** 탭 하단에서 삭제할 보호 정책을 선택하고 **보호 정책 삭제** 버튼을 클릭하여 삭제할 수 있습니다.
+
+## 이미지 캐시 사용
+
+소스 레지스트리(다른 원격 레지스트리)에서 이미지를 다운로드하여 캐싱하는 기능을 제공합니다.
+이미지 캐시 유형의 레지스트리로 이미지 Pull 요청이 되면 아래와 같이 구분하여 이미지 제공을 결정합니다.
+
+| 구분 | 이미지 제공 |
+| --- | --- |
+| 캐시 된 이미지와 소스 레지스트리의 이미지가 다름 | 소스 레지스트리의 이미지를 다운로드하여 이미지 제공 |
+| 캐시 된 이미지와 소스 레지스트리의 이미지가 동일 | 캐시 된 이미지 제공 |
+| 소스 레지스트리가 연결되지 않음 | 캐시 된 이미지 제공 |
+| 소스 레지스트리에서 이미지가 삭제 | 이미지 제공하지 않음 |
+
+이미지 캐시 유형의 레지스트리는 아래와 같이 요청한 이미지가 없는 경우 소스 레지스트리의 이미지를 다운로드하여 제공합니다.
+![ncr_c001_20221129](https://static.toastoven.net/prod_ncr/20221129/ncr_ko_c001.png)
+
+### 이미지 캐시 생성
+
+이미지 캐시 기능을 사용하기 위해서는 소스 레지스트리 등록이 필요합니다. NCR Console에서 **이미지 캐시** 탭을 클릭한 뒤 **이미지 캐시 생성**을 클릭합니다. **이미지 캐시 생성** 대화 상자에서 소스 레지스트리의 정보를 입력합니다.
+지원되는 소스 레지스트리 유형과 URL, Access ID, Access Secret은 아래와 같습니다.
+
+| 소스 레지스트리 유형 | URL | Access ID | Access Secret |
+| --- | --- | --- | --- |
+| NHN Container Registry(NCR) | `https://xxxxxxxx-$REGION-registry.container.nhncloud.com` | User Access Key ID | Secret Access Key |
+| Amazon Elastic Container Registry | `https://$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazoneaws.com` | IAM 액세스키 ID | IAM 비밀 액세스 키 |
+| Azure Container Registry | `https://$REGISTRY_NAME.azurecr.io` | 액세스 키 사용자 이름 | 액세스 키 암호 |
+| Google Cloud Container Registry | `https://$REGION` | \_json\_key | 서비스 계정의 비공개 키(JSON 유형) |
+| Docker Hub | `https://hub.docker.com` | Username | Password |
+| Docker Registry | `docker-registry 주소` | Username | Password |
+| Harbor | `Harbor 주소` | Username | Password |
+| Quay | `https://quay.io` | json\_file | {<br>"account\_name": "$사용자 계정",<br>"docker\_cli\_password": "$Quay에서 생성한 암호화된 Password"<br>} |
+
+> [참고] 허용되는 소스 레지스트리의 포트는 80, 443입니다.
+
+### 이미지 캐시 수정
+
+소스 레지스트리 변경이 필요하면 NCR Console에서 **이미지 캐시** 탭을 클릭한 뒤 **이미지 캐시 수정**을 클릭합니다. **이미지 캐시 수정** 대화 상자에서 소스 레지스트리의 정보를 입력합니다.
+
+### 이미지 캐시 삭제
+
+이미지 캐시를 더 이상 사용하지 않는다면 NCR Console에서 **이미지 캐시** 탭을 클릭합니다. 삭제하려는 이미지 캐시를 선택한 뒤 **이미지 캐시 삭제** 버튼을 클릭합니다.
+
+> [참고]
+> 해당 이미지 캐시를 대상으로 지정한 레지스트리가 존재하면 이미지 캐시를 삭제할 수 없습니다.
+
+### 이미지 캐시 유형의 레지스트리 생성
+
+이미지 캐시 유형의 레지스트리를 생성하려면 NCR Console에서 **관리** 탭에서 **레지스트리 생성**을 클릭합니다. **레지스트리 생성** 대화 상자에서 사용 용도를 **이미지 캐시**를 선택한 뒤 이미지 캐시 대상을 선택합니다.
+
+> [참고]
+> 이미지 캐시 유형의 레지스트리에는 Image Push를 할 수 없습니다.
+> 이미지 캐시 유형의 레지스트리에는 자동으로 `Pull 한 날짜가 7일 이내인 아티팩트는 제외하고 정리` 이미지 정리 정책이 추가됩니다.
+> * 이미지 정리/보호 정책을 추가하여 레지스트리마다 캐시 된 이미지 관리 정책을 다르게 할 수 있습니다.
+> 컨테이너 이미지 복제 기능을 사용하게 되면 이미지 캐시 유형의 레지스트리는 일반 유형의 레지스트리로 변경되어 복제됩니다.
+
+### 이미지 캐시 유형의 레지스트리에서 이미지 가져오기(Pull)
+
+Docker 명령줄 도구의 pull 명령을 사용해 이미지 캐시 유형의 레지스트리에서 이미지를 가져올 수 있습니다.
+
+```
+docker pull {사용자 이미지 캐시 유형의 레지스트리 주소}/{소스 레지스트리의 레지스트리 이름}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+
+```
+$ docker pull example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+latest: Pulling from harbor/test/nginx
+7a6db449b51b: Already exists
+ca1981974b58: Already exists
+d4019c921e20: Already exists
+7cb804d746d4: Already exists
+e7a561826262: Already exists
+7247f6e5c182: Already exists
+Digest: sha256:89020cd33be2767f3f894484b8dd77bc2e5a1ccc864350b92c53262213257dfc
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+
+$ docker images
+REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/harbor/test/nginx                latest          2b7d6430f78d   2 months ago    142MB
+```
+
+공식 이미지 또는 단일 레벨 저장소에서 이미지를 가져오는 경우 `소스 레지스트리의 레지스트리 이름을 library`로 사용해야 합니다.
+
+```
+docker pull {사용자 이미지 캐시 유형의 레지스트리 주소}/library/hello-world:latest
+```
+
+* 공식 이미지 예시
+
+```
+$ docker pull example-kr1-registry.container.nhncloud.com/docker/library/ubuntu:18.04
+
+$ docker images
+REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/docker/library/ubuntu            18.04           71eaf13299f4   6 days ago      63.1MB
+```
+
+> [주의] 이미지 캐싱 처리 최대 시간은 200초입니다. 소스 레지스트리에서 이미지 다운로드 받는 시간이 200초 이상 소요되는 경우 이미지 캐싱 처리가 되지 않습니다.
+> 동일한 이미지 가져오기를 다시 수행하면 이미지 이어받기 처리가 됩니다.
+> 이미지 캐싱 처리가 되지 않고 용량만 증가한 경우 2시간 이후 용량을 정리합니다.
+
+### 이미지 캐시 유형의 레지스트리 삭제
+
+이미지 캐시 유형의 레지스트리를 더이상 사용하지 않는다면 NCR Console에서 **관리** 탭을 클릭합니다. 삭제하려는 레지스트리를 선택한 후 **레지스트리 삭제** 버튼을 클릭합니다.
+
