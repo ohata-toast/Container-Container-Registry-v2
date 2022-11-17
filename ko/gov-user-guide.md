@@ -276,7 +276,7 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 | 소스 레지스트리에서 이미지가 삭제 | 이미지 제공하지 않음 |
 
 이미지 캐시 유형의 레지스트리는 아래와 같이 요청한 이미지가 없는 경우 소스 레지스트리의 이미지를 다운로드하여 제공합니다.
-![ncr_c001_20221129](https://static.toastoven.net/prod_ncr/20221129/ncr_ko_c001.png)
+![D-NCR_imagecache_01](https://static.toastoven.net/prod_ncr/20221129/D-NCR_imagecache_01.png)
 
 ### 이미지 캐시 생성
 
