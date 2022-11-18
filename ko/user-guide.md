@@ -413,7 +413,7 @@ NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다.
 
 ### 이미지 캐시 생성
 
-이미지 캐시를 사용하려면 소스 레지스트리를 등록해야합니다. NCR Console에서 **이미지 캐시** 탭을 클릭한 뒤 **이미지 캐시 생성**을 클릭합니다. **이미지 캐시 생성** 대화 상자에서 소스 레지스트리의 정보를 입력합니다.
+이미지 캐시를 사용하려면 소스 레지스트리를 등록해야 합니다. NCR Console에서 **이미지 캐시** 탭을 클릭한 뒤 **이미지 캐시 생성**을 클릭합니다. **이미지 캐시 생성** 대화 상자에서 소스 레지스트리의 정보를 입력합니다.
 지원되는 소스 레지스트리 유형과 URL, Access ID, Access Secret은 아래와 같습니다.
 
 | 소스 레지스트리 유형 | URL | Access ID | Access Secret |
@@ -487,20 +487,23 @@ docker pull {사용자 이미지 캐시 유형의 레지스트리 주소}/librar
 * 공식 이미지 예시
 
 ```
-$ docker pull example-kr1-registry.container.nhncloud.com/docker/library/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/docker/library/hello-world:latest
 
 $ docker images
 REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/docker/library/ubuntu            18.04           71eaf13299f4   6 days ago      63.1MB
+example-kr1-registry.container.nhncloud.com/docker/library/hello-world       latest          feb5d9fea6a5   14 months ago   13.3kB
 ```
 
 > [주의] 이미지 캐싱 처리 최대 시간은 200초입니다. 소스 레지스트리에서 이미지를 다운로드하는 데 200초 이상의 시간이 소요될 경우 이미지 캐싱이 처리되지 않습니다.
+>
 > 동일한 이미지 가져오기를 다시 실행할 경우 이미지를 이어받기가 진행됩니다.
+>
 > 이미지 캐싱 처리가 되지 않고 용량만 증가한 경우 2시간 이후 용량을 정리합니다.
 
 ### 이미지 캐시 유형의 레지스트리 삭제
 
 더 이상 사용하지 않는 이미지 캐시 유형의 레지스트리를 삭제할 수 있습니다. NCR Console의 **관리** 에서 삭제하려는 레지스트리를 선택한 뒤 **레지스트리 삭제** 버튼을 클릭합니다.
+
 
 ## 서비스 이용 권한
 
