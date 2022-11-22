@@ -352,6 +352,7 @@ REPOSITORY                                              TAG     IMAGE ID        
 example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
+
 ## コンテナイメージの複製
 
 NCRで提供する複製機能はリージョン間イメージを複製します。複製機能の具体的な特徴は次のとおりです。
@@ -392,6 +393,109 @@ NCRで提供する複製機能はリージョン間イメージを複製しま�
 
 複製ヒストリーで複製進行状況および履歴を確認できます。複製ヒストリーを確認するには構成した複製をクリックし、下部の**詳細情報表示**画面で**複製ヒストリー**タブをクリックします。
 下部の照会された情報をクリックしてヒストリー詳細情報を確認できます。
+
+## イメージキャッシュ使用
+
+ソースレジストリ(他の遠隔レジストリ)からイメージをダウンロードしてキャッシュする機能を提供します。
+イメージキャッシュタイプのレジストリでイメージPullリクエストが行われると、次のように区分してイメージの提供を決定します。
+
+| 区分 | イメージ提供 |
+| --- | --- |
+| キャッシュされたイメージとソースレジストリのイメージが異なる | ソースレジストリのイメージをダウンロードしてイメージを提供 |
+| キャッシュされたイメージとソースレジストリのイメージが同じ | キャッシュされたイメージを提供 |
+| ソースレジストリが接続されていない | キャッシュされたイメージを提供 |
+| ソースレジストリからイメージが削除 | イメージを提供しない |
+
+イメージキャッシュタイプのレジストリは、次のようにリクエストしたイメージがない場合、ソースレジストリのイメージをダウンロードして提供します。
+![D-NCR_imagecache_01](https://static.toastoven.net/prod_ncr/20221129/D-NCR_imagecache_01.png)
+
+### イメージキャッシュの作成
+
+イメージキャッシュを使用するにはソースレジストリを登録する必要があります。 NCR Consoleで**イメージキャッシュ**タブをクリックし、**イメージキャッシュ作成**をクリックします。**イメージキャッシュ作成**ダイアログボックスでソースレジストリの情報を入力します。
+サポートされるソースレジストリタイプとURL、Access ID、Access Secretは次のとおりです。
+
+| ソースレジストリタイプ | URL | Access ID | Access Secret |
+| --- | --- | --- | --- |
+| NHN Container Registry(NCR) | `https://xxxxxxxx-$REGION-registry.container.nhncloud.com` | User Access Key ID | Secret Access Key |
+| Amazon Elastic Container Registry | `https://$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazoneaws.com` | IAMアクセスキーID | IAM秘密アクセスキー |
+| Azure Container Registry | `https://$REGISTRY_NAME.azurecr.io` | アクセスキーユーザー名 | アクセスキー暗号 |
+| Google Cloud Container Registry | `https://$REGION` | \_json\_key | サービスアカウントの秘密鍵(JSONタイプ) |
+| Docker Hub | `https://hub.docker.com` | Username | Password |
+| Docker Registry | `docker-registryアドレス` | Username | Password |
+| Harbor | `Harborアドレス` | Username | Password |
+| Quay | `https://quay.io` | json\_file | {<br>"account\_name": "$ユーザーアカウント"、<br>"docker\_cli\_password": "$Quayで作成した暗号化されたPassword"<br>} |
+
+> [参考]許可されるソースレジストリのポートは80、443です。
+### イメージキャッシュの修正
+
+ソースレジストリを変更できます。 NCR Consoleで**イメージキャッシュ**  >  **イメージキャッシュ修正**をクリックし、**イメージキャッシュ修正**ダイアログボックスでソースレジストリの情報を入力します。
+
+### イメージキャッシュの削除
+
+廃止予定のイメージキャッシュを削除できます。 NCR Consoleの**イメージキャッシュ**で削除したいイメージキャッシュを選択し、**イメージキャッシュ削除**ボタンをクリックします。
+
+> [参考]
+> 当該イメージキャッシュを対象に指定したレジストリが存在する場合、イメージキャッシュを削除できません。
+### イメージキャッシュタイプのレジストリ作成
+
+イメージキャッシュタイプのレジストリを作成するにはNCR Consoleの**管理**タブで**レジストリ作成**をクリックします。**レジストリ作成**ダイアログボックスで使用用途に**イメージキャッシュ**を選択し、イメージキャッシュ対象を選択します。
+
+> [参考]
+> イメージキャッシュタイプのレジストリにはImage Pushができません。
+> イメージキャッシュタイプのレジストリには自動的に`Pullした日付が7日以内のアーティファクトは除外して整理`イメージ整理ポリシーが追加されます。
+> * イメージ整理/保護ポリシーを追加して、レジストリごとにキャッシュされたイメージ管理ポリシーを設定できます。
+> コンテナイメージ複製機能を使用すると、イメージキャッシュタイプのレジストリは一般タイプのレジストリに変更されて複製されます。
+### イメージキャッシュタイプのレジストリからイメージを取得する(Pull)
+
+Dockerコマンドラインツールのpullコマンドを使用してイメージキャッシュタイプのレジストリからイメージをインポートできます。
+
+```
+docker pull {ユーザーイメージキャッシュタイプのレジストリアドレス}/{ソースレジストリのレジストリ名}/{イメージ名}:{タグ名}
+```
+
+* 例
+
+```
+$ docker pull example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+latest: Pulling from harbor/test/nginx
+7a6db449b51b: Already exists
+ca1981974b58: Already exists
+d4019c921e20: Already exists
+7cb804d746d4: Already exists
+e7a561826262: Already exists
+7247f6e5c182: Already exists
+Digest: sha256:89020cd33be2767f3f894484b8dd77bc2e5a1ccc864350b92c53262213257dfc
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+$ docker images
+REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/harbor/test/nginx                latest          2b7d6430f78d   2 months ago    142MB
+```
+
+公式イメージまたは単一レベルリポジトリからイメージをインポートする場合、`ソースレジストリのレジストリ名をlibrary`にして使用する必要があります。
+
+```
+docker pull {ユーザーイメージキャッシュタイプのレジストリアドレス}/library/hello-world:latest
+```
+
+* 公式イメージ例
+
+```
+$ docker pull example-kr1-registry.container.nhncloud.com/docker/library/hello-world:latest
+$ docker images
+REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/docker/library/hello-world       latest          feb5d9fea6a5   14 months ago   13.3kB
+```
+
+> [注意]イメージキャッシュ処理の最大時間は200秒です。ソースレジストリからイメージをダウンロードするのに200秒以上の時間がかかる場合はイメージキャッシュが処理されません。
+>
+> 同じイメージのインポートを再実行する場合、続きから行われます。
+>
+> イメージキャッシュが処理されていないのに容量が増加した場合、増加した容量は2時間後に元の状態に戻ります。
+### イメージキャッシュタイプのレジストリ削除
+
+廃止予定のイメージキャッシュタイプのレジストリを削除できます。NCR Consoleの**管理**で削除したいレジストリを選択し、**レジストリ削除**ボタンをクリックします。
+
 
 ## サービス利用権限
 
