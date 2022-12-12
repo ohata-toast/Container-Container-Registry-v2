@@ -395,6 +395,121 @@ After a certain period of time, the capacity of the original image becomes small
 You can check the replication progress and history in the replication history. To check the replication history, click the configured replication and click the **Replication History** tab on the**View Details** page at the bottom. 
 You can find the history details by clicking the searched information at the bottom.
 
+## Use Image Cache
+
+Provides a feature to download and cache images from a source registry (a different remote registry).
+When an image pull request is made to an image cache type registry, images are provided based on the classification as follows.
+
+| Classification | Image provided |
+| --- | --- |
+| Cached image different from the registry image | Source registry image downloaded and provided |
+| Cached image same with the source registry image | Cached image provided |
+| Source registry not connected | Cached image provided |
+| Image deleted from the source registry | Image not provided |
+
+The image cache type registry downloads and provides the source registry image when the requested image is not found as follows. 
+![D-NCR_imagecache_01](https://static.toastoven.net/prod_ncr/20221129/D-NCR_imagecache_01.png)
+
+### Create Image Cache
+
+To use the image cache, you must register a source registry. Click the **image cache** tab from the NCR console and click **Create Image Cache**. Enter the source registry information on the**Create Image Cache** dialog box.
+The supported source registry type, URL, Access ID, and Access Secret are as follows.
+
+| Source Registry Type | URL | Access ID | Access Secret |
+| --- | --- | --- | --- |
+| NHN Container Registry(NCR) | `https://xxxxxxxx-$REGION-registry.container.nhncloud.com` | User Access Key ID | Secret Access Key |
+| Amazon Elastic Container Registry | `https://$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazoneaws.com` | IAM Access Key ID | IAM Secret Access Key |
+| Azure Container Registry | `https://$REGISTRY_NAME.azurecr.io` | Access Key User Name | Access Key Password |
+| Google Cloud Container Registry | `https://$REGION` | \_json_key | Private key of service account (JSON type) |
+| Docker Hub | `https://hub.docker.com` | Username | Password |
+| Docker Registry | `docker-registry address` | Username | Password |
+| Harbor | `Harbor address` | Username | Password |
+| Quay | `https://quay.io` | json_file | {<br>"account_name": "$사용자 계정",<br>"docker_cli_password": "$Quay에서 생성한 암호화된 Password"<br>} |
+
+> [Note]
+The allowed source registry ports are 80 and 443.
+
+### Modify Image Cache
+
+You can change the source registry. Click **Image Cache**  >  **Modify Image Cache** and enter the source registry information on the **Modify Image Cache** dialog box.
+
+### Delete Image Cache
+
+You can delete the image cache you no longer use. Select an image cache to delete from **Image Cache** on the NCR console and click  the **Delete Image Cache** button.
+
+> [Note]
+An image cache cannot be deleted if a registry targeting that image cache exists.
+
+### Create an Image Cache Type Registry
+
+To create an image cache type registry, click **Create Registry** on the **Management** tab. Select **Image Cache** for purpose of use in the **Create Registry** dialog box and select an image to cache.
+
+> [Note]
+You cannot proceed with image push in an image cache type registry.
+
+> [Note]
+In an image cache type registry, an image cleanup policy of deleting artifacts except ` artifacts that have been pulled within 7 days` will be added.
+> * You can have a different cached image management policy for each registry by adding image cleanup/protection policies.
+
+> [Note]
+When using the container image replication feature, an image cache type registry is changed to a normal type registry and replicated.
+
+### Import an Image from the image cache type registry
+
+You can use the pull command of the Docker command-line tool to import images from an image cache type registry.
+
+```
+docker pull {Address of an user image cache type registry}/{Registry name of a source registry}/{Image name}:{Tag name}
+```
+
+* Example
+
+```
+$ docker pull example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+latest: Pulling from harbor/test/nginx
+7a6db449b51b: Already exists
+ca1981974b58: Already exists
+d4019c921e20: Already exists
+7cb804d746d4: Already exists
+e7a561826262: Already exists
+7247f6e5c182: Already exists
+Digest: sha256:89020cd33be2767f3f894484b8dd77bc2e5a1ccc864350b92c53262213257dfc
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+example-kr1-registry.container.nhncloud.com/harbor/test/nginx:latest
+
+$ docker images
+REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/harbor/test/nginx                latest          2b7d6430f78d   2 months ago    142MB
+```
+
+If you are importing an image from an official image or single-level repository, you must use  `library as the registry name of the source registry`.
+
+```
+docker pull {Address of an user image cache type registry}/library/hello-world:latest
+```
+
+* Image example
+
+```
+$ docker pull example-kr1-registry.container.nhncloud.com/docker/library/hello-world:latest
+
+$ docker images
+REPOSITORY                                                                   TAG             IMAGE ID       CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/docker/library/hello-world       latest          feb5d9fea6a5   14 months ago   13.3kB
+```
+
+> [Note]
+It takes up to 200 seconds to process image caching. Image caching is not processed if downloading an image from the source registry takes more than 200 seconds.
+> * When you are importing the same image again, the image continues to be downloaded.
+
+> [Note]
+If the capacity is increased even though image caching has not been processed, the increased capacity will be restored after 2 hours.
+
+### Delete Image Cache Type Registry
+
+You can delete the image cache type registry you no longer use. Select a registry to delete from **Management** on the NCR console and click the **Delete Registry** button.
+
+
 ## Service Permission
 
 You can control the use of NCR for each user by using the service permissions.
