@@ -393,6 +393,7 @@ After a certain period of time, the capacity of the original image becomes small
 ### Replication History
 
 You can check the replication progress and history in the replication history. To check the replication history, click the configured replication and click the **Replication History** tab on the**View Details** page at the bottom. 
+You can find the history details by clicking the searched information at the bottom.
 
 ## Use Image Cache
 
