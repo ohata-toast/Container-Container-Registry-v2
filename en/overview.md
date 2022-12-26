@@ -41,3 +41,4 @@ The main features of the NCR service are as follows:
     * Image cleanup and protection setup
 * Inter-region registry replication feature
 * Private URI feature that allows users to use the NCR service from an instance unconnected with the internet gateway
+* Image cache feature
