@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### January 31, 2023
+
+#### Added Features
+
+* Added the image vulnerability scanning feature.
+
 ### November 29, 2022
 
 #### Added Features
