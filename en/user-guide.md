@@ -509,6 +509,76 @@ If the capacity is increased even though image caching has not been processed, t
 
 You can delete the image cache type registry you no longer use. Select a registry to delete from **Management** on the NCR console and click the **Delete Registry** button.
 
+## Image Vulnerability Scanning
+
+NCR provides the vulnerability scanning feature for images. If you enable the NCR service, the vulnerability scanning is available by default.
+You can manually start scanning of selected artifacts. You can also set the cycle to automatically scan all artifacts in NCR at specific intervals.
+
+### Scan Artifacts
+
+You can view the list of container images by clicking the **View Image** button of the uploaded registry in the registry list on the **Container** > **NHN Container Registry (NCR)** page.
+You can view the list of artifacts for an image by clicking the **View Artifact** button for the image from the image list.
+Start vulnerability scanning by clicking **Scan** after selecting an artifact from the artifact list.
+
+* The following status is shown in the **Vulnerability** column for the artifact.
+    * Not Scanned (-): Artifact is not scanned.
+    * Scanning (In progress): Scanning is in progress.
+    * Stopped (Stopped): Scanning is canceled upon **Stop Scanning** request.
+    * If the artifact scanning completes successfully, it indicates the overall severity level, along with the total number of vulnerabilities found and the number of vulnerabilities that can be fixed.
+
+> [Note]
+> You can start scanning at any time as long as the status is not **Scanning**.
+
+### Retrieve Vulnerability Information
+
+You can view the vulnerability details from the **Image Scan** tab after selecting an artifact from the artifact list.
+
+### Scan Settings
+
+You can set a cycle to automatically scan vulnerabilities.
+Select a cycle for scanning from **Auto Scan** by clicking **Scan Settings** on the **Container** > **NHN Container Registry(NCR)** page.
+
+| Cycle | Description |
+| --- | --- |
+| None | Auto scan is not set. |
+| Hourly | Run a scan at the start of every hour . |
+| Daily | Run a scan at midnight every day. Since the UCT time is used, scan actually runs every day at 9:00 AM Korean time. |
+| Weekly | Run a scan every Saturday at midnight. Since the UCT time is used, scan actually runs on Sunday at 9:00 AM Korean time. |
+| Custom | Run a scan according to the cron job configured by the user. |
+
+> [Note]
+> If you set a cycle from **Scan Settings** on the **Container** > **NHN Container Registry(NCR)** page, it is applied to all registries in NCR.
+
+### CVE Allow List
+
+If you start scanning, the CVE (Common Vulnerabilities and Exposures) contained in the image are identified. The image may not be allowed to run depending on the severity of the CVE.
+In this case, the user can ignore a specific CVE by creating the CVE allow list.    
+You can set a common CVE allow list across NCR or individual CVE allow list per registry.
+
+**Set a Common CVE Allow List across NCR**
+</br>Click **Scan Settings** on the **Container** > **NHN Container Registry(NCR)** page. Enter a CVE ID list to be ignored on **Allow Common Registry CVE** > **Allow List**. You can add multiple CVE IDs using commas or line breaks. 
+
+**Set an Individual CVE Allow List per Registry**
+</br>Click **Image Scan Settings** from the **Image Scan** tab after selecting a registry from the registry list on the **Container** > **NHN Container Registry(NCR)** page. Enter a CVE ID list to be ignored on **Allow CVE** > **Allow List**. You can add multiple CVE IDs using commas or line breaks.
+
+> [Note]
+> If you set an allow list for individual registry, the common allow list for registries is no longer used.
+
+### Registry Settings
+
+You can configure settings for vulnerabilities per registry.
+
+**Auto Scan When Push**
+</br>When the user pushes an image, scan is automatically run.
+</br>Set **Auto Scan When Push** by clicking **Create Registry** on the **Container** > **NHN Container Registry(NCR)** page.
+
+**Prevent Image Deployment**
+</br> You may not allow the execution of the image depending on the severity of the vulnerability. You cannot pull images with detected vulnerabilities above the set severity. The vulnerabilities added to the CVE allow list are ignored.
+</br> Click **Image Scan Settings** from the **Image Scan** tab after selecting a registry from the registry list on the **Container** > **NHN Container Registry (NCR)** page. Select a severity level not to be allowed in **Prevent Pull**.
+
+> [Note]
+> When you pull an image for the first time after adding a setting to prevent image deployment in the image cache registry, the setting is not applied because the vulnerability information of the image does not yet exist in the image cache registry.
+
 
 ## Service Permission
 
