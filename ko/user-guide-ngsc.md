@@ -74,7 +74,7 @@ Docker 명령줄 도구를 이용해 사용자 레지스트리에 로그인하�
 
 > [참고]
 > 멤버 권한의 사용자는 컨테이너 이미지 저장, 삭제 기능은 사용할 수 없습니다.
-> NGSC 환경은 외부망 통신이 안되기 때문에 **이미지 캐시** 유형의 레지스트리는 사용할 수 없습니다.
+> NGSC 환경은 외부망 통신이 불가하기 때문에 이미지 캐시 유형의 레지스트리는 사용할 수 없습니다.
 
 ### 사용자 레지스트리 생성
 
@@ -173,7 +173,7 @@ example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 
 ## 컨테이너 레지스트리 관리
 
 > [참고]
-> NGSC 환경은 외부망 통신이 안되기 때문에 **웹훅**은 사용할 수 없습니다.
+> NGSC 환경은 외부망 통신이 불가하기 때문에 웹훅은 사용할 수 없습니다.
 
 ### 컨테이너 이미지 및 아티팩트 삭제
 
@@ -274,17 +274,17 @@ Private URI는 NHN Cloud의 VPC 네트워크 내에서 사용할 수 있는 NCR 
 > 인스턴스, 서비스 게이트웨이, Object Storage와 NCR은 모두 동일한 리전을 사용해야 합니다.
 
 ### NCR 서비스 게이트웨이 생성
-**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **NCR**로 선택한 뒤 **확인**을 클릭하면 NCR 서비스 게이트웨이가 생성됩니다.
+**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성할 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **NCR**로 선택한 뒤 **확인**을 클릭하면 NCR 서비스 게이트웨이가 생성됩니다.
 ![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
 
 ### Object Storage 서비스 게이트웨이 생성
-NCR에서 Private URI를 이용하여 이미지를 가져오려면 Object Storage에 대한 서비스 게이트웨이를 생성해야 합니다. NCR은 Object Storage를 사용하여 이미지 계층을 저장하기 때문에 서비스 게이트웨이가 필요합니다. 이미지를 다운로드할 때도 NCR에 접근하여 이미지 매니페스트를 가져온 뒤 Object Storage에 접근하여 실제 이미지 계층을 다운로드합니다.
+NCR에서 Private URI를 이용하여 이미지를 가져오려면 Object Storage에 대한 서비스 게이트웨이를 생성해야 합니다. NCR은 Object Storage를 사용하여 이미지 계층을 저장하기 때문에 서비스 게이트웨이가 필요합니다. 이미지를 다운로드할 때도 먼저 NCR에서 이미지 매니페스트를 가져온 뒤, Object Storage에 접근하여 실제 이미지 계층을 다운로드합니다.
 
-**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **Object Storage**로 선택한 뒤 **확인**을 클릭하면 Object Storage 서비스 게이트웨이가 생성됩니다.
+**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성할 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **Object Storage**로 선택한 뒤 **확인**을 클릭하면 Object Storage 서비스 게이트웨이가 생성됩니다.
 ![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
 
 ### 호스트 등록
-인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 통해 NCR 레지스트리를 사용할 수 있도록 호스트 파일에 도메인과 IP를 설정해야 합니다.
+인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 이용해 NCR을 사용할 수 있도록 호스트 파일에 도메인과 IP를 설정해야 합니다.
 인스턴스에서 Private Endpoint의 IP를 찾을 수 있도록 호스트 파일에 NCR 서비스 게이트웨이 IP 주소와 NCR Private Endpoint, Object Storage 서비스 게이트웨이 IP 주소와 Object Storage 도메인을 입력합니다.
 
 NCR과 Object Storage 서비스 게이트웨이의 IP 주소는 **Network > Service Gateway** 페이지에서 확인할 수 있습니다.
@@ -314,7 +314,7 @@ Private Endpoint: private-example-kr1-registry.container.nhncloud.com
 ```
 
 
-### Private URI를 통한 레지스트리 작업
+### Private URI를 이용한 레지스트리 작업
 인스턴스에 접속하고 `docker login` 명령을 실행하여 레지스트리에 로그인합니다. 인스턴스 구성에 따라 다음 명령에 `sudo`를 접두사로 붙여야 할 수도 있습니다.
 ```shell
 $ docker login {사용자 Private 레지스트리 주소}
