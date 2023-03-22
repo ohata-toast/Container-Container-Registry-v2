@@ -650,7 +650,7 @@ The following checks were performed on each of these signatures:
 ```
 
 > [참고]
-> 다른 키로 여러번 서명할 경우 모든 키로 검증이 가능합니다.
+> 다른 키로 여러 번 서명할 경우 모든 키로 검증이 가능합니다.
 
 ## 서비스 이용 권한
 
