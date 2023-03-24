@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### March 28, 2023
+
+#### Added Features
+
+* Added the image trust feature.
+
 ### January 31, 2023
 
 #### Added Features
