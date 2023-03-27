@@ -580,6 +580,94 @@ You can configure settings for vulnerabilities per registry.
 > When you pull an image for the first time after adding a setting to prevent image deployment in the image cache registry, the setting is not applied because the vulnerability information of the image does not yet exist in the image cache registry.
 
 
+## Image Trust
+
+You can verify the integrity of an image by signing the image in NCR and verifying the signature.
+
+### Prerequisites
+
+NCR provides the image signature feature by using the sigstore/cosign solution. To use the image trust feature, you must install the sigstore/cosign client.
+Refer to [sigstore/cosign](https://docs.sigstore.dev/cosign/installation/) to install the client.
+
+**Windows**
+Downloand and install [Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe).
+
+### Create Key Pair
+
+Create a key pair in your local in order to sign and verify artifacts.
+Private and public key files are created in the path where the command is executed.
+
+```bash
+$ cosign generate-key-pair
+Enter password for private key: 
+Enter password for private key again: 
+Private key written to cosign.key
+Public key written to cosign.pub
+```
+
+### Sign Artifact
+
+Sign using the private key and store the signature in NCR.
+
+```bash
+$ cosign sign --key {private key file} {user registry address}/{image name}:{tag name}
+```
+
+* Example
+
+```bash
+$ cosign sign --key cosign.key 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+Enter password for private key: 
+WARNING: Image reference 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest uses a tag, not a digest, to identify the image to sign.
+    This can lead you to sign a different image than the intended one. Please use a
+    digest (example.com/ubuntu@sha256:abc123...) rather than tag
+    (example.com/ubuntu:latest) for the input to cosign. The ability to refer to
+    images by tag will be removed in a future release.
+
+WARNING: "517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox" appears to be a private repository, please confirm uploading to the transparency log at "https://rekor.sigstore.dev"
+Are you sure you would like to continue? [y/N] y
+
+	Note that there may be personally identifiable information associated with this signed artifact.
+	This may include the email address associated with the account with which you authenticate.
+	This information will be used for signing this artifact and will be stored in public transparency logs and cannot be removed later.
+
+By typing 'y', you attest that you grant (or have permission to grant) and agree to have this information stored permanently in transparency logs.
+Are you sure you would like to continue? [y/N] y
+tlog entry created with index: 16394784
+Pushing signature to: f579cc3e-kr2-registry.container.nhncloud.com/hy/busybox
+```
+
+> [Note]
+> You cannot sign images in registries of image cache type.
+
+**Check Artifact Signature**
+You can find whether artifacts are signed in the **Authentication** column of the artifact list.
+
+### Verify Artifact Signature
+
+Verify whether the signature is forged or tampered using the public key.
+
+```bash
+$ cosign sign --key {public key file} {user registry address}/{image name}:{tag name}
+```
+
+* Example
+
+```bash
+$ cosign verify --key cosign.pub 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+
+Verification for 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - Existence of the claims in the transparency log was verified offline
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox"},"image":{"docker-manifest-digest":"sha256:5e42fbc46b177f10319e8937dd39702e7891ce6d8a42d60c1b4f433f94200bd2"},"type":"cosign container image signature"},"optional":{"Bundle":{"SignedEntryTimestamp":"MEYCIQDw+fMYgkFqzoAT2LOJaLogLyGKMzhcz31RZEcdc1+84wIhAJ46+JqazStGtkqaJWRcmRkk97/nJ4L0wrNXhj1JCifO","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiI1YzMxNmNjYjRmMTBjMDhkNmY4ODVjMDVkNzhlZjMyODliZDMxYjhhMTliMDAwZTAwOTkwMzcxM2Y0ZGRmYTViIn19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FWUNJUUR5WEtYSEpzamZNZDJIMjRxWkliTDFSOE1XTFV3K0pKdHg3Z1J5T1JEYTd3SWhBSXAvalNWQkhMdm5NczY4ZWVSMFBVUkZtQjI0b0VFRVN5NmZKVHhXT0JXVyIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGWTBWcEsyMU9UR05wYzBaSWQyVXlOamRhUzJsc01ERkNRMk0xTWdwTlowTkdVWGhDYkRsa2NGTlJOakowVmtrMFNsQmxLMGxRVjJ0VFFXc3JNRzlKWmtZMU9GRjJVMUpxTm1OcU1XSm1SWEpKUVhOVGNWVm5QVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=","integratedTime":1679898462,"logIndex":16394784,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}}}}]
+```
+
+> [Note]
+> You can verify with any key if you sign multiple times with different keys.
+
 ## Service Permission
 
 You can control the use of NCR for each user by using the service permissions.

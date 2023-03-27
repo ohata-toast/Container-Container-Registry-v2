@@ -563,6 +563,92 @@ NCR全体に共通CVE許可リストを設定したり、レジストリごと�
 > [参考]
 > イメージキャッシュレジストリに配布防止設定を行って初めてイメージをpullする場合にはイメージキャッシュレジストリにまだイメージの脆弱性情報が存在しないため、配布防止設定が適用されません。   
 
+## イメージ信頼機能
+
+NCRにあるイメージに署名し、署名を検証してイメージの整合性を確認できます。
+
+### 事前準備
+
+NCRはsigstore/cosignソリューションを利用してイメージ署名機能を提供します。イメージ信頼機能を使用するにはsigstore/cosignクライアントがインストールされている必要があります。
+[sigstore/cosign](https://docs.sigstore.dev/cosign/installation/)を参照してインストールします。
+
+**Windows**
+[Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe)をダウンロードしてインストールします。
+
+### キーペアの作成
+
+アーティファクトを署名し、検証するためのキーペアをローカルに作成します。
+コマンドを実行したパスにPrivate/Publicキーファイルが作成されます。
+
+```bash
+$ cosign generate-key-pair
+Enter password for private key: 
+Enter password for private key again: 
+Private key written to cosign.key
+Public key written to cosign.pub
+```
+
+### アーティファクト署名
+
+Privateキーを利用して署名し、signatureをNCRに保存します。
+
+```bash
+$ cosign sign --key {private key file} {ユーザーレジストリアドレス}/{イメージ名}:{タグ名}
+```
+
+* 例
+
+```bash
+$ cosign sign --key cosign.key 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+Enter password for private key: 
+WARNING: Image reference 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest uses a tag, not a digest, to identify the image to sign.
+    This can lead you to sign a different image than the intended one. Please use a
+    digest (example.com/ubuntu@sha256:abc123...) rather than tag
+    (example.com/ubuntu:latest) for the input to cosign. The ability to refer to
+    images by tag will be removed in a future release.
+
+WARNING: "517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox" appears to be a private repository, please confirm uploading to the transparency log at "https://rekor.sigstore.dev"
+Are you sure you would like to continue? [y/N] y
+
+	Note that there may be personally identifiable information associated with this signed artifact.
+	This may include the email address associated with the account with which you authenticate.
+	This information will be used for signing this artifact and will be stored in public transparency logs and cannot be removed later.
+
+By typing 'y', you attest that you grant (or have permission to grant) and agree to have this information stored permanently in transparency logs.
+Are you sure you would like to continue? [y/N] y
+tlog entry created with index: 16394784
+Pushing signature to: f579cc3e-kr2-registry.container.nhncloud.com/hy/busybox
+```
+
+> [参考]
+> イメージキャッシュタイプのレジストリにあるイメージは署名ができません。
+**アーティファクトの署名有無確認**
+アーティファクトリストの**認証**列でアーティファクトの署名有無を確認できます。
+
+### アーティファクトの署名検証
+
+Publicキーを利用して偽造・改ざんを検証します。
+
+```bash
+$ cosign sign --key {public key file} {ユーザーレジストリアドレス}/{イメージ名}:{タグ名}
+```
+
+* 例
+
+```bash
+$ cosign verify --key cosign.pub 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+Verification for 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - Existence of the claims in the transparency log was verified offline
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox"},"image":{"docker-manifest-digest":"sha256:5e42fbc46b177f10319e8937dd39702e7891ce6d8a42d60c1b4f433f94200bd2"},"type":"cosign container image signature"},"optional":{"Bundle":{"SignedEntryTimestamp":"MEYCIQDw+fMYgkFqzoAT2LOJaLogLyGKMzhcz31RZEcdc1+84wIhAJ46+JqazStGtkqaJWRcmRkk97/nJ4L0wrNXhj1JCifO","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiI1YzMxNmNjYjRmMTBjMDhkNmY4ODVjMDVkNzhlZjMyODliZDMxYjhhMTliMDAwZTAwOTkwMzcxM2Y0ZGRmYTViIn19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FWUNJUUR5WEtYSEpzamZNZDJIMjRxWkliTDFSOE1XTFV3K0pKdHg3Z1J5T1JEYTd3SWhBSXAvalNWQkhMdm5NczY4ZWVSMFBVUkZtQjI0b0VFRVN5NmZKVHhXT0JXVyIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGWTBWcEsyMU9UR05wYzBaSWQyVXlOamRhUzJsc01ERkNRMk0xTWdwTlowTkdVWGhDYkRsa2NGTlJOakowVmtrMFNsQmxLMGxRVjJ0VFFXc3JNRzlKWmtZMU9GRjJVMUpxTm1OcU1XSm1SWEpKUVhOVGNWVm5QVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=","integratedTime":1679898462,"logIndex":16394784,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}}}}]
+```
+
+> [参考]
+> 異なるキーで複数回署名する場合、すべてのキーで検証が可能です。
+
 ## サービス利用権限
 
 サービス利用権限を利用してユーザーごとにNCRの使用を制御できます。

@@ -580,6 +580,94 @@ CVE의 심각도에 따라 이미지의 실행을 허용하지 않을 수 있습
 > [참고]
 > 이미지 캐시 레지스트리에 배포 방지 설정을 하고 처음 이미지를 pull 하는 경우에는 이미지 캐시 레지스트리에 아직 이미지의 취약점 정보가 존재하지 않으므로 배포 방지 설정이 적용되지 않습니다.
 
+## 이미지 신뢰 기능
+
+NCR에 있는 이미지에 서명하고 서명을 검증하여 이미지의 무결성을 확인할 수 있습니다.
+
+### 사전 준비
+
+NCR은 sigstore/cosign 솔루션을 이용하여 이미지 서명 기능을 제공합니다. 이미지 신뢰 기능을 사용하려면 sigstore/cosign 클라이언트가 설치되어 있어야 합니다.
+[sigstore/cosign](https://docs.sigstore.dev/cosign/installation/)를 참고하여 설치합니다.
+
+**Windows**
+[Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe)를 다운로드해 설치합니다.
+
+### 키 페어 생성
+
+아티팩트를 서명하고 검증하기 위한 키 페어를 로컬에 생성합니다.
+명령어를 실행한 경로에 Private/Public 키 파일이 생성됩니다.
+
+```bash
+$ cosign generate-key-pair
+Enter password for private key: 
+Enter password for private key again: 
+Private key written to cosign.key
+Public key written to cosign.pub
+```
+
+### 아티팩트 서명
+
+Private 키를 이용하여 서명하고 signature를 NCR에 저장합니다.
+
+```bash
+$ cosign sign --key {private key file} {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+
+```bash
+$ cosign sign --key cosign.key 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+Enter password for private key: 
+WARNING: Image reference 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest uses a tag, not a digest, to identify the image to sign.
+    This can lead you to sign a different image than the intended one. Please use a
+    digest (example.com/ubuntu@sha256:abc123...) rather than tag
+    (example.com/ubuntu:latest) for the input to cosign. The ability to refer to
+    images by tag will be removed in a future release.
+
+WARNING: "517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox" appears to be a private repository, please confirm uploading to the transparency log at "https://rekor.sigstore.dev"
+Are you sure you would like to continue? [y/N] y
+
+	Note that there may be personally identifiable information associated with this signed artifact.
+	This may include the email address associated with the account with which you authenticate.
+	This information will be used for signing this artifact and will be stored in public transparency logs and cannot be removed later.
+
+By typing 'y', you attest that you grant (or have permission to grant) and agree to have this information stored permanently in transparency logs.
+Are you sure you would like to continue? [y/N] y
+tlog entry created with index: 16394784
+Pushing signature to: f579cc3e-kr2-registry.container.nhncloud.com/hy/busybox
+```
+
+> [참고]
+> 이미지 캐시 유형의 레지스트리에 있는 이미지는 서명이 불가합니다.
+
+**아티팩트 서명 여부 확인**
+아티팩트 목록의 **인증** 열에서 아티팩트들의 서명 여부를 확인할 수 있습니다.
+
+### 아티팩트의 서명 검증
+
+Public 키를 이용하여 위변조를 검증합니다.
+
+```bash
+$ cosign sign --key {public key file} {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+
+```bash
+$ cosign verify --key cosign.pub 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+
+Verification for 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - Existence of the claims in the transparency log was verified offline
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox"},"image":{"docker-manifest-digest":"sha256:5e42fbc46b177f10319e8937dd39702e7891ce6d8a42d60c1b4f433f94200bd2"},"type":"cosign container image signature"},"optional":{"Bundle":{"SignedEntryTimestamp":"MEYCIQDw+fMYgkFqzoAT2LOJaLogLyGKMzhcz31RZEcdc1+84wIhAJ46+JqazStGtkqaJWRcmRkk97/nJ4L0wrNXhj1JCifO","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiI1YzMxNmNjYjRmMTBjMDhkNmY4ODVjMDVkNzhlZjMyODliZDMxYjhhMTliMDAwZTAwOTkwMzcxM2Y0ZGRmYTViIn19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FWUNJUUR5WEtYSEpzamZNZDJIMjRxWkliTDFSOE1XTFV3K0pKdHg3Z1J5T1JEYTd3SWhBSXAvalNWQkhMdm5NczY4ZWVSMFBVUkZtQjI0b0VFRVN5NmZKVHhXT0JXVyIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGWTBWcEsyMU9UR05wYzBaSWQyVXlOamRhUzJsc01ERkNRMk0xTWdwTlowTkdVWGhDYkRsa2NGTlJOakowVmtrMFNsQmxLMGxRVjJ0VFFXc3JNRzlKWmtZMU9GRjJVMUpxTm1OcU1XSm1SWEpKUVhOVGNWVm5QVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=","integratedTime":1679898462,"logIndex":16394784,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}}}}]
+```
+
+> [참고]
+> 다른 키로 여러 번 서명할 경우 모든 키로 검증이 가능합니다.
+
 ## 서비스 이용 권한
 
 서비스 이용 권한을 이용하여 사용자별로 NCR 사용을 통제할 수 있습니다.
