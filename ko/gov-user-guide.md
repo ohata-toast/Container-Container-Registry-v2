@@ -377,3 +377,160 @@ example-kr1-registry.container.nhncloud.com/docker/library/hello-world       lat
 
 더 이상 사용하지 않는 이미지 캐시 유형의 레지스트리를 삭제할 수 있습니다. NCR Console의 **관리** 에서 삭제하려는 레지스트리를 선택한 뒤 **레지스트리 삭제** 버튼을 클릭합니다.
 
+## 이미지 취약점 스캐닝
+
+NCR 서비스를 활성화하면 기본으로 이미지 취약점 스캐닝 기능을 사용할 수 있습니다.
+이미지 취약점 스캐닝을 사용하면 선택한 아티팩트에 대해 수동으로 스캔을 시작할 수 있습니다. 또한 특정 간격으로 NCR 내 모든 아티팩트를 자동으로 스캔하도록 주기를 설정할 수도 있습니다.
+
+### 아티팩트 스캔
+
+**Container** > **NHN Container Registry(NCR)** 페이지의 레지스트리 목록에서 업로드한 레지스트리의 **이미지 보기** 버튼을 클릭하면 컨테이너 이미지 목록을 볼 수 있습니다.
+이미지 목록에서 원하는 이미지의 **아티팩트 보기** 버튼을 클릭하면 해당 이미지의 아티팩트 목록을 볼 수 있습니다.
+아티팩트 목록에서 아티팩트를 선택한 후 **스캔**을 클릭하여 취약점 스캔을 실행합니다.
+
+* 아티팩트의 **취약점** 열에는 다음 상태가 표시됩니다.
+    * Not Scanned(-): 아티팩트가 스캔 된 적이 없습니다.
+    * Scanning(진행중): 스캔 작업이 진행 중입니다.
+    * Stopped(중지됨): **스캔 중지** 요청으로 스캔 작업이 취소되었습니다.
+    * 아티팩트 스캔이 성공적으로 완료되면 발견된 총취약점 수 및 수정할 수 있는 취약점 수와 함께 전체 심각도 수준을 나타냅니다.
+
+> [참고]
+> 상태가 **Scanning**이 아니면 언제든지 스캔을 시작할 수 있습니다.
+
+### 취약점 정보 조회
+
+아티팩트 목록에서 아티팩트를 선택한 후 **이미지 스캔** 탭에서 자세한 취약점 정보를 확인할 수 있습니다.
+
+### 스캔 설정
+
+자동으로 취약점을 스캔하는 주기를 설정할 수 있습니다.
+**Container** > **NHN Container Registry(NCR)** > **스캔 설정**을 클릭한 뒤 **자동 스캔**에서 설정할 주기를 선택합니다.
+
+| 주기 | 설명 |
+| --- | --- |
+| None | 자동 스캔이 설정되지 않았습니다. |
+| Hourly | 매 시간 시작 시 스캔을 실행합니다. |
+| Daily | 매일 자정에 스캔을 실행합니다. UTC 시간을 사용하므로 실제로 한국 시간 기준 매일 오전 9시에 실행합니다. |
+| Weekly | 매주 토요일 자정에 스캔을 실행합니다. UTC 시간을 사용하므로 실제로 한국 시간 기준 일요일 오전 9시에 실행합니다. |
+| Custom | 사용자가 설정한 cron job에 따라 스캔을 실행합니다. |
+
+> [참고]
+> **Container** > **NHN Container Registry(NCR)** 페이지에서 **스캔 설정**을 하면 NCR 내 모든 레지스트리에 적용됩니다.
+
+### CVE 허용 목록
+
+스캔을 실행하면 이미지에 포함된 CVE(common vulnerabilities and exposures, 공통 취약성 및 노출)가 식별됩니다.
+CVE의 심각도에 따라 이미지의 실행을 허용하지 않을 수 있습니다.
+이 경우 사용자는 CVE 허용 목록을 만들어 특정 CVE를 무시할 수 있습니다. NCR 전체에 공통 CVE 허용 목록을 설정하거나 레지스트리별로 개별 CVE 허용 목록을 설정할 수 있습니다.
+
+**NCR 전체의 공통 CVE 허용 목록 설정**
+**Container** > **NHN Container Registry(NCR)** 페이지에서 **스캔 설정**을 클릭합니다. **공통 레지스트리 CVE 허용** > **허용 목록**에 무시할 CVE ID 목록을 입력합니다. 쉼표나 줄 바꿈을 사용하여 여러 CVE ID를 추가할 수 있습니다.
+
+**레지스트리별 개별 CVE 허용 목록 설정**
+**Container** > **NHN Container Registry(NCR)** 페이지의 레지스트리 목록에서 레지스트리를 선택한 후 **이미지 스캔** 탭의 **이미지 스캔 설정**을 클릭합니다. **CVE 허용** > **허용 목록**에 무시할 CVE ID 목록을 입력합니다. 쉼표나 줄 바꿈을 사용하여 여러 CVE ID를 추가할 수 있습니다.
+
+> [참고]
+> 개별 레지스트리에 허용 목록을 설정하면 공통 레지스트리 허용 목록은 더 이상 사용되지 않습니다.
+
+### 레지스트리 설정
+
+레지스트리별로 취약점 관련 설정을 할 수 있습니다.
+
+**Push 시 자동 스캔**
+사용자가 이미지를 push 하면 자동으로 스캔을 실행합니다.
+**Container** > **NHN Container Registry(NCR)** 페이지에서 **레지스트리 생성**을 클릭하여 **Push 시 자동 스캔**을 설정합니다.
+
+**이미지 배포 방지**
+취약점의 심각도에 따라 이미지의 실행을 허용하지 않을 수 있습니다. 설정한 심각도를 포함하여 그 이상의 심각도가 검출된 이미지는 pull 할 수 없습니다. CVE 허용 목록에 추가된 취약점은 무시됩니다.
+**Container** > **NHN Container Registry(NCR)** 페이지의 레지스트리 목록에서 레지스트리를 선택한 후 **이미지 스캔**탭의 **이미지 스캔 설정**을 클릭합니다. **Pull 방지**에 허용하지 않을 심각도를 선택합니다.
+
+> [참고]
+> 이미지 캐시 레지스트리에 배포 방지 설정을 하고 처음 이미지를 pull 하는 경우에는 이미지 캐시 레지스트리에 아직 이미지의 취약점 정보가 존재하지 않으므로 배포 방지 설정이 적용되지 않습니다.
+
+## 이미지 신뢰 기능
+
+NCR에 있는 이미지에 서명하고 서명을 검증하여 이미지의 무결성을 확인할 수 있습니다.
+
+### 사전 준비
+
+NCR은 sigstore/cosign 솔루션을 이용하여 이미지 서명 기능을 제공합니다. 이미지 신뢰 기능을 사용하려면 sigstore/cosign 클라이언트가 설치되어 있어야 합니다.
+[sigstore/cosign](https://docs.sigstore.dev/cosign/installation/)를 참고하여 설치합니다.
+
+**Windows**
+[Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe)를 다운로드해 설치합니다.
+
+### 키 페어 생성
+
+아티팩트를 서명하고 검증하기 위한 키 페어를 로컬에 생성합니다.
+명령어를 실행한 경로에 Private/Public 키 파일이 생성됩니다.
+
+```bash
+$ cosign generate-key-pair
+Enter password for private key: 
+Enter password for private key again: 
+Private key written to cosign.key
+Public key written to cosign.pub
+```
+
+### 아티팩트 서명
+
+Private 키를 이용하여 서명하고 signature를 NCR에 저장합니다.
+
+```bash
+$ cosign sign --key {private key file} {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+
+```bash
+$ cosign sign --key cosign.key 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+Enter password for private key: 
+WARNING: Image reference 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest uses a tag, not a digest, to identify the image to sign.
+    This can lead you to sign a different image than the intended one. Please use a
+    digest (example.com/ubuntu@sha256:abc123...) rather than tag
+    (example.com/ubuntu:latest) for the input to cosign. The ability to refer to
+    images by tag will be removed in a future release.
+
+WARNING: "517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox" appears to be a private repository, please confirm uploading to the transparency log at "https://rekor.sigstore.dev"
+Are you sure you would like to continue? [y/N] y
+
+	Note that there may be personally identifiable information associated with this signed artifact.
+	This may include the email address associated with the account with which you authenticate.
+	This information will be used for signing this artifact and will be stored in public transparency logs and cannot be removed later.
+
+By typing 'y', you attest that you grant (or have permission to grant) and agree to have this information stored permanently in transparency logs.
+Are you sure you would like to continue? [y/N] y
+tlog entry created with index: 16394784
+Pushing signature to: f579cc3e-kr2-registry.container.nhncloud.com/hy/busybox
+```
+
+> [참고]
+> 이미지 캐시 유형의 레지스트리에 있는 이미지는 서명이 불가합니다.
+
+**아티팩트 서명 여부 확인**
+아티팩트 목록의 **인증** 열에서 아티팩트들의 서명 여부를 확인할 수 있습니다.
+
+### 아티팩트의 서명 검증
+
+Public 키를 이용하여 위변조를 검증합니다.
+
+```bash
+$ cosign sign --key {public key file} {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+
+```bash
+$ cosign verify --key cosign.pub 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest
+
+Verification for 517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox:latest --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - Existence of the claims in the transparency log was verified offline
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox"},"image":{"docker-manifest-digest":"sha256:5e42fbc46b177f10319e8937dd39702e7891ce6d8a42d60c1b4f433f94200bd2"},"type":"cosign container image signature"},"optional":{"Bundle":{"SignedEntryTimestamp":"MEYCIQDw+fMYgkFqzoAT2LOJaLogLyGKMzhcz31RZEcdc1+84wIhAJ46+JqazStGtkqaJWRcmRkk97/nJ4L0wrNXhj1JCifO","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiI1YzMxNmNjYjRmMTBjMDhkNmY4ODVjMDVkNzhlZjMyODliZDMxYjhhMTliMDAwZTAwOTkwMzcxM2Y0ZGRmYTViIn19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FWUNJUUR5WEtYSEpzamZNZDJIMjRxWkliTDFSOE1XTFV3K0pKdHg3Z1J5T1JEYTd3SWhBSXAvalNWQkhMdm5NczY4ZWVSMFBVUkZtQjI0b0VFRVN5NmZKVHhXT0JXVyIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGWTBWcEsyMU9UR05wYzBaSWQyVXlOamRhUzJsc01ERkNRMk0xTWdwTlowTkdVWGhDYkRsa2NGTlJOakowVmtrMFNsQmxLMGxRVjJ0VFFXc3JNRzlKWmtZMU9GRjJVMUpxTm1OcU1XSm1SWEpKUVhOVGNWVm5QVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=","integratedTime":1679898462,"logIndex":16394784,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}}}}]
+```
+
+> [참고]
+> 다른 키로 여러 번 서명할 경우 모든 키로 검증이 가능합니다.
