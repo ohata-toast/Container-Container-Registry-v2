@@ -5,7 +5,7 @@
 #### 기능 추가
 
 * NCR 서비스를 위한 Public API가 공개되었습니다.
-  * Public API에 대한 내용은 [API 가이드](Container/NCR/ko/public-api/)를 참고하세요.
+  * Public API에 대한 내용은 [API 가이드](Container/NCR/ko/public-api/)를 참고하십시오.
 
 #### 기능 개선
 

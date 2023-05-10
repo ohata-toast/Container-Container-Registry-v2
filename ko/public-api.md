@@ -23,7 +23,7 @@ API 도메인은 다음과 같습니다.
 | header.resultCode | Body | Integer | 200: 정상<br>10000 이상: 오류 |
 | header.resultMessage | Body | String | "SUCCESS": 정상<br>그 외: 오류 원인 메시지 |
 
-> [주의] API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.
+> [주의] API 응답에 가이드에 명시되지 않은 필드가 나타날 수 있습니다. 이런 필드는 NHN Cloud 내부 용도로 사용되며 사전 공지 없이 변경될 수 있으므로 사용하지 않습니다.<br>
 > [주의] 리소스를 생성할 때 입력하지 않은 옵션 필드는 조회할 때 응답 본문에 나타나지 않을 수 있습니다.
 
 ## 컨테이너 레지스트리
@@ -44,7 +44,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -52,12 +52,12 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | --- | --- | --- | --- | --- |
 | registries | Body | Array | O | 컨테이너 레지스트리 목록 |
 | registries.project\_id | Body | Integer | O | 컨테이너 레지스트리 ID |
-| [registries.name](http://registries.name) | Body | String | O | 컨테이너 레지스트리 이름 |
+| registries.name | Body | String | O | 컨테이너 레지스트리 이름 |
 | registries.creation\_time | Body | String | O | 생성 시간 |
 | registries.update\_time | Body | String | O | 변경 시간 |
 | registries.repo\_count | Body | Integer | O | 컨테이너 레지스트리에 있는 이미지 개수 |
 | registries.metadata | Body | Object map[string]string | O | 컨테이너 레지스트리 설정 |
-| registries.metadata.auto\_scan | Body | String | O | 이미지를 push 할 때 자동으로 스캔 여부: true/false |
+| registries.metadata.auto\_scan | Body | String | O | 이미지를 push할 때 자동으로 스캔 여부: true/false |
 | registries.metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | registries.metadata.prevent\_vul | Body | String | O | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | registries.metadata.reuse\_sys\_cve\_allowlist | Body | String | O | 공통 CVE 허용 목록 사용 여부: true/false |
@@ -130,12 +130,12 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | --- | --- | --- | --- | --- |
 | registry | Body | Object | O | 컨테이너 레지스트리 정보 |
 | registry.project\_id | Body | Integer | O | 컨테이너 레지스트리 ID |
-| [registry.name](http://registry.name) | Body | String | O | 컨테이너 레지스트리 이름 |
+| registry.name | Body | String | O | 컨테이너 레지스트리 이름 |
 | registry.creation\_time | Body | String | O | 생성 시간 |
 | registry.update\_time | Body | String | O | 변경 시간 |
 | registry.repo\_count | Body | Integer | O | 컨테이너 레지스트리에 있는 이미지 개수 |
 | registry.metadata | Body | Object map[string]string | O | 컨테이너 레지스트리 설정 |
-| registry.metadata.auto\_scan | Body | String | O | 이미지를 push 할 때 자동으로 스캔 여부: true/false |
+| registry.metadata.auto\_scan | Body | String | O | 이미지를 push할 때 자동으로 스캔 여부: true/false |
 | registry.metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | registry.metadata.prevent\_vul | Body | String | O | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | registry.metadata.reuse\_sys\_cve\_allowlist | Body | String | O | 공통 CVE 허용 목록 사용 여부: true/false |
@@ -198,13 +198,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 | appKey | URL | String | O | 서비스 Appkey |
 | project\_name | Body | String | O | 컨테이너 레지스트리 이름 |
 | metadata | Body | Object map[string]string | X | 컨테이너 레지스트리 설정 |
-| metadata.auto\_scan | Body | String | X | 이미지를 push 할 때 자동으로 스캔 여부: true/false |
+| metadata.auto\_scan | Body | String | X | 이미지를 push할 때 자동으로 스캔 여부: true/false |
 | metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | metadata.prevent\_vul | Body | String | X | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 공통 CVE 허용 목록 사용 여부: true/false |
-| cve\_allowlist | Body | Object | X | 취약점 허용 목록 |
-| cve\_allowlist.items | Body | Object List | X | CVE 목록 |
-| cve\_allowlist.items.cve\_id | Body | String | X | CVE ID |
 | registry\_id | Body | Integer | X | 이미지 캐시 유형의 레지스트리 생성 시 필요한 이미지 캐시 ID |
 
 예시
@@ -254,7 +251,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | metadata | Body | Object map[string]string | X | 컨테이너 레지스트리 설정 |
-| metadata.auto\_scan | Body | String | X | 이미지를 push 할 때 자동으로 스캔 여부: true/false |
+| metadata.auto\_scan | Body | String | X | 이미지를 push할 때 자동으로 스캔 여부: true/false |
 | metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | metadata.prevent\_vul | Body | String | X | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 공통 CVE 허용 목록 사용 여부: true/false |
@@ -300,7 +297,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | appKey | URL | String | O | 서비스 Appkey |
 | registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -362,7 +359,6 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | tag | Body | Object | X | 태그에 대한 보호 정책 정보 |
 | tag.include | Body | Boolean | X | 태그에 대한 보호 정책 설정 여부 |
 | tag.pattern | Body | String | X | 보호 대상 태그<br>전체 태그 대상: \*\* 입력 |
-| disabled | Body | Boolean | X | 이미지 보호 정책 활성화 여부<br>미입력 시 활성화(false) 설정 |
 
 예시
 
@@ -461,7 +457,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | appKey | URL | String | O | 서비스 Appkey |
 | registryId | URL | String | O | 레지스트리 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -471,11 +467,11 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | retention\_rules.id | Body | Integer | O | 이미지 정리 정책 ID |
 | retention\_rules.disabled | Body | Boolean | O | 이미지 정리 정책 활성화 여부 |
 | retention\_rules.parameters | Body | Object map | O | 정리 정책 설정 |
-| retention\_rules.parameters.always | Body | Integer | X | 항상 n 개의 아티팩트만 보관 |
-| retention\_rules.parameters.latest\_pulled\_n\_images | Body | Integer | X | 가장 최근에 Pull 한 n 개의 아티팩트만 보관 |
-| retention\_rules.parameters.latest\_pushed\_n\_images | Body | Integer | X | 가장 최근에 Push 한 n 개의 아티팩트만 보관 |
-| retention\_rules.parameters.n\_days\_since\_last\_pull | Body | Integer | X | Push 한 날짜가 n 일인 아티팩트만 보관 |
-| retention\_rules.parameters.n\_days\_since\_last\_push | Body | Integer | X | Pull 한 날짜가 n 일인 아티팩트만 보관 |
+| retention\_rules.parameters.always | Body | Integer | X | 항상 n개의 아티팩트만 보관 |
+| retention\_rules.parameters.latest\_pulled\_n\_images | Body | Integer | X | 가장 최근에 Pull한 n개의 아티팩트만 보관 |
+| retention\_rules.parameters.latest\_pushed\_n\_images | Body | Integer | X | 가장 최근에 Push한 n개의 아티팩트만 보관 |
+| retention\_rules.parameters.n\_days\_since\_last\_pull | Body | Integer | X | Push한 날짜가 n일인 아티팩트만 보관 |
+| retention\_rules.parameters.n\_days\_since\_last\_push | Body | Integer | X | Pull한 날짜가 n일인 아티팩트만 보관 |
 | retention\_rules.tag | Body | Object | O | 태그에 대한 정리 정책 정보 |
 | retention\_rules.tag.include | Body | Boolean | O | 태그에 대한 정리 정책 설정 여부 |
 | retention\_rules.tag.pattern | Body | String | O | 정리 대상 태그 |
@@ -537,11 +533,11 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | scope.pattern | Body | String | X | 정리 대상 이미지<br>전체 이미지 대상: \*\* 입력 |
 | disabled | Body | Boolean | X | 이미지 정리 정책 활성화 여부<br>미입력 시 활성화(false) 설정 |
 | parameters | Body | Object map | O | 정리 정책 설정 |
-| parameters.always | Body | Integer | X | 항상 n 개의 아티팩트만 보관 |
-| parameters.latest\_pulled\_n\_images | Body | Integer | X | 가장 최근에 Pull 한 n 개의 아티팩트만 보관 |
-| parameters.latest\_pushed\_n\_images | Body | Integer | X | 가장 최근에 Push 한 n 개의 아티팩트만 보관 |
-| parameters.n\_days\_since\_last\_pull | Body | Integer | X | Push 한 날짜가 n 일인 아티팩트만 보관 |
-| parameters.n\_days\_since\_last\_push | Body | Integer | X | Pull 한 날짜가 n 일인 아티팩트만 보관 |
+| parameters.always | Body | Integer | X | 항상 n개의 아티팩트만 보관 |
+| parameters.latest\_pulled\_n\_images | Body | Integer | X | 가장 최근에 Pull한 n개의 아티팩트만 보관 |
+| parameters.latest\_pushed\_n\_images | Body | Integer | X | 가장 최근에 Push한 n개의 아티팩트만 보관 |
+| parameters.n\_days\_since\_last\_pull | Body | Integer | X | Push한 날짜가 n일인 아티팩트만 보관 |
+| parameters.n\_days\_since\_last\_push | Body | Integer | X | Pull한 날짜가 n일인 아티팩트만 보관 |
 
 예시
 
@@ -566,7 +562,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 이미지 보호 정책을 삭제합니다.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
 ### 요청
@@ -577,7 +573,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | registryId | URL | String | O | 레지스트리 ID |
-| rule\_id | URL | String | O | 이미지 정리 정책 ID |
+| id | Query | Integer | O | 이미지 정리 정책 ID |
 
 ### 응답
 
@@ -607,11 +603,11 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 | scope.include | Body | Boolean | O | 이미지에 대한 정리 정책 설정 여부 |
 | scope.pattern | Body | String | O | 정리 대상 이미지 |
 | parameters | Body | Object map | O | 정리 정책 설정 |
-| parameters.always | Body | Integer | 설정되어 있을 시 필수 | 항상 n 개의 아티팩트만 보관 |
-| parameters.latest\_pulled\_n\_images | Body | Integer | 설정되어 있을 시 필수 | 가장 최근에 Pull 한 n 개의 아티팩트만 보관 |
-| parameters.latest\_pushed\_n\_images | Body | Integer | 설정되어 있을 시 필수 | 가장 최근에 Push 한 n 개의 아티팩트만 보관 |
-| parameters.n\_days\_since\_last\_pull | Body | Integer | 설정되어 있을 시 필수 | Push 한 날짜가 n 일인 아티팩트만 보관 |
-| parameters.n\_days\_since\_last\_push | Body | Integer | 설정되어 있을 시 필수 | Pull 한 날짜가 n 일인 아티팩트만 보관 |
+| parameters.always | Body | Integer | 설정되어 있을 시 필수 | 항상 n개의 아티팩트만 보관 |
+| parameters.latest\_pulled\_n\_images | Body | Integer | 설정되어 있을 시 필수 | 가장 최근에 Pull한 n개의 아티팩트만 보관 |
+| parameters.latest\_pushed\_n\_images | Body | Integer | 설정되어 있을 시 필수 | 가장 최근에 Push한 n개의 아티팩트만 보관 |
+| parameters.n\_days\_since\_last\_pull | Body | Integer | 설정되어 있을 시 필수 | Push한 날짜가 n일인 아티팩트만 보관 |
+| parameters.n\_days\_since\_last\_push | Body | Integer | 설정되어 있을 시 필수 | Pull한 날짜가 n일인 아티팩트만 보관 |
 
 예시
 
@@ -654,14 +650,14 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 | appKey | URL | String | O | 서비스 Appkey |
 | registryId | URL | String | O | 레지스트리 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | executions | Body | Array | O | 이미지 정리 히스토리 목록 |
-| [executions.id](http://executions.id) | Body | Integer | O | 이미지 정리 히스토리 ID |
+| executions.id | Body | Integer | O | 이미지 정리 히스토리 ID |
 | executions.dry\_run | Body | Boolean | O | 테스트 실행 여부 |
 | executions.trigger | Body | String | O | 이미지 정리 실행 방식 |
 | executions.start\_time | Body | String | O | 이미지 정리 시작 시간 |
@@ -708,17 +704,17 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 | registryId | URL | String | O | 레지스트리 ID |
 | executionId | URL | String | O | 이미지 정리 히스토리 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | tasks | Body | Array | O | 태스크 목록 |
-| [tasks.id](http://tasks.id) | Body | Integer | O | 태스크 ID |
-| tasks.repository | Body | String | O | 정리 된 이미지 이름 |
+| tasks.id | Body | Integer | O | 태스크 ID |
+| tasks.repository | Body | String | O | 정리된 이미지 이름 |
 | tasks.retained | Body | Integer | O | 이미지 보호 설정 여부 |
-| tasks.total | Body | Integer | O | 정리 된 개수 |
+| tasks.total | Body | Integer | O | 정리된 개수 |
 | tasks.start\_time | Body | String | O | 정리 시작 시간 |
 | tasks.end\_time | Body | String | O | 정리 종료 시간 |
 | tasks.status | Body | String | O | 태스크 상태 |
@@ -883,7 +879,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | appKey | URL | String | O | 서비스 Appkey |
 | registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -893,8 +889,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | policies.creation\_time | Body | String | O | 웹훅 생성 시간 |
 | policies.enabled | Body | Boolean | O | 웹훅 활성화 여부 |
 | policies.event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
-| [policies.id](http://policies.id) | Body | Integer | O | 웹훅 ID |
-| [policies.name](http://policies.name) | Body | String | O | 웹훅 이름 |
+| policies.id | Body | Integer | O | 웹훅 ID |
+| policies.name | Body | String | O | 웹훅 이름 |
 | policies.project\_id | Body | Integer | O | 레지스트리 ID |
 | policies.targets | Body | Object List | O | 웹훅 정보 |
 | policies.targets.address | Body | String | O | 웹훅 엔드포인트 |
@@ -963,8 +959,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | policy.creation\_time | Body | String | O | 웹훅 생성 시간 |
 | policy.enabled | Body | Boolean | O | 웹훅 활성화 여부 |
 | policy.event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
-| [policy.id](http://policy.id) | Body | Integer | O | 웹훅 ID |
-| [policy.name](http://policy.name) | Body | String | O | 웹훅 이름 |
+| policy.id | Body | Integer | O | 웹훅 ID |
+| policy.name | Body | String | O | 웹훅 이름 |
 | policy.project\_id | Body | Integer | O | 레지스트리 ID |
 | policy.targets | Body | Object List | O | 웹훅 정보 |
 | policy.targets.address | Body | String | O | 웹훅 엔드포인트 |
@@ -1020,7 +1016,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | appKey | URL | String | O | 서비스 Appkey |
 | registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
 | enabled | Body | Boolean | X | 웹훅 활성화 여부<br>미입력 시 false 설정 |
-| event\_types | Body | String List | O | 웹훅 이벤트 유형 ("PUSH\_ARTIFACT", "PULL\_ARTIFACT", "DELETE\_ARTIFACT") |
+| event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
 | name | Body | String | X | 웹훅 이름 |
 | targets | Body | Object List | O | 웹훅 정보 |
 | targets.address | Body | String | O | 웹훅 엔드포인트 |
@@ -1090,7 +1086,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
 | policyId | URL | String | O | 웹훅 ID |
 | enabled | Body | Boolean | X | 웹훅 활성화 여부 |
-| event\_types | Body | String List | O | 웹훅 이벤트 유형 ("PUSH\_ARTIFACT", "PULL\_ARTIFACT", "DELETE\_ARTIFACT") |
+| event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
 | name | Body | String | X | 웹훅 이름 |
 | targets | Body | Object List | O | 웹훅 정보 |
 | targets.address | Body | String | O | 웹훅 엔드포인트 |
@@ -1138,15 +1134,15 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
 | appKey | URL | String | O | 서비스 Appkey |
 | registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | images | Body | Array | O | 컨테이너 이미지 목록 |
-| [images.id](http://images.id) | Body | Integer | O | 컨테이너 이미지 ID |
-| [images.name](http://images.name) | Body | String | O | 컨테이너 이미지 이름 |
+| images.id | Body | Integer | O | 컨테이너 이미지 ID |
+| images.name | Body | String | O | 컨테이너 이미지 이름 |
 | images.project\_id | Body | Integer | O | 레지스트리 ID |
 | images.pull\_count | Body | Integer | O | 컨테이너 이미지 pull 횟수 |
 | images.artifact\_count | Body | Integer | O | 컨테이너 이미지 아티팩트 개수 |
@@ -1200,8 +1196,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | image | Body | Object | O | 컨테이너 이미지 목록 |
-| [image.id](http://image.id) | Body | Integer | O | 컨테이너 이미지 ID |
-| [image.name](http://image.name) | Body | String | O | 컨테이너 이미지 이름 |
+| image.id | Body | Integer | O | 컨테이너 이미지 ID |
+| image.name | Body | String | O | 컨테이너 이미지 이름 |
 | image.project\_id | Body | Integer | O | 레지스트리 ID |
 | image.pull\_count | Body | Integer | O | 컨테이너 이미지 pull 횟수 |
 | image.artifact\_count | Body | Integer | O | 컨테이너 이미지 아티팩트 개수 |
@@ -1270,7 +1266,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 | with\_scan\_overview | Query | String | X | 취약점 정보 조회 여부 |
 | with\_accessory | Query | String | X | 인증 정보 조회 여부 |
 
@@ -1285,7 +1281,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | artifacts.accessories | Body | Object | X | 아티팩트 인증 정보 |
 | artifacts.manifest\_media\_type | Body | String | O | 아티팩트 타입 |
 | artifacts.media\_type | Body | String | O | 아티팩트 타입 |
-| artifacts.size | Body | Integer | O | 아티팩트 크 |
+| artifacts.size | Body | Integer | O | 아티팩트 크기 |
 | artifacts.pull\_time | Body | String | O | 아티팩트 pull 시간 |
 | artifacts.push\_time | Body | String | O | 아티팩트 push 시간 |
 
@@ -1377,7 +1373,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | artifact.accessories | Body | Object | X | 아티팩트 인증 정보 |
 | artifact.manifest\_media\_type | Body | String | O | 아티팩트 타입 |
 | artifact.media\_type | Body | String | O | 아티팩트 타입 |
-| artifact.size | Body | Integer | O | 아티팩트 크 |
+| artifact.size | Body | Integer | O | 아티팩트 크기 |
 | artifact.pull\_time | Body | String | O | 아티팩트 pull 시간 |
 | artifact.push\_time | Body | String | O | 아티팩트 push 시간 |
 
@@ -1477,15 +1473,15 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | tags | Body | Array | O | 아티팩트 태그 목록 |
-| [tags.id](http://tags.id) | Body | Integer | O | 아티팩트 태그 ID |
-| [tags.name](http://tags.name) | Body | String | O | 아티팩트 태그 이름 |
+| tags.id | Body | Integer | O | 아티팩트 태그 ID |
+| tags.name | Body | String | O | 아티팩트 태그 이름 |
 | tags.pull\_time | Body | String | O | 아티팩트 태그 pull 시간 |
 | tags.push\_time | Body | String | O | 아티팩트 태그 push 시간 |
 
@@ -1690,7 +1686,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -1703,9 +1699,9 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.creation\_time | Body | String | O | 생성 시간 |
 | policies.src\_registry | Body | Object | O | 소스 레지스트리 정보 |
 | policies.trigger | Body | Object | O | 복제 실행 방식 |
-| [policies.id](http://policies.id) | Body | Integer | O | 복제 ID |
+| policies.id | Body | Integer | O | 복제 ID |
 | policies.enabled | Body | Boolean | O | 복제 활성화 여부 |
-| [policies.name](http://policies.name) | Body | String | O | 복제 이름 |
+| policies.name | Body | String | O | 복제 이름 |
 
 예시
 
@@ -1804,9 +1800,9 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.creation\_time | Body | String | O | 생성 시간 |
 | policy.src\_registry | Body | Object | O | 소스 레지스트리 정보 |
 | policy.trigger | Body | Object | O | 복제 실행 방식 |
-| [policy.id](http://policy.id) | Body | Integer | O | 복제 ID |
+| policy.id | Body | Integer | O | 복제 ID |
 | policy.enabled | Body | Boolean | O | 복제 활성화 여부 |
-| [policy.name](http://policy.name) | Body | String | O | 복제 이름 |
+| policy.name | Body | String | O | 복제 이름 |
 
 예시
 
@@ -1987,7 +1983,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -1999,7 +1995,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 | executions.trigger | Body | String | O | 복제 실행 방식 |
 | executions.start\_time | Body | String | O | 복제 시작 시간 |
 | executions.end\_time | Body | String | O | 복제 종료 시간 |
-| [executions.id](http://executions.id) | Body | Integer | O | 복제 히스토리 ID |
+| executions.id | Body | Integer | O | 복제 히스토리 ID |
 | executions.policy\_id | Body | Integer | O | 복제 ID |
 
 예시
@@ -2027,7 +2023,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 
 ### 복제 히스토리 보기
 
-복제 히스토리 조회합니다.
+복제 히스토리를 조회합니다.
 
 ```
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
@@ -2042,7 +2038,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 | appKey | URL | String | O | 서비스 Appkey |
 | executionId | URL | String | O | 복제 히스토리 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -2053,7 +2049,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 | tasks.start\_time | Body | String | O | 복제 시작 시간 |
 | tasks.dst\_resource | Body | String | O | 대상 리소스 |
 | tasks.src\_resource | Body | String | O | 소스 리소스 |
-| [tasks.id](http://tasks.id) | Body | Integer | O | Task ID |
+| tasks.id | Body | Integer | O | Task ID |
 | tasks.execution\_id | Body | Integer | O | 복제 히스토리 ID |
 | tasks.end\_time | Body | String | O | 복제 종료 시간 |
 
@@ -2152,7 +2148,7 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | page | Query | Integer | X | 조회할 페이지 번호 |
-| page\_size | Query | Integer | X | 조회할 페이지 크기 (default: 10) |
+| page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
 ### 응답
 
@@ -2162,11 +2158,11 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 | endpoints.status | Body | String | O | 이미지 캐시 상태 |
 | endpoints.credential | Body | Object | O | 소스 레지스트리 인증 정보 |
 | endpoints.update\_time | Body | String | O | 변경 시간 |
-| [endpoints.name](http://endpoints.name) | Body | String | O | 이미지 캐시 이름 |
+| endpoints.name | Body | String | O | 이미지 캐시 이름 |
 | endpoints.url | Body | String | O | 소스 레지스트리 주소 |
 | endpoints.creation\_time | Body | String | O | 생성 시간 |
 | endpoints.type | Body | String | O | 소스 레지스트리 유형 |
-| [endpoints.id](http://endpoints.id) | Body | Integer | O | 이미지 캐시 ID |
+| endpoints.id | Body | Integer | O | 이미지 캐시 ID |
 | endpoints.description | Body | Integer | O | 이미지 캐시 설명 |
 
 예시
@@ -2315,7 +2311,7 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | schedule | Body | Object | O | 스캔 주기 정보 |
-| [schedule.id](http://schedule.id) | Body | Integer | O | 스캔 주기 ID |
+| schedule.id | Body | Integer | O | 스캔 주기 ID |
 | schedule.schedule | Body | Object | O | 스캔 주기 |
 | schedule.schedule.cron | Body | String | O | 스캔 주기의 cron 형식 |
 | schedule.schedule.type | Body | String | O | 스캔 주기 유형 |
