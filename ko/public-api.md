@@ -122,7 +122,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 
 ### 응답
 
@@ -231,7 +232,8 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 
 ### 응답
 
@@ -250,6 +252,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | metadata | Body | Object map[string]string | X | 컨테이너 레지스트리 설정 |
 | metadata.auto\_scan | Body | String | X | 이미지를 push할 때 자동으로 스캔 여부: true/false |
 | metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
@@ -1003,10 +1007,10 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 
 ### 웹훅 생성하기
 
-웹훅 목록을 생성합니다.
+웹훅을 생성합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 ```
 
 ### 요청
@@ -1693,12 +1697,21 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | policies | Body | Array | O | 복제 목록 |
-| policies.update\_time | Body | String | O | 변경 시간 |
-| policies.filters | Body | Object | O | 복제 대상 필터 정보 |
+| policies.filters | Body | Object List | O | 복제 대상 설정 정보 |
+| policies.filters.type | Body | String | O | 복제 대상 유형 |
+| policies.filters.value | Body | String | O | 복제 대상 필터 값 |
 | policies.dest\_registry | Body | Object | O | 대상 레지스트리 정보 |
+| policies.dest\_registsry.name | Body | String | O | 대상 리전 이름 |
+| policies.dest\_registsry.id | Body | Integer | X | 대상 리전 ID, 값이 존재하면 Push 복제 |
 | policies.creation\_time | Body | String | O | 생성 시간 |
 | policies.src\_registry | Body | Object | O | 소스 레지스트리 정보 |
+| policies.src\_registry.name | Body | String | O | 소스 리전 이름 |
+| policies.src\_registry.id | Body | Integer | X | 소스 리전 ID, 값이 존재하면 Pull 복제 |
 | policies.trigger | Body | Object | O | 복제 실행 방식 |
+| policies.trigger.type | Body | String | O | manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반) |
+| policies.trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 |
+| policies.trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 (Unix cron 표현식 사용) |
+| policies.dest\_namespace | Body | String | X | 대상 레지스트리 |
 | policies.id | Body | Integer | O | 복제 ID |
 | policies.enabled | Body | Boolean | O | 복제 활성화 여부 |
 | policies.name | Body | String | O | 복제 이름 |
@@ -1794,12 +1807,21 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | policy | Body | Object | O | 복제 정보 |
-| policy.update\_time | Body | String | O | 변경 시간 |
-| policy.filters | Body | Object | O | 복제 대상 필터 정보 |
+| policy.filters | Body | Object List | O | 복제 대상 설정 정보 |
+| policy.filters.type | Body | String | O | 복제 대상 유형 |
+| policy.filters.value | Body | String | O | 복제 대상 필터 값 |
 | policy.dest\_registry | Body | Object | O | 대상 레지스트리 정보 |
+| policy.dest\_registsry.name | Body | String | O | 대상 리전 이름 |
+| policy.dest\_registsry.id | Body | Integer | X | 대상 리전 ID, 값이 존재하면 Push 복제 |
 | policy.creation\_time | Body | String | O | 생성 시간 |
 | policy.src\_registry | Body | Object | O | 소스 레지스트리 정보 |
+| policy.src\_registry.name | Body | String | O | 소스 리전 이름 |
+| policy.src\_registry.id | Body | Integer | X | 소스 리전 ID, 값이 존재하면 Pull 복제 |
 | policy.trigger | Body | Object | O | 복제 실행 방식 |
+| policy.trigger.type | Body | String | O | manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반) |
+| policy.trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 |
+| policy.trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 (Unix cron 표현식 사용) |
+| policy.dest\_namespace | Body | String | X | 대상 레지스트리 |
 | policy.id | Body | Integer | O | 복제 ID |
 | policy.enabled | Body | Boolean | O | 복제 활성화 여부 |
 | policy.name | Body | String | O | 복제 이름 |
@@ -1884,8 +1906,21 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| dest\_registry | Body | Object | O | 대상 레지스트리 정보 |
-| trigger | Body | Object | O | 복제 실행 유형 |
+| dest\_registry | Body | Object | X | Push 복제의 대상 레지스트리 정보 |
+| dest\_registry.name | Body | String | O | Push 복제의 대상 리전 이름, KR2 |
+| dest\_registry.id | Body | Integer | O | Push 복제의 대상 리전 ID, 1 |
+| src\_registry | Body | Object | X | Pull 복제의 대상 레지스트리 정보 |
+| src\_registry.name | Body | String | O | Pull 복제의 대상 리전 이름, KR2 |
+| src\_registry.id | Body | Integer | O | Pull 복제의 대상 리전 ID, 1 |
+| trigger | Body | Object | O | 복제 실행 방식 |
+| trigger.type | Body | String | O | Push 복제, manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반)<br>Pull 복제, manual/scheduled |
+| trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 설정 |
+| trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 설정 (Unix cron 표현식 사용) |
+| dest\_namespace | Body | String | X | 대상 레지스트리 |
+| filters | Body | Object List | X | 복제 할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
+| filters.type | Body | String | X | 복제 할 대상 설정, name(이미지 이름)/tag(태그 이름) |
+| filters.value | Body | String | X | 필터할 값 |
+| filters.decoration | Body | String | X | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
 
 예시
@@ -1933,7 +1968,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 복제를 변경합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
+PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
 ### 요청
@@ -1944,8 +1979,21 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | policyId | URL | String | O | 복제 ID |
-| dest\_registry | Body | Object | O | 대상 레지스트리 정보 |
-| trigger | Body | Object | O | 복제 실행 유형 |
+| dest\_registry | Body | Object | Push 복제 필수 | Push 복제의 대상 레지스트리 정보, 복제 유형 변경 불가 |
+| dest\_registry.name | Body | String | Push 복제 필수 | Push 복제의 대상 리전 이름, KR2 |
+| dest\_registry.id | Body | Integer | Push 복제 필수 | Push 복제의 대상 리전 ID, 1 |
+| src\_registry | Body | Object | Pull 복제 필수 | Pull 복제의 대상 레지스트리 정보, 복제 유형 변경 불가 |
+| src\_registry.name | Body | String | Pull 복제 필수 | Pull 복제의 대상 리전 이름, KR2 |
+| src\_registry.id | Body | Integer | Pull 복제 필수 | Pull 복제의 대상 리전 ID, 1 |
+| trigger | Body | Object | O | 복제 실행 방식 |
+| trigger.type | Body | String | O | Push 복제, manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반)<br>Pull 복제, manual/scheduled |
+| trigger.trigger\_settings | Body | Object | 설정되어 있을 시 필수 | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 설정 |
+| trigger.trigger\_settings.cron | Body | String | 설정되어 있을 시 필수 | 복제 실행 주기 설정 (Unix cron 표현식 사용) |
+| dest\_namespace | Body | String | 설정되어 있을 시 필수 | 대상 레지스트리 |
+| filters | Body | Object List | 설정되어 있을 시 필수 | 복제 할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
+| filters.type | Body | String | 설정되어 있을 시 필수 | 복제 할 대상 설정, name(이미지 이름)/tag(태그 이름) |
+| filters.value | Body | String | 설정되어 있을 시 필수 | 필터할 값 |
+| filters.decoration | Body | String | 설정되어 있을 시 필수 | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
 
 예시
@@ -2157,9 +2205,12 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 | endpoints | Body | Array | O | 이미지 캐시 목록 |
 | endpoints.status | Body | String | O | 이미지 캐시 상태 |
 | endpoints.credential | Body | Object | O | 소스 레지스트리 인증 정보 |
+| endpoints.credential.access\_key | Body | String | O | 소스 레지스트리 access ID |
+| endpoints.credential.access\_secret | Body | String | O | 소스 레지스트리 access secret |
 | endpoints.update\_time | Body | String | O | 변경 시간 |
 | endpoints.name | Body | String | O | 이미지 캐시 이름 |
 | endpoints.url | Body | String | O | 소스 레지스트리 주소 |
+| endpoints.insecure | Body | Boolean | O | 인증서 검증 여부 |
 | endpoints.creation\_time | Body | String | O | 생성 시간 |
 | endpoints.type | Body | String | O | 소스 레지스트리 유형 |
 | endpoints.id | Body | Integer | O | 이미지 캐시 ID |
@@ -2210,10 +2261,11 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 | appKey | URL | String | O | 서비스 Appkey |
 | name | Body | String | O | 이미지 캐시 이름 |
 | url | Body | String | O | 소스 레지스트리 주소 |
-| type | Body | String | O | 소스 레지스트리 유형 |
+| type | Body | String | O | 소스 레지스트리 유형, harbor/docker-hub/docker-registry/google-gcr/aws-ecr/azure-acr/quay/ncr |
 | credential | Body | Object | O | 소스 레지스트리 인증 정보 |
 | credential.access\_key | Body | String | O | 소스 레지스트리 access ID |
 | credential.access\_secret | Body | String | O | 소스 레지스트리 access secret |
+| insecure | Body | Boolean | X | 인증서 검증 여부 |
 
 예시
 
@@ -2238,7 +2290,7 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 이미지 캐시를 삭제합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
+DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 ```
 
 ### 요청
@@ -2272,6 +2324,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 | url | Body | String | X | 소스 레지스트리 주소 |
 | access\_key | Body | String | X | 소스 레지스트리 access ID |
 | access\_secret | Body | String | X | 소스 레지스트리 access secret |
+| insecure | Body | Boolean | X | 인증서 검증 여부 |
 
 예시
 
@@ -2341,41 +2394,9 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 }
 ```
 
-### 스캔 주기 생성하기
+### 스캔 주기 설정하기
 
 스캔 주기를 설정합니다.
-
-```
-POST /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
-```
-
-### 요청
-
-| 이름 | 종류 | 형식 | 필수 | 설명 |
-| --- | --- | --- | --- | --- |
-| appKey | URL | String | O | 서비스 Appkey |
-| schedule | Body | Object | O | 스캔 주기 정보 |
-| schedule.cron | Body | String | O | 스캔 주기의 cron 형식 |
-| schedule.type | Body | String | O | 스캔 주기 유형 |
-
-예시
-
-```json
-{
-    "schedule": {
-        "cron": "0 0 * * *",
-        "type": "Daily"
-    }
-}
-```
-
-### 응답
-
-이 API는 공통 정보만 응답합니다.
-
-### 스캔 주기 변경하기
-
-스캔 주기를 변경합니다.
 
 ```
 PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
