@@ -1709,8 +1709,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.src\_registry.id | Body | Integer | X | 소스 리전 ID, 값이 존재하면 Pull 복제 |
 | policies.trigger | Body | Object | O | 복제 실행 방식 |
 | policies.trigger.type | Body | String | O | manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반) |
-| policies.trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 |
-| policies.trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 (Unix cron 표현식 사용) |
+| policies.trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled일 때 필수 |
+| policies.trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기(Unix cron 표현식 사용) |
 | policies.dest\_namespace | Body | String | X | 대상 레지스트리 |
 | policies.id | Body | Integer | O | 복제 ID |
 | policies.enabled | Body | Boolean | O | 복제 활성화 여부 |
@@ -1819,8 +1819,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.src\_registry.id | Body | Integer | X | 소스 리전 ID, 값이 존재하면 Pull 복제 |
 | policy.trigger | Body | Object | O | 복제 실행 방식 |
 | policy.trigger.type | Body | String | O | manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반) |
-| policy.trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 |
-| policy.trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 (Unix cron 표현식 사용) |
+| policy.trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled일 때 필수 |
+| policy.trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기(Unix cron 표현식 사용) |
 | policy.dest\_namespace | Body | String | X | 대상 레지스트리 |
 | policy.id | Body | Integer | O | 복제 ID |
 | policy.enabled | Body | Boolean | O | 복제 활성화 여부 |
@@ -1914,11 +1914,11 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | src\_registry.id | Body | Integer | O | Pull 복제의 대상 리전 ID, 1 |
 | trigger | Body | Object | O | 복제 실행 방식 |
 | trigger.type | Body | String | O | Push 복제, manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반)<br>Pull 복제, manual/scheduled |
-| trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 설정 |
-| trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 설정 (Unix cron 표현식 사용) |
+| trigger.trigger\_settings | Body | Object | X | 복제 실행 주기, 복제 실행 방식이 scheduled일 때 필수 설정 |
+| trigger.trigger\_settings.cron | Body | String | X | 복제 실행 주기 설정(Unix cron 표현식 사용) |
 | dest\_namespace | Body | String | X | 대상 레지스트리 |
-| filters | Body | Object List | X | 복제 할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
-| filters.type | Body | String | X | 복제 할 대상 설정, name(이미지 이름)/tag(태그 이름) |
+| filters | Body | Object List | X | 복제할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
+| filters.type | Body | String | X | 복제할 대상 설정, name(이미지 이름)/tag(태그 이름) |
 | filters.value | Body | String | X | 필터할 값 |
 | filters.decoration | Body | String | X | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
@@ -1979,19 +1979,19 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | policyId | URL | String | O | 복제 ID |
-| dest\_registry | Body | Object | Push 복제 필수 | Push 복제의 대상 레지스트리 정보, 복제 유형 변경 불가 |
-| dest\_registry.name | Body | String | Push 복제 필수 | Push 복제의 대상 리전 이름, KR2 |
-| dest\_registry.id | Body | Integer | Push 복제 필수 | Push 복제의 대상 리전 ID, 1 |
-| src\_registry | Body | Object | Pull 복제 필수 | Pull 복제의 대상 레지스트리 정보, 복제 유형 변경 불가 |
-| src\_registry.name | Body | String | Pull 복제 필수 | Pull 복제의 대상 리전 이름, KR2 |
-| src\_registry.id | Body | Integer | Pull 복제 필수 | Pull 복제의 대상 리전 ID, 1 |
+| dest\_registry | Body | Object | X | Push 복제의 대상 레지스트리 정보 |
+| dest\_registry.name | Body | String | X | Push 복제의 대상 리전 이름, KR2 |
+| dest\_registry.id | Body | Integer | X | Push 복제의 대상 리전 ID, 1 |
+| src\_registry | Body | Object | X | Pull 복제의 대상 레지스트리 정보 |
+| src\_registry.name | Body | String | X | Pull 복제의 대상 리전 이름, KR2 |
+| src\_registry.id | Body | Integer | X | Pull 복제의 대상 리전 ID, 1 |
 | trigger | Body | Object | O | 복제 실행 방식 |
 | trigger.type | Body | String | O | Push 복제, manual(설정 안 함)/scheduled(사용자 설정)/event\_based(이벤트 기반)<br>Pull 복제, manual/scheduled |
-| trigger.trigger\_settings | Body | Object | 설정되어 있을 시 필수 | 복제 실행 주기, 복제 실행 방식이 scheduled 일 때 필수 설정 |
-| trigger.trigger\_settings.cron | Body | String | 설정되어 있을 시 필수 | 복제 실행 주기 설정 (Unix cron 표현식 사용) |
+| trigger.trigger\_settings | Body | Object | 설정되어 있을 시 필수 | 복제 실행 주기, 복제 실행 방식이 scheduled일 때 필수 설정 |
+| trigger.trigger\_settings.cron | Body | String | 설정되어 있을 시 필수 | 복제 실행 주기 설정(Unix cron 표현식 사용) |
 | dest\_namespace | Body | String | 설정되어 있을 시 필수 | 대상 레지스트리 |
-| filters | Body | Object List | 설정되어 있을 시 필수 | 복제 할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
-| filters.type | Body | String | 설정되어 있을 시 필수 | 복제 할 대상 설정, name(이미지 이름)/tag(태그 이름) |
+| filters | Body | Object List | 설정되어 있을 시 필수 | 복제할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
+| filters.type | Body | String | 설정되어 있을 시 필수 | 복제할 대상 설정, name(이미지 이름)/tag(태그 이름) |
 | filters.value | Body | String | 설정되어 있을 시 필수 | 필터할 값 |
 | filters.decoration | Body | String | 설정되어 있을 시 필수 | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
