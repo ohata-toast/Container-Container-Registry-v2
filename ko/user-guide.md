@@ -384,7 +384,7 @@ NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다.
 | Pattern | Description | String(Match or not) |
 | --- | --- | --- |
 | * : path/* | 구분 기호 `/` 를 제외한 모든 문자와 일치합니다. | path/hello-world(Y) <br> path/my/hello-world(N) |
-| ** : path/** | 모든 문자와 일치합니다. | path/hello-world(Y) <br> path/my/hello-world(Y) |
+| \*\* : path/\*\* | 모든 문자와 일치합니다. | path/hello-world(Y) <br> path/my/hello-world(Y) |
 | ? : 1.? | 구분 기호 `/` 를 제외한 임의의 한 문자와 일치합니다. | 1.0(Y) <br> 1.01(N) |
 | {} : {path,ncr}/** | 쉼표로 구분된 항목 중 하나와 일치하는 문자와 일치합니다. | path/hello-world(Y) <br> ncr/hello-world(Y) <br> nhn/hello-world(N) |
 
