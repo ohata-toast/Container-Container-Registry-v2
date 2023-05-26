@@ -358,11 +358,11 @@ example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 
 
 The replication feature provided by NCR replicates images between regions. The specific characteristics of the replication feature are as follows.
 
-* Replicate images from a region (A) to a target region (B).
-* When an image is uploaded to a region (A), the image is automatically replicated to a target region (B).
+* Replicates images between regions.
+* Allows users to choose how replication runs.
 * Users can start replication directly if they want.
-* If the same image already exists in a target region (B), it will not be replicated.
-* Even when the original image is deleted from a region (A), the replicated image is not deleted from a target region (B).
+* If the same image already exists in the target region, it will not be replicated.
+* Even when the original image is deleted from the current region (A), the replicated image is not deleted from the target region (B).
 
 To use the image replication feature, click the **Replication** tab in the NCR Console.
 
@@ -371,16 +371,31 @@ To use the image replication feature, click the **Replication** tab in the NCR C
 Click **Create Replication** and enter the required information to configure replication in the **Create Replication** dialog box.
 
 > [Note]
-The status can be displayed as **Disabled** immediately after creating replication. When replication is set ready, the status turns to **Enabled**. 
-If the status doesn’t change after a few minutes, click **Refresh**.
+> The status can be displayed as **Disabled** immediately after creating replication. When replication is set ready, the status turns to **Enabled**. 
+> If the status doesn’t change after a few minutes, click **Refresh**.
+
+### Replication Target Filter
+
+* **Source Image Name Filter**: Enter an image name or partial name to replicate the specified target.
+* **Source Tag Filter**: Enter a tag name or partial name to replicate the specified target. You can specify match/exclude for this filter.
+
+Filter supports the following patterns.
+| Pattern | Description | String(Match or not) |
+| --- | --- | --- |
+| * : path/* | Matches any character except the delimiter `/`. | path/hello-world(Y) <br> path/my/hello-world(N) |
+| ** : path/** | Matches all characters. | path/hello-world(Y) <br> path/my/hello-world(Y) |
+| ? : 1.? | Matches any single character except the delimiter `/`. | 1.0(Y) <br> 1.01(N) |
+| {} : {path,ncr}/** | Matches a character that matches one of the comma-separated items. | path/hello-world(Y) <br> ncr/hello-world(Y) <br> nhn/hello-world(N) |
 
 ### Auto Replication
 
-Once replication configuration is complete, when an image is uploaded to a region, it is automatically replicated to the target region.
+* Event-based: Replication runs automatically to the target region when an image is uploaded to the current region.
+* User Settings: Replication runs at a user-set interval.
 
 > [Caution] 
-Only newly uploaded images are automatically replicated. 
-If you want to replicate the uploaded image before configuring replication, use the **Manual Replication** feature.
+> **Event-based** is only available for the Push type replication.
+> Only newly uploaded images are automatically replicated. 
+> If you want to replicate the uploaded image before configuring replication, use the **Manual Replication** feature.
 
 ### Manual Replication
 
