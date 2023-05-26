@@ -2,11 +2,6 @@
 
 ### May 30, 2023
 
-#### Added Features
-
-* Released the Public API for the NCR service.
-  * For more information on the Public API, see [API Guide](Container/NCR/ko/public-api/).
-
 #### Feature Updates
 
 * Added the feature to replicate pull between regions.
