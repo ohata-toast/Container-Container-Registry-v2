@@ -2,11 +2,6 @@
 
 ### 2023. 05. 30.
 
-#### 機能追加
-
-* NCRサービスのためのPublic APIが公開されました。
-  * Public APIの内容は[APIガイド](Container/NCR/ko/public-api/)を参照してください。
-
 #### 機能改善
 
 * リージョン間Pull複製機能を追加しました。
