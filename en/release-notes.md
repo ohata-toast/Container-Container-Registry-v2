@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### May 30, 2023
+
+#### Feature Updates
+
+* Added the feature to replicate pull between regions.
+
 ### March 28, 2023
 
 #### Added Features
@@ -22,7 +28,7 @@
 
 #### Added Features
 
-* Added thw Private URI feature
+* Added the Private URI feature
   * Added the Private URI feature that allows users to use the NCR service from an instance unconnected with the internet gateway.
   * For more details, see [Private URI User Guide](./user-guide/#private-uri).
 
