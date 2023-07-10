@@ -108,7 +108,7 @@ docker tag {イメージ名}:{タグ} {ユーザーレジストリアドレス}/
 * 例
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 ```
 
 > [参考]
@@ -122,8 +122,8 @@ docker push {ユーザーレジストリアドレス}/{イメージ名}:{タグ�
 
 * 例
 ```bash
-$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/registry/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -153,19 +153,19 @@ docker pull {ユーザーレジストリアドレス}/{イメージ名}:{タグ�
 
 * 例
 ```bash
-$ docker pull example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                     TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/registry/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
@@ -344,12 +344,12 @@ f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                        TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/hello-world/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
