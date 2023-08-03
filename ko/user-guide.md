@@ -169,6 +169,136 @@ example-kr1-registry.container.nhncloud.com/registry/ubuntu   18.04   4e5021d210
 
 
 
+### Helm chart 사용
+
+NCR에서 Helm chart를 관리할 수 있습니다. Helm chart를 저장하거나, 원하는 환경으로 가져오려면 Helm 명령줄 도구를 이용해야 합니다. Helm 명령줄 도구의 버전은 최소 3.8.0 이상이어야 합니다.
+
+#### 사용자 레지스트리 로그인
+
+Helm 명령줄 도구를 이용해 사용자 레지스트리에 접근하려면 로그인을 해야 합니다. `helm registry login` 명령을 사용한 후 `Username`에는 NHN Cloud 사용자 계정의 User Access Key를, `Password`로는 Secret Key를 각각 입력합니다.
+
+```
+$ helm registry login {사용자 레지스트리 주소}
+Username: {NHN Cloud 사용자 계정 User Access Key}
+Password: {NHN Cloud 사용자 계정 User Secret Key}
+Login Succeeded
+```
+
+#### Helm chart 저장(Push)
+
+Helm chart를 레지스트리에 저장하려면 업로드할 차트를 압축하여 로컬에 저장해야 합니다. Helm chart의 root 디렉토리로 디렉토리를 변경한 다음, **package** 명령을 이용해 차트를 로컬에 저장합니다. `Chart.yaml`에 지정된 이름과 버전으로 저장됩니다.
+
+> [참고]
+> Helm chart를 만드는 방법에 대한 자세한 정보는 [Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)를 참고 하십시오.
+> [Artifact Hub](https://artifacthub.io/)에서 공개된 Helm chart를 가져올수 있습니다.
+
+```
+$ helm package .
+Successfully packaged chart and saved it to: /path/helm-0.1.0.tgz
+```
+
+이제 Helm 명령줄 도구의 **push** 명령을 사용해 차트를 사용자 레지스트리에 저장할 수 있습니다.
+
+```
+helm push {차트 압축파일} oci://{사용자 레지스트리 주소}
+```
+
+* 예시
+
+```shell
+$ helm push helm-0.1.0.tgz oci://example-kr1-registry.container.nhncloud.com/registry
+Pushed: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+#### Helm chart 설치(Install)
+
+Helm 명령줄 도구의 **install** 명령을 사용해 차트를 Kubernetes 환경에 배포할 수 있습니다. 이를 위해 NCR Console에서 설치할 차트의 정보를 확인해야 합니다.
+
+```
+helm install {배포 이름} oci://{사용자 레지스트리 주소}/{차트 이름} --version {차트 버전}
+```
+
+* 예시
+
+```
+$ helm install myrelease oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+```
+
+#### Helm chart 가져오기(Pull)
+
+Helm 명령줄 도구의 **pull** 명령을 사용해 차트를 압축파일로 가져올 수 있습니다. 이를 위해 NCR Console에서 가져올 차트의 정보를 확인해야 합니다.
+
+```
+helm pull oci://{사용자 레지스트리 주소}/{차트 이름} --version {차트 버전}
+```
+
+* 예시
+
+```
+$ helm pull oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+Pulled: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+### OCI Artifact 사용
+
+ORAS 명령줄 도구를 사용하여 임의의 파일을 OCI Artifact로 레지스트리에 저장할 수 있습니다.
+[ORAS installation](https://oras.land/docs/installation)을 참고하여 ORAS 명령줄 도구를 설치합니다. ORAS 명령줄 도구의 자세한 사용법은 [ORAS docs](https://oras.land/docs/)를 참고하십시오.
+
+#### 사용자 레지스트리 로그인
+
+ORAS 명령줄 도구를 이용해 사용자 레지스트리에 접근하려면 로그인을 해야 합니다. `oras login` 명령을 사용한 후 `Username`에는 NHN Cloud 사용자 계정의 User Access Key를, `Password`로는 Secret Key를 각각 입력합니다.
+
+```
+$ oras login {사용자 레지스트리 주소}
+Username: {NHN Cloud 사용자 계정 User Access Key}
+Password: {NHN Cloud 사용자 계정 User Secret Key}
+Login Succeeded
+```
+
+#### OCI Artifact 저장(Push)
+
+레지스트리에 저장할 임의의 파일을 생성합니다.
+
+```
+$ echo "hello world" > artifact.txt
+```
+
+ORAS 명령줄 도구의 **push** 명령을 사용해 파일을 사용자 레지스트리에 저장할 수 있습니다.
+
+```
+oras push {사용자 레지스트리 주소}/{아티팩트 이름}:{아티팩트 버전} {파일 이름}
+```
+
+* 예시
+
+```
+$ oras push example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1 artifact.txt
+Uploading 6001d106f8ef artifact.txt
+Uploaded  6001d106f8ef artifact.txt
+Pushed [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:fbd2f5fd108cc75e7a805d9f21ab3c2ad8810c55c4e6581b1e1b3f3ea111d4fc
+```
+
+#### OCI Artifact 가져오기(Pull)
+
+ORAS 명령줄 도구의 **pull** 명령을 사용해 파일을 가져올 수 있습니다. 이를 위해 NCR Console에서 가져올 차트의 정보를 확인해야 합니다.
+
+```
+oras pull {사용자 레지스트리 주소}/{아티팩트 이름}:{아티팩트 버전}
+```
+
+* 예시
+
+```
+$ oras pull example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Downloading a948904f2f0f artifact.txt
+Downloaded  a948904f2f0f artifact.txt
+Pulled [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:a6886dfd78cfee5412d410d5ad09129efea9fe7da9c911dd976e8e77808a95b0
+```
+
 ## 컨테이너 레지스트리 관리
 
 ### 컨테이너 이미지 및 아티팩트 삭제
@@ -267,6 +397,9 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 <span id="private-uri"></span>
 ## Private URI 사용
 Private URI는 NHN Cloud의 VPC 네트워크 내에서 사용할 수 있는 NCR 주소입니다. 보안을 강화하기 위해 인터넷 게이트웨이에 연결하지 않고 외부 네트워크를 단절한 인스턴스에서 NCR 서비스를 사용하고자 할 때 Private URI 기능을 활용할 수 있습니다.
+
+> [참고]
+> Private URI는 한국(평촌) 리전에서만 사용 가능합니다.
 
 > [참고]
 > 인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 이용하려면 NCR과 Object Storage 서비스 게이트웨이를 생성해야 합니다.

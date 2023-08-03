@@ -263,6 +263,156 @@ Docker 명령줄 도구 없이 NCR Console에서 태그를 생성할 수 있습�
 
 **이미지 보호** 탭 하단에서 삭제할 보호 정책을 선택하고 **보호 정책 삭제** 버튼을 클릭하여 삭제할 수 있습니다.
 
+<span id="private-uri"></span>
+## Private URI 사용
+Private URI는 NHN Cloud의 VPC 네트워크 내에서 사용할 수 있는 NCR 주소입니다. 보안을 강화하기 위해 인터넷 게이트웨이에 연결하지 않고 외부 네트워크를 단절한 인스턴스에서 NCR 서비스를 사용하고자 할 때 Private URI 기능을 활용할 수 있습니다.
+
+> [참고]
+> Private URI는 한국(평촌) 리전에서만 사용 가능합니다.
+
+> [참고]
+> 인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 이용하려면 NCR과 Object Storage 서비스 게이트웨이를 생성해야 합니다.
+
+> [참고]
+> 인스턴스, 서비스 게이트웨이, Object Storage와 NCR은 모두 동일한 리전을 사용해야 합니다.
+
+### NCR 서비스 게이트웨이 생성
+**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **NCR**로 선택한 뒤 **확인**을 클릭하면 NCR 서비스 게이트웨이가 생성됩니다.
+![ncr_c001_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c001.png)
+
+### Object Storage 서비스 게이트웨이 생성
+NCR에서 Private URI를 이용하여 이미지를 가져오려면 Object Storage에 대한 서비스 게이트웨이를 생성해야 합니다. NCR은 Object Storage를 사용하여 이미지 계층을 저장하기 때문에 서비스 게이트웨이가 필요합니다. 이미지를 다운로드할 때도 NCR에 접근하여 이미지 매니페스트를 가져온 뒤 Object Storage에 접근하여 실제 이미지 계층을 다운로드합니다.
+
+**Network > Service Gateway** 페이지로 이동하여 **서비스 게이트웨이 생성**을 클릭합니다. 생성하고자 하는 서비스 게이트웨이의 **이름**, **VPC**, **서브넷**을 입력하고 **서비스**를 **Object Storage**로 선택한 뒤 **확인**을 클릭하면 Object Storage 서비스 게이트웨이가 생성됩니다.
+![ncr_c002_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c005.png)
+
+### 호스트 등록
+인터넷 게이트웨이에 연결하지 않은 인스턴스에서 Private URI를 통해 NCR 레지스트리를 사용할 수 있도록 호스트 파일에 도메인과 IP를 설정해야 합니다.
+인스턴스에서 Private Endpoint의 IP를 찾을 수 있도록 호스트 파일에 NCR 서비스 게이트웨이 IP 주소와 NCR Private Endpoint, Object Storage 서비스 게이트웨이 IP 주소와 Object Storage 도메인을 입력합니다.
+
+NCR과 Object Storage 서비스 게이트웨이의 IP 주소는 **Network > Service Gateway** 페이지에서 확인할 수 있습니다.
+![ncr_c003_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c003.png)
+
+NCR Private URI는 **Container > NHN Container Registry(NCR) > 관리** 페이지에서 레지스트리를 선택 후 하단의 **기본 정보** 탭에서 확인할 수 있습니다. Private Endpoint는 Private URI에서 레지스트리 이름을 제외한 경로입니다.
+![ncr_c004_20220927](https://static.toastoven.net/prod_ncr/20220927/ncr_ko_c004.png)
+
+* 예시
+```
+Private URI: private-example-kr1-registry.container.nhncloud.com/hello-world
+Private Endpoint: private-example-kr1-registry.container.nhncloud.com
+```
+
+**Windows**
+`C:\Windows\System32\drivers\etc\hosts` 파일을 열고 다음 내용을 추가합니다.
+```
+{NCR 서비스 게이트웨이 IP 주소} {NCR Private Endpoint}
+{Object Storage 서비스 게이트웨이 IP 주소} {Object Storage 도메인}
+```
+
+**Linux**
+`/etc/hosts` 파일을 열고 다음 내용을 추가합니다.
+```
+{NCR 서비스 게이트웨이 IP 주소} {NCR Private Endpoint}
+{Object Storage 서비스 게이트웨이 IP 주소} {Object Storage 도메인}
+```
+
+
+### Private URI를 통한 레지스트리 작업
+인스턴스에 접속하고 `docker login` 명령을 실행하여 레지스트리에 로그인합니다. 인스턴스 구성에 따라 다음 명령에 `sudo`를 접두사로 붙여야 할 수도 있습니다.
+```shell
+$ docker login {사용자 Private 레지스트리 주소}
+Username: {NHN Cloud 사용자 계정 User Access Key}
+Password: {NHN Cloud 사용자 계정 User Secret Key}
+Login Succeeded
+```
+
+* 예시
+```shell
+$ docker login private-example-kr1-registry.container.nhncloud.com
+Username: hello-world
+Password:
+Login Succeeded
+```
+
+`docker pull`과 같은 레지스트리 작업을 수행하여 레지스트리에서 샘플 이미지를 다운로드합니다. NCR Console에서 가져올 이미지의 정보를 확인합니다.
+```shell
+$ docker pull {사용자 Private URI}/{이미지 이름}:{태그 이름}
+```
+
+* 예시
+```
+$ docker pull private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+18.04: Pulling from ubuntu
+5bed26d33875: Pull complete
+f11b29a9c730: Pull complete
+930bda195c84: Pull complete
+78bf9a5ad49e: Pull complete
+Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
+Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+
+$ docker images
+REPOSITORY                                                        TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/hello-world/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+```
+
+
+## 컨테이너 이미지 복제
+
+NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다. 복제 기능의 구체적인 특징은 다음과 같습니다.
+
+* 리전 간 양방향 이미지 복제를 합니다.
+* 사용자가 복제 실행 방식을 선택할 수 있습니다.
+* 대상 리전에 이미 동일한 이미지가 존재하는 경우 복제하지 않습니다.
+* 현재 리전(A)에서 복제 이미지의 원본이 삭제되어도 대상 리전(B)에 복제된 이미지는 삭제하지 않습니다.
+
+이미지 복제 기능을 사용하려면 NCR Console에서 **복제** 탭을 클릭합니다.
+
+### 복제 구성 설정
+
+**복제 생성**을 클릭한 뒤 **복제 생성** 대화 상자에서 복제 구성에 필요한 정보를 입력합니다.
+
+> [참고]
+> 복제 생성 직후에는 활성 상태가 **비활성화**으로 표시될 수 있습니다. 복제 준비가 완료되면 **활성화**로 표시됩니다.
+> 수 분 후에도 상태가 변경되지 않는 경우 **새로 고침**을 클릭합니다.
+
+### 복제 대상 필터
+
+* **소스 이미지 이름 필터**: 이미지 이름 또는 일부를 입력하여 지정된 대상을 복제합니다.
+* **소스 태그 필터**: 태그 이름 또는 일부를 입력하여 지정된 대상을 복제합니다. 이 필터에 대해 일치/제외를 지정할 수 있습니다.
+
+필터는 다음과 같은 패턴을 지원합니다.
+
+| Pattern | Description | String(Match or not) |
+| --- | --- | --- |
+| * : path/* | 구분 기호 `/` 를 제외한 모든 문자와 일치합니다. | path/hello-world(Y) <br> path/my/hello-world(N) |
+| \*\* : path/\*\* | 모든 문자와 일치합니다. | path/hello-world(Y) <br> path/my/hello-world(Y) |
+| ? : 1.? | 구분 기호 `/` 를 제외한 임의의 한 문자와 일치합니다. | 1.0(Y) <br> 1.01(N) |
+| {} : {path,ncr}/** | 쉼표로 구분된 항목 중 하나와 일치하는 문자와 일치합니다. | path/hello-world(Y) <br> ncr/hello-world(Y) <br> nhn/hello-world(N) |
+
+### 자동 복제
+
+* **이벤트 기반**: 현재 리전에 이미지가 업로드될 때 자동으로 대상 리전으로 복제가 실행됩니다.
+* **사용자 설정**: 사용자가 설정한 주기에 따라 복제가 실행됩니다.
+
+> [주의]
+> **이벤트 기반** 방식은 Push 유형의 복제에서만 사용할 수 있습니다.
+> 새로 업로드되는 이미지만 자동 복제가 실행됩니다.
+> 복제 구성 전에 업로드된 이미지를 복제하려면 **수동 복제** 기능을 이용합니다.
+
+### 수동 복제
+
+**복제 실행**을 클릭한 뒤 **복제 실행** 대화 상자에서 **확인**을 클릭하면 복제가 실행됩니다.
+
+> [주의]
+> Garbage Collection 기능이 실행되기 전 복제를 실행할 경우 대상 리전(B)에 복제된 이미지의 용량이 원본보다 작을 수 있습니다.
+> 일정 시간 이후 원본 이미지의 용량이 작아집니다.
+
+### 복제 히스토리
+
+복제 히스토리에서 복제 진행 상황 및 이력을 확인할 수 있습니다. 복제 히스토리를 확인하려면 구성한 복제를 클릭하고 하단의 **상세 정보 보기** 화면에서 **복제 히스토리** 탭을 클릭합니다.
+하단의 조회된 정보를 클릭하여 히스토리 상세 정보를 확인할 수 있습니다.
+
 ## 이미지 캐시 사용
 
 소스 레지스트리(다른 원격 레지스트리)에서 이미지를 다운로드하여 캐싱하는 기능을 제공합니다.
