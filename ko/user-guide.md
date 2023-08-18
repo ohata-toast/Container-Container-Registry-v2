@@ -186,7 +186,7 @@ Login Succeeded
 
 #### Helm chart 저장(Push)
 
-Helm chart를 레지스트리에 저장하려면 업로드할 차트를 압축하여 로컬에 저장해야 합니다. Helm chart의 root 디렉토리로 디렉토리를 변경한 뒤 **package** 명령을 이용해 차트를 로컬에 저장합니다. `Chart.yaml`에 지정된 이름과 버전으로 저장됩니다.
+Helm chart를 레지스트리에 저장하려면 업로드할 차트를 압축하여 로컬에 저장해야 합니다. Helm chart의 root 디렉터리로 디렉터리를 변경한 뒤 **package** 명령을 이용해 차트를 로컬에 저장합니다. `Chart.yaml`에 지정된 이름과 버전으로 저장됩니다.
 
 > [참고]
 > Helm chart를 만드는 방법에 대한 자세한 정보는 [Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)를 참고하십시오.
