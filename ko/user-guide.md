@@ -11,7 +11,7 @@ Docker Hub에서 [Docker Desktop for Windows](https://hub.docker.com/editions/co
 Docker Hub에서 [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)을 다운로드해 설치합니다.
 
 #### Linux
-Linux 배포판에 따라 설치 과정이 다릅니다. CentOS 7, Ubuntu가 아닌 다른 배포판을 사용한다면 [Install Docker Engine](https://docs.docker.com/engine/install)을 확인하세요.
+Linux 배포판에 따라 설치 과정이 다릅니다. CentOS 7, Ubuntu가 아닌 다른 배포판을 사용한다면 [Install Docker Engine](https://docs.docker.com/engine/install)을 확인하십시오.
 
 * CentOS 7
 ```
@@ -112,7 +112,7 @@ docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/registry/ubu
 ```
 
 > [참고]
-> 컨테이너 이미지 이름으로는 영어 소문자, 숫자, 일부 특수문자(-, _, /, .) 조합만 허용됩니다. 리포지토리 이름은 레지스트리 주소를 포함해 최대 255자, 태그 이름은 최대 128자로 제한됩니다. 이미지 이름이 길면 사용하기 불편할 수 있습니다. 적당한 길이의 이름을 사용하시기 바랍니다.
+> 컨테이너 이미지 이름으로는 영어 소문자, 숫자, 일부 특수문자(-, _, /, .) 조합만 허용됩니다. 리포지토리 이름은 레지스트리 주소를 포함해 최대 255자, 태그 이름은 최대 128자로 제한됩니다. 이미지 이름이 길면 사용하기 불편할 수 있습니다. 적당한 길이의 이름을 사용하십시오.
 
 이제 Docker 명령줄 도구의 **push** 명령을 사용해 컨테이너 이미지를 사용자 레지스트리에 저장할 수 있습니다.
 
@@ -186,11 +186,11 @@ Login Succeeded
 
 #### Helm chart 저장(Push)
 
-Helm chart를 레지스트리에 저장하려면 업로드할 차트를 압축하여 로컬에 저장해야 합니다. Helm chart의 root 디렉토리로 디렉토리를 변경한 다음, **package** 명령을 이용해 차트를 로컬에 저장합니다. `Chart.yaml`에 지정된 이름과 버전으로 저장됩니다.
+Helm chart를 레지스트리에 저장하려면 업로드할 차트를 압축하여 로컬에 저장해야 합니다. Helm chart의 root 디렉토리로 디렉토리를 변경한 뒤 **package** 명령을 이용해 차트를 로컬에 저장합니다. `Chart.yaml`에 지정된 이름과 버전으로 저장됩니다.
 
 > [참고]
-> Helm chart를 만드는 방법에 대한 자세한 정보는 [Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)를 참고 하십시오.
-> [Artifact Hub](https://artifacthub.io/)에서 공개된 Helm chart를 가져올수 있습니다.
+> Helm chart를 만드는 방법에 대한 자세한 정보는 [Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)를 참고하십시오.
+> [Artifact Hub](https://artifacthub.io/)에서 공개된 Helm chart를 가져올 수 있습니다.
 
 ```
 $ helm package .
@@ -504,7 +504,7 @@ NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다.
 **복제 생성**을 클릭한 뒤 **복제 생성** 대화 상자에서 복제 구성에 필요한 정보를 입력합니다.
 
 > [참고]
-> 복제 생성 직후에는 활성 상태가 **비활성화**으로 표시될 수 있습니다. 복제 준비가 완료되면 **활성화**로 표시됩니다.
+> 복제 생성 직후에는 활성 상태가 **비활성화**로 표시될 수 있습니다. 복제 준비가 완료되면 **활성화**로 표시됩니다.
 > 수 분 후에도 상태가 변경되지 않는 경우 **새로 고침**을 클릭합니다.
 
 ### 복제 대상 필터
