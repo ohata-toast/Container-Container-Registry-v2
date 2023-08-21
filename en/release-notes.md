@@ -1,5 +1,12 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### August 29, 2023
+
+#### Feature Updates
+
+* Added the feature to manage OCI artifacts.
+* Added the Quota feature.
+
 ### May 30, 2023
 
 #### Feature Updates
