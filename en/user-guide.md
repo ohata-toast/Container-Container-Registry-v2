@@ -169,6 +169,136 @@ example-kr1-registry.container.nhncloud.com/registry/ubuntu   18.04   4e5021d210
 
 
 
+### Use Helm Chart
+
+You can manage Helm charts in NCR. You will need to use the Helm command line tool to save or import Helm charts into your preferred environment. The version of the Helm command-line tool must be at least 3.8.0.
+
+#### Log in to the User Registry
+
+You must be logged in to access the user registry using the Helm command-line tool. After using the `helm registry login` command, enter the User Access Key of your NHN Cloud user account in `Username` and the Secret Key in `Password`.
+
+```
+$ helm registry login {user registry address}
+Username: {NHN Cloud user account User Access Key}
+Password: {NHN Cloud user account User Secret Key}
+Login Succeeded
+```
+
+#### Save Helm Chart (Push)
+
+To store Helm charts in the registry, you must compress the charts you are uploading and save them locally. Change directories to the Helm chart's root directory and use the **package** command to save the chart locally. It is saved with the name and version specified in `Chart.yaml`.
+
+> [Note]
+For more information on creating Helm charts, see the [](https://helm.sh/docs/chart_template_guide/)Chart Template Developer's Guide[](https://helm.sh/docs/chart_template_guide/).
+You can import Helm charts published on [](https://artifacthub.io/)Artifact Hub2[](https://artifacthub.io/).
+
+```
+$ helm package .
+Successfully packaged chart and saved it to: /path/helm-0.1.0.tgz
+```
+
+You can now use the **push** command of the Helm command-line tool to store charts to your user registry.
+
+```
+helm push {chart archive} oci://{user registry address}
+```
+
+* Example
+
+```shell
+$ helm push helm-0.1.0.tgz oci://example-kr1-registry.container.nhncloud.com/registry
+Pushed: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+#### Install Helm chart
+
+You can deploy charts to your Kubernetes environment using the **install** command of the Helm command-line tool. For this, you need to check the information of the chart to be installed in the NCR Console.
+
+```
+helm install {deployment name} oci://{user registry address}/{chart name} --version {chart version}
+```
+
+* Example
+
+```
+$ helm install myrelease oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+```
+
+#### Import Helm Chart (Push)
+
+You can use the **pull** command of the Helm command-line tool to import charts into a zipped file. For this, you need to check the information of the chart to be imported in the NCR Console.
+
+```
+helm install {deployment name} oci://{user registry address}/{chart name} --version {chart version}
+```
+
+* Example
+
+```
+$ helm pull oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+Pulled: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+### Use OCI Artifact
+
+Arbitrary files can be stored in the registry as OCI Artifacts using the ORAS command line tool.
+Refer to [](https://oras.land/docs/installation)ORAS installation[](https://oras.land/docs/installation) to install ORAS command line tools. For detailed usage of the ORAS command line tools, see the [](https://oras.land/docs/)ORAS docs[](https://oras.land/docs/).
+
+#### Log in to the User Registry
+
+You must be logged in to access the user registry using the ORAS command-line tool. After using the `oras login` command, enter the User Access Key of your NHN Cloud user account in `Username` and the Secret Key in `Password`.
+
+```
+$ oras login {user registry address}
+Username: {NHN Cloud user account User Access Key}
+Password: {NHN Cloud user account User Secret Key}
+Login Succeeded
+```
+
+#### Save OCI Artifact (Push)
+
+Creates a random file to store in the registry.
+
+```
+$ echo "hello world" > artifact.txt
+```
+
+You can now use the **push** command of the ORAS command-line tool to store files to your user registry.
+
+```
+oras push {user registry address}/{artifact name}:{artifact version} {file name}
+```
+
+* Example
+
+```
+$ oras push example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1 artifact.txt
+Uploading 6001d106f8ef artifact.txt
+Uploaded  6001d106f8ef artifact.txt
+Pushed [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:fbd2f5fd108cc75e7a805d9f21ab3c2ad8810c55c4e6581b1e1b3f3ea111d4fc
+```
+
+#### Import OCI Artifact (Pull)
+
+You can use the **pull** command of the ORAS command-line tool to import files into a zipped file. For this, you need to check the information of the chart to be imported in the NCR Console.
+
+```
+oras pull {user registry address}/{artifact name}:{artifact version}
+```
+
+* Example
+
+```
+$ oras pull example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Downloading a948904f2f0f artifact.txt
+Downloaded  a948904f2f0f artifact.txt
+Pulled [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:a6886dfd78cfee5412d410d5ad09129efea9fe7da9c911dd976e8e77808a95b0
+```
+
 ## Manage a Container Registry
 
 ### Delete Container Images and Artifacts
