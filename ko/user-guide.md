@@ -11,7 +11,7 @@ Docker Hub에서 [Docker Desktop for Windows](https://hub.docker.com/editions/co
 Docker Hub에서 [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)을 다운로드해 설치합니다.
 
 #### Linux
-Linux 배포판에 따라 설치 과정이 다릅니다. CentOS 7, Ubuntu가 아닌 다른 배포판을 사용한다면 [Install Docker Engine](https://docs.docker.com/engine/install)을 확인하세요.
+Linux 배포판에 따라 설치 과정이 다릅니다. CentOS 7, Ubuntu가 아닌 다른 배포판을 사용한다면 [Install Docker Engine](https://docs.docker.com/engine/install)을 확인하십시오.
 
 * CentOS 7
 ```
@@ -108,11 +108,11 @@ docker tag {이미지 이름}:{태그} {사용자 레지스트리 주소}/{이�
 * 예시
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 ```
 
 > [참고]
-> 컨테이너 이미지 이름으로는 영어 소문자, 숫자, 일부 특수문자(-, _, /, .) 조합만 허용됩니다. 리포지토리 이름은 레지스트리 주소를 포함해 최대 255자, 태그 이름은 최대 128자로 제한됩니다. 이미지 이름이 길면 사용하기 불편할 수 있습니다. 적당한 길이의 이름을 사용하시기 바랍니다.
+> 컨테이너 이미지 이름으로는 영어 소문자, 숫자, 일부 특수문자(-, _, /, .) 조합만 허용됩니다. 리포지토리 이름은 레지스트리 주소를 포함해 최대 255자, 태그 이름은 최대 128자로 제한됩니다. 이미지 이름이 길면 사용하기 불편할 수 있습니다. 적당한 길이의 이름을 사용하십시오.
 
 이제 Docker 명령줄 도구의 **push** 명령을 사용해 컨테이너 이미지를 사용자 레지스트리에 저장할 수 있습니다.
 
@@ -122,8 +122,8 @@ docker push {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름
 
 * 예시
 ```bash
-$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/registry/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -152,22 +152,152 @@ docker pull {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름
 
 * 예시
 ```bash
-$ docker pull example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                     TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/registry/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
+
+### Helm chart 사용
+
+NCR에서 Helm chart를 관리할 수 있습니다. Helm chart를 저장하거나, 원하는 환경으로 가져오려면 Helm 명령줄 도구를 이용해야 합니다. Helm 명령줄 도구의 버전은 최소 3.8.0 이상이어야 합니다.
+
+#### 사용자 레지스트리 로그인
+
+Helm 명령줄 도구를 이용해 사용자 레지스트리에 접근하려면 로그인을 해야 합니다. `helm registry login` 명령을 사용한 후 `Username`에는 NHN Cloud 사용자 계정의 User Access Key를, `Password`로는 Secret Key를 각각 입력합니다.
+
+```
+$ helm registry login {사용자 레지스트리 주소}
+Username: {NHN Cloud 사용자 계정 User Access Key}
+Password: {NHN Cloud 사용자 계정 User Secret Key}
+Login Succeeded
+```
+
+#### Helm chart 저장(Push)
+
+Helm chart를 레지스트리에 저장하려면 업로드할 차트를 압축하여 로컬에 저장해야 합니다. Helm chart의 root 디렉터리로 디렉터리를 변경한 뒤 **package** 명령을 이용해 차트를 로컬에 저장합니다. `Chart.yaml`에 지정된 이름과 버전으로 저장됩니다.
+
+> [참고]
+> Helm chart를 만드는 방법에 대한 자세한 정보는 [Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)를 참고하십시오.
+> [Artifact Hub](https://artifacthub.io/)에서 공개된 Helm chart를 가져올 수 있습니다.
+
+```
+$ helm package .
+Successfully packaged chart and saved it to: /path/helm-0.1.0.tgz
+```
+
+이제 Helm 명령줄 도구의 **push** 명령을 사용해 차트를 사용자 레지스트리에 저장할 수 있습니다.
+
+```
+helm push {차트 압축파일} oci://{사용자 레지스트리 주소}
+```
+
+* 예시
+
+```shell
+$ helm push helm-0.1.0.tgz oci://example-kr1-registry.container.nhncloud.com/registry
+Pushed: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+#### Helm chart 설치(Install)
+
+Helm 명령줄 도구의 **install** 명령을 사용해 차트를 Kubernetes 환경에 배포할 수 있습니다. 이를 위해 NCR Console에서 설치할 차트의 정보를 확인해야 합니다.
+
+```
+helm install {배포 이름} oci://{사용자 레지스트리 주소}/{차트 이름} --version {차트 버전}
+```
+
+* 예시
+
+```
+$ helm install myrelease oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+```
+
+#### Helm chart 가져오기(Pull)
+
+Helm 명령줄 도구의 **pull** 명령을 사용해 차트를 압축파일로 가져올 수 있습니다. 이를 위해 NCR Console에서 가져올 차트의 정보를 확인해야 합니다.
+
+```
+helm pull oci://{사용자 레지스트리 주소}/{차트 이름} --version {차트 버전}
+```
+
+* 예시
+
+```
+$ helm pull oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+Pulled: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+### OCI Artifact 사용
+
+ORAS 명령줄 도구를 사용하여 임의의 파일을 OCI Artifact로 레지스트리에 저장할 수 있습니다.
+[ORAS installation](https://oras.land/docs/installation)을 참고하여 ORAS 명령줄 도구를 설치합니다. ORAS 명령줄 도구의 자세한 사용법은 [ORAS docs](https://oras.land/docs/)를 참고하십시오.
+
+#### 사용자 레지스트리 로그인
+
+ORAS 명령줄 도구를 이용해 사용자 레지스트리에 접근하려면 로그인을 해야 합니다. `oras login` 명령을 사용한 후 `Username`에는 NHN Cloud 사용자 계정의 User Access Key를, `Password`로는 Secret Key를 각각 입력합니다.
+
+```
+$ oras login {사용자 레지스트리 주소}
+Username: {NHN Cloud 사용자 계정 User Access Key}
+Password: {NHN Cloud 사용자 계정 User Secret Key}
+Login Succeeded
+```
+
+#### OCI Artifact 저장(Push)
+
+레지스트리에 저장할 임의의 파일을 생성합니다.
+
+```
+$ echo "hello world" > artifact.txt
+```
+
+ORAS 명령줄 도구의 **push** 명령을 사용해 파일을 사용자 레지스트리에 저장할 수 있습니다.
+
+```
+oras push {사용자 레지스트리 주소}/{아티팩트 이름}:{아티팩트 버전} {파일 이름}
+```
+
+* 예시
+
+```
+$ oras push example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1 artifact.txt
+Uploading 6001d106f8ef artifact.txt
+Uploaded  6001d106f8ef artifact.txt
+Pushed [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:fbd2f5fd108cc75e7a805d9f21ab3c2ad8810c55c4e6581b1e1b3f3ea111d4fc
+```
+
+#### OCI Artifact 가져오기(Pull)
+
+ORAS 명령줄 도구의 **pull** 명령을 사용해 파일을 가져올 수 있습니다. 이를 위해 NCR Console에서 가져올 차트의 정보를 확인해야 합니다.
+
+```
+oras pull {사용자 레지스트리 주소}/{아티팩트 이름}:{아티팩트 버전}
+```
+
+* 예시
+
+```
+$ oras pull example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Downloading a948904f2f0f artifact.txt
+Downloaded  a948904f2f0f artifact.txt
+Pulled [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:a6886dfd78cfee5412d410d5ad09129efea9fe7da9c911dd976e8e77808a95b0
+```
 
 ## 컨테이너 레지스트리 관리
 
@@ -346,12 +476,12 @@ f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                        TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/hello-world/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
@@ -371,7 +501,7 @@ NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다.
 **복제 생성**을 클릭한 뒤 **복제 생성** 대화 상자에서 복제 구성에 필요한 정보를 입력합니다.
 
 > [참고]
-> 복제 생성 직후에는 활성 상태가 **비활성화**으로 표시될 수 있습니다. 복제 준비가 완료되면 **활성화**로 표시됩니다.
+> 복제 생성 직후에는 활성 상태가 **비활성화**로 표시될 수 있습니다. 복제 준비가 완료되면 **활성화**로 표시됩니다.
 > 수 분 후에도 상태가 변경되지 않는 경우 **새로 고침**을 클릭합니다.
 
 ### 복제 대상 필터

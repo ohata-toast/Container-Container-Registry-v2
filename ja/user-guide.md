@@ -108,7 +108,7 @@ docker tag {イメージ名}:{タグ} {ユーザーレジストリアドレス}/
 * 例
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 ```
 
 > [参考]
@@ -122,8 +122,8 @@ docker push {ユーザーレジストリアドレス}/{イメージ名}:{タグ�
 
 * 例
 ```bash
-$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/registry/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -153,22 +153,150 @@ docker pull {ユーザーレジストリアドレス}/{イメージ名}:{タグ�
 
 * 例
 ```bash
-$ docker pull example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                     TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/registry/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
+### Helm chart使用
 
+NCRでHelm chartを管理することができます。Helm chartを保存したり、希望の環境にインポートするには、Helmコマンドラインツールを利用する必要があります。Helmコマンドラインツールのバージョンは最低3.8.0以上でなければなりません。
+
+#### ユーザーレジストリログイン
+
+Helmコマンドラインツールを利用してユーザーレジストリにアクセスするにはログインが必要です。helm registry login`コマンドを使用した後、 `Username`にはNHN CloudユーザーアカウントのUser Access Keyを、 `Password`にはSecret Keyをそれぞれ入力します。
+
+```
+$ helm registry login {ユーザーレジストリアドレス}
+Username: {NHN CloudユーザーアカウントUser Access Key}
+Password: {NHN CloudユーザーアカウントUser Secret Key}
+Login Succeeded
+```
+
+#### Helm chart保存(Push)
+
+Helm chartをレジストリに保存するには、アップロードするチャートを圧縮してローカルに保存する必要があります。Helm chartのrootディレクトリにディレクトリを変更した後、**package**コマンドを使ってチャートをローカルに保存します。`Chart.yaml`に指定された名前とバージョンで保存されます。
+
+> [参考]
+> Helm chartを作る方法についての詳しい情報は[Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)を参照してください。
+> [Artifact Hub](https://artifacthub.io/)で公開されたHelm chartを取得できます。
+
+```
+$ helm package .
+Successfully packaged chart and saved it to: /path/helm-0.1.0.tgz
+```
+
+これでHelmコマンドラインツールの**push**コマンドを使ってチャートをユーザーレジストリに保存できます。
+
+```
+helm push {チャート圧縮ファイル} oci://{ユーザーレジストリアドレス}
+```
+
+* 例
+
+```shell
+$ helm push helm-0.1.0.tgz oci://example-kr1-registry.container.nhncloud.com/registry
+Pushed: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+#### Helm chartインストール(Install)
+
+Helmコマンドラインツールの**install**コマンドを使ってチャートをKubernetes環境に配布できます。このため、NCR Consoleでインストールするチャートの情報を確認する必要があります。
+
+```
+helm install {配布名} oci://{ユーザーレジストリアドレス}/{チャート名} --version {チャートバージョン}
+```
+
+* 例
+
+```
+$ helm install myrelease oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+```
+
+#### Helm chart取得(Pull)
+
+Helmコマンドラインツールの**pull**コマンドを使ってチャートを圧縮ファイルでインポートできます。このため、NCR Consoleでインポートするチャートの情報を確認する必要があります。
+
+```
+helm pull oci://{ユーザーレジストリアドレス}/{チャート名} --version {チャートバージョン}
+```
+
+* 例
+
+```
+$ helm pull oci://example-kr1-registry.container.nhncloud.com/registry/helm --version 0.1.0
+Pulled: example-kr1-registry.container.nhncloud.com/registry/helm:0.1.0
+Digest: sha256:628760743a9642f0edd5f4dc30b598827c2c4cde4976ebe9eeb2d3e827ca7e99
+```
+
+### OCI Artifact使用
+
+ORASコマンドラインツールを使用して任意のファイルをOCI Artifactとしてレジストリに保存できます。
+[ORAS installation](https://oras.land/docs/installation)を参考にしてORASコマンドラインツールをインストールします。ORASコマンドラインツールの詳しい使い方は[ORAS docs](https://oras.land/docs/)を参照してください。
+
+#### ユーザーレジストリログイン
+
+ORASコマンドラインツールを使ってユーザーレジストリにアクセスするにはログインが必要です。oras login`コマンドを使用した後、 `Username`にはNHN CloudユーザーアカウントのUser Access Keyを、`Password`にはSecret Keyをそれぞれ入力します。
+
+```
+$ oras login {ユーザーレジストリアドレス}
+Username: {NHN CloudユーザーアカウントUser Access Key}
+Password: {NHN CloudユーザーアカウントUser Secret Key}
+Login Succeeded
+```
+
+#### OCI Artifact保存(Push)
+
+レジストリに保存する任意のファイルを作成します。
+
+```
+$ echo "hello world" > artifact.txt
+```
+
+ORASコマンドラインツールの**push**コマンドを使ってファイルをユーザーレジストリに保存できます。
+
+```
+oras push {ユーザーレジストリアドレス}/{アーティファクト名}:{アーティファクトバージョン} {ファイル名}
+```
+
+* 例
+
+```
+$ oras push example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1 artifact.txt
+Uploading 6001d106f8ef artifact.txt
+Uploaded  6001d106f8ef artifact.txt
+Pushed [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:fbd2f5fd108cc75e7a805d9f21ab3c2ad8810c55c4e6581b1e1b3f3ea111d4fc
+```
+
+#### OCI Artifact取得(Pull)
+
+ORASコマンドラインツールの**pull**コマンドを使用してファイルをインポートできます。このため、NCR Consoleでインポートするチャートの情報を確認する必要があります。
+
+```
+oras pull {ユーザーレジストリアドレス}/{アーティファクト名}:{アーティファクトバージョン}
+```
+
+* 例
+
+```
+$ oras pull example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Downloading a948904f2f0f artifact.txt
+Downloaded  a948904f2f0f artifact.txt
+Pulled [registry] example-kr1-registry.container.nhncloud.com/registry/hello-artifact:v1
+Digest: sha256:a6886dfd78cfee5412d410d5ad09129efea9fe7da9c911dd976e8e77808a95b0
+```
 
 ## コンテナレジストリ管理
 
@@ -267,6 +395,9 @@ Dockerコマンドラインツールを使わずにNHN Cloud Consoleからタグ
 Private URIはNHN CloudのVPCネットワーク内で使用できるNCRアドレスです。セキュリティを強化するためにインターネットゲートウェイに接続せずに外部ネットワークを切断したインスタンスでNCRサービスを使用したい場合はPrivate URI機能を活用できます。
 
 > [参考]
+> Private URIは韓国(ピョンチョン)リージョンでのみ使用可能です。
+
+> [参考]
 > インターネットゲートウェイに接続していないインスタンスでPrivate URIを利用するには、NCRとObject Storageサービスゲートウェイを作成する必要があります。
 
 > [参考]
@@ -344,12 +475,12 @@ f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-private-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
+private-example-kr1-registry.container.nhncloud.com/hello-world/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                        TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/hello-world/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
