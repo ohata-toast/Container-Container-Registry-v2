@@ -108,7 +108,7 @@ docker tag {이미지 이름}:{태그} {사용자 레지스트리 주소}/{이�
 * 예시
 
 ```bash
-docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+docker tag ubuntu:18.04 example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 ```
 
 > [참고]
@@ -122,8 +122,8 @@ docker push {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름
 
 * 예시
 ```bash
-$ docker push example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-The push refers to repository [example-kr1-registry.container.nhncloud.com/ubuntu]
+$ docker push example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+The push refers to repository [example-kr1-registry.container.nhncloud.com/registry/ubuntu]
 16542a8fc3be: Pushed
 6597da2e2e52: Pushed
 977183d4e999: Pushed
@@ -144,7 +144,7 @@ c8be1b8f4d60: Pushed
     아티팩트 목록에서 원하는 아티팩트를 클릭하면 선택한 아티팩트에 지정된 태그 목록을 조회할 수 있습니다. 새로 태그를 생성하거나 태그를 검색해서 삭제할 수 있습니다.
 
 ### 컨테이너 이미지 가져오기(Pull)
-Docker 명령줄 도구의 **pull** 명령을 사용해 이미지를 가져올 수 있습니다. 이를 위해 NHN Cloud Console에서 가져올 이미지의 정보를 확인해야 합니다.
+Docker 명령줄 도구의 **pull** 명령을 사용해 이미지를 가져올 수 있습니다. 이를 위해 NCR Console에서 가져올 이미지의 정보를 확인해야 합니다.
 
 ```bash
 docker pull {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름}
@@ -152,19 +152,19 @@ docker pull {사용자 레지스트리 주소}/{이미지 이름}:{태그 이름
 
 * 예시
 ```bash
-$ docker pull example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+$ docker pull example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 18.04: Pulling from ubuntu
 5bed26d33875: Pull complete
 f11b29a9c730: Pull complete
 930bda195c84: Pull complete
 78bf9a5ad49e: Pull complete
 Digest: sha256:e5dd9dbb37df5b731a6688fa49f4003359f6f126958c9c928f937bec69836320
-Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/ubuntu:18.04
-example-kr1-registry.container.nhncloud.com/ubuntu:18.04
+Status: Downloaded newer image for example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
+example-kr1-registry.container.nhncloud.com/registry/ubuntu:18.04
 
 $ docker images
-REPOSITORY                                              TAG     IMAGE ID        CREATED         SIZE
-example-kr1-registry.container.nhncloud.com/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
+REPOSITORY                                                     TAG     IMAGE ID        CREATED         SIZE
+example-kr1-registry.container.nhncloud.com/registry/ubuntu   18.04   4e5021d210f6    12 days ago     64.2MB
 ```
 
 
