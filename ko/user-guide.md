@@ -834,7 +834,7 @@ NCR 서비스 이용 권한은 다음과 같습니다.
 | --- | --- |
 | Project Admin<br>Project Member<br>Service Admin | NHN Container Registry(NCR) 서비스 Create(생성), Read(읽기), Update(갱신), Delete(삭제) |
 | Service Viewer | NHN Container Registry(NCR) 서비스 Read(읽기) |
-| Image Uploader | NHN Container Registry(NCR) 서비스 Read(읽기), 이미지 Create(생성)) |
+| Image Uploader | NHN Container Registry(NCR) 서비스 Read(읽기), 이미지 Create(생성) |
 
 NCR 서비스 이용 권한에 의해 사용할 수 있는 기능은 다음과 같습니다.
 
