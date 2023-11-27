@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry(NCR)  > 릴리스 노트
 
+### 2023. 11. 28.
+
+#### 기능 추가
+* Public URI 사용 여부를 설정할 수 있는 기능을 추가하였습니다.
+* 이미지 업로드만 할 수 있는 `Image Uploader` 권한이 추가되었습니다.
+
 ### 2023. 08. 29.
 
 #### 기능 개선
