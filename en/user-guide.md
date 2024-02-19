@@ -364,7 +364,7 @@ Repeat cycle uses cron expression (\* \* \* \* \*) and the meaning of each field
 | Field name | Acceptable range of values | Allowed special characters |
 | --- | --- | --- |
 | Minute | 0-59 | `*` `/` `,` `-` |
-| Hour | 0-59 | `*` `/` `,` `-` |
+| Hour | 0-23 | `*` `/` `,` `-` |
 | Date | 1-31 | `*` `/` `,` `?` |
 | Month | 1-12<br>JAN-DEC | `*` `/` `,` `-` |
 | Day | 0-6<br>SUN-SAT | `*` `/` `,` `?` |
