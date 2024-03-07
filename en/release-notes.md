@@ -1,5 +1,14 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### February 27, 2024
+
+#### Added Features
+* You can checkout events occurred in the NCR console from CloudTrail.
+* Added an overwrite option to the image replication feature.
+
+#### Feature Updates
+* Made modifications so that image keyword search is available.
+
 ### November 28, 2023
 
 #### Added Features
