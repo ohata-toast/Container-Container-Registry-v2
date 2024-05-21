@@ -190,8 +190,7 @@ To receive notifications on image changes, register your webhook settings in the
 
 ### Container Image Cleanup
 
-You can make settings to clean up (delete) the images and artifacts stored in a registry according to policies in the NCR Console. To use the image cleanup policy, select a repository to apply and click the **Image Cleanup** tab on the details pane at the bottom. 
-Up to 15 image cleanup policies can be registered.
+You can make settings to clean up (delete) the images and artifacts stored in a registry according to policies in the NCR Console. To use the image cleanup policy, select a repository to apply and click the **Image Cleanup** tab on the details pane at the bottom.
 
 > [Caution] 
 If the same policy is set for image cleanup and image protection, the image protection policy takes priority and the image cleanup feature may not work properly.
@@ -246,8 +245,7 @@ You can check the history details by clicking the queried information at the bot
 
 ### Container Image Protection
 
-You can set the image protection feature to protect the images and artifacts stored in a registry from deletion and change in the NCR Console. To use the image protection feature, select a registry to apply and click the **Image Protection** tab on the details pane at the bottom. 
-Up to 15 image protection policies can be registered.
+You can set the image protection feature to protect the images and artifacts stored in a registry from deletion and change in the NCR Console. To use the image protection feature, select a registry to apply and click the **Image Protection** tab on the details pane at the bottom.
 
 #### Add Image Protection Policy
 
