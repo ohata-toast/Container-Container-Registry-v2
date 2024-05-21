@@ -1,5 +1,15 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### May 28, 2024
+
+#### Added Features
+* Added the featue to block deployment of unsigned images.
+
+#### Feature Updates
+* Modified image cleanup/protection policies to identify images that contain `/`.
+* Expanded artifact lookup items.
+* Modified image cleanup policies to be unlimited in number.
+
 ### February 27, 2024
 
 #### Added Features
