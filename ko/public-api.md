@@ -1,6 +1,7 @@
 ## Container > NHN Container Registry(NCR) > API 가이드
 
 컨테이너 레지스트리를 구성하기 위한 API를 기술합니다.
+API를 사용하려면 User Access Key와 Secret Access Key가 필요합니다. User Access Key와 Secret Access Key는 NHN Cloud Console의 계정 > **API 보안 설정** 페이지에서 생성합니다.
 
 ### API 요청 공통 정보
 
@@ -11,6 +12,15 @@ API 도메인은 다음과 같습니다.
 | --- | --- |
 | 한국(판교) 리전 | [https://kr1-ncr.api.nhncloudservice.com](https://kr1-ncr.api.nhncloudservice.com) |
 | 한국(평촌) 리전 | [https://kr2-ncr.api.nhncloudservice.com](https://kr2-ncr.api.nhncloudservice.com) |
+| 한국(광주) 리전 | [https://kr3-ncr.api.nhncloudservice.com](https://kr3-ncr.api.nhncloudservice.com) |
+| 한국(죽전_신한) 리전 | [https://pj1-ncr.api.nhncloudservice.com](https://pj1-ncr.api.nhncloudservice.com) |
+
+API 헤더는 다음과 같습니다
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| X-TC-AUTHENTICATION-ID | Header | String | O | User Access Key |
+| X-TC-AUTHENTICATION-SECRET | Header | String | X (생성하였을 경우 필수) | Secret Access Key |
 
 ### API 응답 공통 정보
 
@@ -289,7 +299,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 이미지 보호 정책 목록을 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
 ### 요청
@@ -299,7 +309,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryId | URL | String | O | 레지스트리 ID |
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
@@ -348,7 +358,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 이미지 보호 정책을 생성합니다.
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
 ### 요청
@@ -356,7 +366,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryId | URL | String | O | 레지스트리 ID |
 | scope | Body | Object | X | 이미지에 대한 보호 정책 정보 |
 | scope.include | Body | Boolean | X | 이미지에 대한 보호 정책 설정 여부 |
 | scope.pattern | Body | String | X | 보호 대상 이미지<br>전체 이미지 대상: \*\* 입력 |
@@ -384,7 +394,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 이미지 보호 정책을 삭제합니다.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{rule_id}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
 ### 요청
@@ -394,7 +404,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrule
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryId | URL | String | O | 레지스트리 ID |
 | rule\_id | URL | String | O | 이미지 보호 정책 ID |
 
 ### 응답
@@ -406,7 +416,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrule
 이미지 보호 정책을 변경합니다.
 
 ```
-PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{rule_id}
+PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
 ### 요청
@@ -414,7 +424,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryId | URL | String | O | 레지스트리 ID |
 | rule\_id | URL | String | O | 이미지 보호 정책 ID |
 | disabled | Body | Boolean | X | 이미지 보호 정책 활성화 여부 |
 | scope | Body | Object | O | 이미지에 대한 보호 정책 정보 |
@@ -881,7 +891,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
@@ -952,7 +963,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 
 ### 응답
@@ -1018,7 +1030,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | enabled | Body | Boolean | X | 웹훅 활성화 여부<br>미입력 시 false 설정 |
 | event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
 | name | Body | String | X | 웹훅 이름 |
@@ -1067,7 +1080,8 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 
 ### 응답
@@ -1087,7 +1101,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 | enabled | Body | Boolean | X | 웹훅 활성화 여부 |
 | event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
@@ -1126,7 +1141,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 컨테이너 이미지 목록을 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 ```
 
 ### 요청
@@ -1136,7 +1151,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
@@ -1182,7 +1197,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
 컨테이너 이미지를 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
 ### 요청
@@ -1192,7 +1207,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 
 ### 응답
@@ -1235,7 +1250,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 컨테이너 이미지를 삭제합니다.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
 ### 요청
@@ -1245,7 +1260,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 
 ### 응답
@@ -1257,7 +1272,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 아티팩트 목록을 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts
 ```
 
 ### 요청
@@ -1267,7 +1282,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
@@ -1350,7 +1365,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 아티팩트를 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
 ### 요청
@@ -1360,7 +1375,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 | with\_scan\_overview | Query | String | X | 취약점 정보 조회 여부 |
@@ -1440,7 +1455,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 아티팩트를 삭제합니다.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
 ### 요청
@@ -1450,7 +1465,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 
@@ -1463,7 +1478,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 아티팩트 태그 목록을 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
 ### 요청
@@ -1473,7 +1488,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 | page | Query | Integer | X | 조회할 페이지 번호 |
@@ -1518,7 +1533,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 아티팩트 태그를 생성합니다.
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
 ### 요청
@@ -1526,7 +1541,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 | name | Body | String | O | 아티팩트 태그 이름 |
@@ -1548,7 +1563,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 아티팩트 태그를 삭제합니다.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags/{tagName}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags/{tagName}
 ```
 
 ### 요청
@@ -1558,7 +1573,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 | tagName | URL | String | O | 아티팩트 태그 이름 |
@@ -1572,7 +1587,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 아티팩트 취약점 정보를 조회합니다.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
 ```
 
 ### 요청
@@ -1582,7 +1597,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 
@@ -1654,7 +1669,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 아티팩트를 스캔합니다.
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/scan
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/scan
 ```
 
 ### 요청
@@ -1664,7 +1679,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID |
+| registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 
@@ -1715,6 +1730,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.id | Body | Integer | O | 복제 ID |
 | policies.enabled | Body | Boolean | O | 복제 활성화 여부 |
 | policies.name | Body | String | O | 복제 이름 |
+| policies.dest\_project\_id | Body | String | O | 복제 대상 프로젝트 |
 
 예시
 
@@ -1779,7 +1795,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
             },
             "id": 3,
             "enabled": true,
-            "name": "test"
+            "name": "test",
+            "dest_project_id": "8x5SEWjM"
         }
     ]
 }
@@ -1825,6 +1842,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.id | Body | Integer | O | 복제 ID |
 | policy.enabled | Body | Boolean | O | 복제 활성화 여부 |
 | policy.name | Body | String | O | 복제 이름 |
+| policy.dest\_project\_id | Body | String | O | 복제 대상 프로젝트 |
 
 예시
 
@@ -1888,7 +1906,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
         },
         "id": 12,
         "enabled": true,
-        "name": "test"
+        "name": "test",
+        "dest_project_id": "8x5SEWjM"
     }
 }
 ```
@@ -1922,6 +1941,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | filters.value | Body | String | X | 필터할 값 |
 | filters.decoration | Body | String | X | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
+| dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
 
 예시
 
@@ -1995,6 +2015,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | filters.value | Body | String | 설정되어 있을 시 필수 | 필터할 값 |
 | filters.decoration | Body | String | 설정되어 있을 시 필수 | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
+| dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
 
 예시
 
