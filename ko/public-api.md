@@ -1,7 +1,7 @@
 ## Container > NHN Container Registry(NCR) > API 가이드
 
 컨테이너 레지스트리를 구성하기 위한 API를 기술합니다.
-API를 사용하려면 User Access Key와 Secret Access Key가 필요합니다. User Access Key와 Secret Access Key는 NHN Cloud Console의 계정 > **API 보안 설정** 페이지에서 생성합니다.
+API를 사용하려면 User Access Key와 Secret Access Key가 필요합니다. User Access Key와 Secret Access Key는 NHN Cloud 콘솔의 계정 > **API 보안 설정** 페이지에서 생성합니다.
 
 ### API 요청 공통 정보
 
@@ -132,7 +132,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 
 ### 응답
@@ -242,7 +242,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 
 ### 응답
@@ -262,7 +262,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | metadata | Body | Object map[string]string | X | 컨테이너 레지스트리 설정 |
 | metadata.auto\_scan | Body | String | X | 이미지를 push할 때 자동으로 스캔 여부: true/false |
@@ -891,7 +891,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
@@ -963,7 +963,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 
@@ -1030,7 +1030,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | enabled | Body | Boolean | X | 웹훅 활성화 여부<br>미입력 시 false 설정 |
 | event\_types | Body | String List | O | 웹훅 이벤트 유형, PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
@@ -1080,7 +1080,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 
@@ -1101,7 +1101,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
-| registryNameOrId | URL | String | O | 레지스트리 이름 혹은 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
+| registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 | enabled | Body | Boolean | X | 웹훅 활성화 여부 |
@@ -1938,7 +1938,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | dest\_namespace | Body | String | X | 대상 레지스트리 |
 | filters | Body | Object List | X | 복제할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
 | filters.type | Body | String | X | 복제할 대상 설정, name(이미지 이름)/tag(태그 이름) |
-| filters.value | Body | String | X | 필터할 값 |
+| filters.value | Body | String | X | 필터링할 값 |
 | filters.decoration | Body | String | X | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
 | dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
@@ -2012,7 +2012,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | dest\_namespace | Body | String | 설정되어 있을 시 필수 | 대상 레지스트리 |
 | filters | Body | Object List | 설정되어 있을 시 필수 | 복제할 대상 설정 정보, 전체를 대상으로 하는 경우 설정하지 않음 |
 | filters.type | Body | String | 설정되어 있을 시 필수 | 복제할 대상 설정, name(이미지 이름)/tag(태그 이름) |
-| filters.value | Body | String | 설정되어 있을 시 필수 | 필터할 값 |
+| filters.value | Body | String | 설정되어 있을 시 필수 | 필터링할 값 |
 | filters.decoration | Body | String | 설정되어 있을 시 필수 | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
 | dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
