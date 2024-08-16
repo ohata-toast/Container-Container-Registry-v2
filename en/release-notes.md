@@ -1,5 +1,20 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### August 27, 2024
+
+#### Added Features
+
+* Released Public APIs for NCR.
+  * For more information about Public API, see [API Guide](Container/NCR/ko/public-api/).
+* You receive notifications about events that occur in the registry through Resource Watcher.
+  * For more information, see [Resource Watcher](/Governance%20&%20Audit/Resource%20Watcher/ko/overview).
+* You can view a list of image signatures
+
+#### Feature Updates
+
+* Added the feature to replicate between projects.
+
+
 ### May 28, 2024
 
 #### Added Features
