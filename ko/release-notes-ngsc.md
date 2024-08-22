@@ -1,5 +1,13 @@
 ## Container > NHN Container Registry(NCR)  > 릴리스 노트
 
+### 2024. 09. 05.
+
+#### 기능 추가
+
+* NCR 서비스를 위한 Public API가 공개되었습니다.
+  * Public API에 대한 내용은 [API 가이드](Container/NCR/ko/public-api/)를 참고하세요.
+* 이미지 서명 목록을 조회할 수 있습니다.
+
 ### 2024. 06. 04.
 
 #### 기능 추가

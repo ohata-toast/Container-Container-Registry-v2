@@ -1,6 +1,7 @@
 ## Container > NHN Container Registry(NCR) > APIガイド
 
 コンテナレジストリを構成するためのAPIを記述します。
+APIを使用するには、User Access KeyとSecret Access Keyが必要です。 User Access KeyとSecret Access KeyはNHN Cloudコンソールのアカウント > **APIセキュリティ設定** ページで作成します。
 
 ### APIリクエスト共通情報
 
@@ -11,6 +12,15 @@ APIドメインは次のとおりです。
 | --- | --- |
 | 韓国(パンギョ)リージョン | [https://kr1-ncr.api.nhncloudservice.com](https://kr1-ncr.api.nhncloudservice.com) |
 | 韓国(ピョンチョン)リージョン | [https://kr2-ncr.api.nhncloudservice.com](https://kr2-ncr.api.nhncloudservice.com) |
+| 韓国(光州)リージョン | [https://kr3-ncr.api.nhncloudservice.com](https://kr3-ncr.api.nhncloudservice.com) |
+| 韓国(竹田_新韓)リージョン | [https://pj1-ncr.api.nhncloudservice.com](https://pj1-ncr.api.nhncloudservice.com) |
+
+APIヘッダは次のとおりです。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+| --- | --- | --- | --- | --- |
+| X-TC-AUTHENTICATION-ID | Header | String | O | User Access Key |
+| X-TC-AUTHENTICATION-SECRET | Header | String | X (作成した場合は必須) | Secret Access Key |
 
 ### APIレスポンス共通情報
 
@@ -289,7 +299,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 イメージ保護ポリシーリストを照会します。
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
 ### リクエスト
@@ -299,7 +309,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryId  | URL | String | O | レジストリID |
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
@@ -356,7 +366,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryId | URL | String | O | レジストリID |
+| registryId | URL | String | O | レジストリID |
 | scope | Body | Object | X | イメージに対する保護ポリシー情報 |
 | scope.include | Body | Boolean | X | イメージに対する保護ポリシー設定の有無 |
 | scope.pattern | Body | String | X | 保護対象イメージ<br>全体イメージ対象: \*\* 入力 |
@@ -384,7 +395,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 イメージ保護ポリシーを削除します。
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{rule_id}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
 ### リクエスト
@@ -394,7 +405,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrule
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryId  | URL | String | O | レジストリID |
 | rule\_id | URL | String | O | イメージ保護ポリシーID |
 
 ### レスポンス
@@ -406,7 +417,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrule
 イメージ保護ポリシーを変更します。
 
 ```
-PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{rule_id}
+PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
 ### リクエスト
@@ -414,7 +425,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryId  | URL | String | O | レジストリID |
 | rule\_id | URL | String | O | イメージ保護ポリシーID |
 | disabled | Body | Boolean | X | イメージ保護ポリシーを無効化にするかどうか |
 | scope | Body | Object | O | イメージに対する保護ポリシー情報 |
@@ -881,7 +892,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryNameOrId | URL | String | O | レジストリ名またはID。名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
@@ -952,7 +964,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryNameOrId | URL | String | O | レジストリ名またはID。名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | policyId | URL | String | O | WebフックID |
 
 ### レスポンス
@@ -1018,7 +1031,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryNameOrId | URL | String | O | レジストリ名またはID。名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | enabled | Body | Boolean | X | Webフックが有効かどうか<br>未入力時false設定 |
 | event\_types | Body | String List | O | Webフックイベントタイプ、PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
 | name | Body | String | X | Webフック名 |
@@ -1067,7 +1081,8 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryNameOrId | URL | String | O | レジストリ名またはID。名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | policyId | URL | String | O | WebフックID |
 
 ### レスポンス
@@ -1087,7 +1102,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryNameOrId | URL | String | O | レジストリ名またはID。名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
+| X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | policyId | URL | String | O | WebフックID |
 | enabled | Body | Boolean | X | Webフックが有効かどうか |
 | event\_types | Body | String List | O | Webフックイベントタイプ、PUSH\_ARTIFACT/PULL\_ARTIFACT/DELETE\_ARTIFACT |
@@ -1126,7 +1142,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 コンテナイメージリストを照会します。
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 ```
 
 ### リクエスト
@@ -1136,7 +1152,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
@@ -1182,7 +1198,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
 コンテナイメージを照会します。
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
 ### リクエスト
@@ -1235,7 +1251,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 コンテナイメージを削除します。
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
 ### リクエスト
@@ -1245,7 +1261,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 
 ### レスポンス
@@ -1350,7 +1366,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 アーティファクトを照会します。
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
 ### リクエスト
@@ -1360,7 +1376,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 | with\_scan\_overview | Query | String | X | 脆弱性情報を照会するかどうか |
@@ -1440,7 +1456,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 アーティファクトを削除します。
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
 ### リクエスト
@@ -1450,7 +1466,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 
@@ -1463,7 +1479,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 アーティファクトタグリストを照会します。
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
 ### リクエスト
@@ -1473,7 +1489,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 | page | Query | Integer | X | 照会するページ番号 |
@@ -1518,7 +1534,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 アーティファクトタグを作成します。
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
 ### リクエスト
@@ -1526,7 +1542,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 | name | Body | String | O | アーティファクトタグ名 |
@@ -1548,7 +1564,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 アーティファクトタグを削除します。
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags/{tagName}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags/{tagName}
 ```
 
 ### リクエスト
@@ -1558,7 +1574,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 | tagName | URL | String | O | アーティファクトタグ名 |
@@ -1572,7 +1588,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageNam
 アーティファクト脆弱性情報を照会します。
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
 ```
 
 ### リクエスト
@@ -1582,7 +1598,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 
@@ -1654,7 +1670,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 アーティファクトをスキャンします。
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/scan
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/scan
 ```
 
 ### リクエスト
@@ -1664,7 +1680,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
-| registryNameOrId | URL | String | O | レジストリ名またはID |
+| registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 
@@ -1715,6 +1731,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.id | Body | Integer | O | 複製ID |
 | policies.enabled | Body | Boolean | O | 複製が有効かどうか |
 | policies.name | Body | String | O | 複製名 |
+| policies.dest\_project\_id | Body | String | O | 複製対象プロジェクト |
 
 例
 
@@ -1779,7 +1796,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
             },
             "id": 3,
             "enabled": true,
-            "name": "test"
+            "name": "test",
+            "dest_project_id": "8x5SEWjM"
         }
     ]
 }
@@ -1825,6 +1843,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.id | Body | Integer | O | 複製ID |
 | policy.enabled | Body | Boolean | O | 複製が有効かどうか |
 | policy.name | Body | String | O | 複製名 |
+| policy.dest\_project\_id | Body | String | O | 複製対象プロジェクト |
 
 例
 
@@ -1888,7 +1907,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
         },
         "id": 12,
         "enabled": true,
-        "name": "test"
+        "name": "test",
+        "dest_project_id": "8x5SEWjM"
     }
 }
 ```
@@ -1919,9 +1939,10 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | dest\_namespace | Body | String | X | 対象レジストリ |
 | filters | Body | Object List | X | 複製する対象設定情報、全体を対象にする場合は設定しない |
 | filters.type | Body | String | X | 複製する対象設定、name(イメージ名)/tag(タグ名) |
-| filters.value | Body | String | X | フィルタする値 |
+| filters.value | Body | String | X | フィルタリングする値 |
 | filters.decoration | Body | String | X | フィルタタイプがtagの場合は設定、matches(該当する)/excludes(除外した) |
 | name | Body | String | O | 複製名 |
+| dest\_project\_id | Body | String | X | 複製対象プロジェクト |
 
 例
 
@@ -1992,9 +2013,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | dest\_namespace | Body | String | 設定されている場合は必須 | 対象レジストリ |
 | filters | Body | Object List | 設定されている場合は必須 | 複製する対象設定情報、全体を対象にする場合は設定しない |
 | filters.type | Body | String | 設定されている場合は必須 | 複製する対象設定、name(イメージ名)/tag(タグ名) |
-| filters.value | Body | String | 設定されている場合は必須 | フィルタする値 |
+| filters.value | Body | String | 設定されている場合は必須 | フィルタリングする値 |
 | filters.decoration | Body | String | 設定されている場合は必須 | フィルタタイプがtagの場合は設定、matches(該当する)/excludes(除外した) |
 | name | Body | String | O | 複製名 |
+| dest\_project\_id | Body | String | X | 複製対象プロジェクト |
 
 例
 

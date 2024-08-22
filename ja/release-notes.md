@@ -1,5 +1,19 @@
 ## Container > NHN Container Registry(NCR)  > リリースノート
 
+### 2024. 08. 27.
+
+#### 機能追加
+
+* NCRサービスのためのPublic APIが公開されました。
+  * Public APIの詳細は[APIガイド](Container/NCR/ko/public-api/)を参照してください。
+* Resource Watcherサービスを通じて、レジストリで発生するイベントに関する通知を受けることができます。
+  * 詳細は[Resource Watcher](/Governance%20&%20Audit/Resource%20Watcher/ko/overview)を参照してください。
+* イメージ署名リストを照会できます。
+
+#### 機能改善
+
+* プロジェクト間の複製機能が追加されました。
+
 ### 2024. 05. 28.
 
 #### 機能追加
