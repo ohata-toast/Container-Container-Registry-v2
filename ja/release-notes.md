@@ -5,9 +5,9 @@
 #### 機能追加
 
 * NCRサービスのためのPublic APIが公開されました。
-  * Public APIの詳細は[APIガイド](/Container/NCR/ko/public-api/)を参照してください。
+  * Public APIの詳細は[APIガイド](/Container/NCR/ja/public-api/)を参照してください。
 * Resource Watcherサービスを通じて、レジストリで発生するイベントに関する通知を受けることができます。
-  * 詳細は[Resource Watcher](/Governance%20&%20Audit/Resource%20Watcher/ko/overview)を参照してください。
+  * 詳細は[Resource Watcher](/Governance%20&%20Audit/Resource%20Watcher/ja/overview)を参照してください。
 * イメージ署名リストを照会できます。
 
 #### 機能改善
