@@ -17,7 +17,7 @@ The API domain is as follows.
 
 The API headers are as follows.
 
-| Name | Type | Format | Description |
+| Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | X-TC-AUTHENTICATION-ID | Header | String | O | User Access Key |
 | X-TC-AUTHENTICATION-SECRET | Header | String | X (Required when created) | Secret Access Key |
