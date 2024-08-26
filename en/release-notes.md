@@ -5,7 +5,7 @@
 #### Added Features
 
 * Released Public APIs for NCR.
-  * For more information about Public API, see [API Guide](Container/NCR/en/public-api/).
+  * For more information about Public API, see [API Guide](/Container/NCR/en/public-api/).
 * You receive notifications about events that occur in the registry through Resource Watcher.
   * For more information, see [Resource Watcher](/Governance%20&%20Audit/Resource%20Watcher/en/overview).
 * You can view a list of image signatures
