@@ -10,10 +10,10 @@ API 도메인은 다음과 같습니다.
 
 | 리전 | 도메인 |
 | --- | --- |
-| 한국(판교) 리전 | [https://kr1-ncr.api.nhncloudservice.com](https://kr1-ncr.api.nhncloudservice.com) |
-| 한국(평촌) 리전 | [https://kr2-ncr.api.nhncloudservice.com](https://kr2-ncr.api.nhncloudservice.com) |
-| 한국(광주) 리전 | [https://kr3-ncr.api.nhncloudservice.com](https://kr3-ncr.api.nhncloudservice.com) |
-| 한국(죽전_신한) 리전 | [https://pj1-ncr.api.nhncloudservice.com](https://pj1-ncr.api.nhncloudservice.com) |
+| 한국(판교) 리전 | https://kr1-ncr.api.nhncloudservice.com |
+| 한국(평촌) 리전 | https://kr2-ncr.api.nhncloudservice.com |
+| 한국(광주) 리전 | https://kr3-ncr.api.nhncloudservice.com |
+| 한국(죽전_신한) 리전 | https://pj1-ncr.api.nhncloudservice.com |
 
 API 헤더는 다음과 같습니다
 
@@ -46,7 +46,7 @@ API 헤더는 다음과 같습니다
 GET /ncr/v2.0/appkeys/{appKey}/registries
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -56,7 +56,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -80,7 +80,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | registries.uri | Body | String | O | 컨테이너 레지스트리 접근 URI |
 | registries.private\_uri | Body | String | O | 컨테이너 레지스트리 접근 Private URI |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -117,6 +118,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 }
 ```
 
+</p>
+</details>
+
 ### 컨테이너 레지스트리 보기
 
 컨테이너 레지스트리 정보를 조회합니다.
@@ -125,7 +129,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -135,7 +139,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -159,7 +163,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registry.uri | Body | String | O | 컨테이너 레지스트리 접근 URI |
 | registry.private\_uri | Body | String | O | 컨테이너 레지스트리 접근 Private URI |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -194,6 +199,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 }
 ```
 
+</p>
+</details>
+
 ### 컨테이너 레지스트리 생성하기
 
 컨테이너 레지스트리를 생성합니다.
@@ -202,7 +210,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 POST /ncr/v2.0/appkeys/{appKey}/registries
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -215,7 +223,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 공통 CVE 허용 목록 사용 여부: true/false |
 | registry\_id | Body | Integer | X | 이미지 캐시 유형의 레지스트리 생성 시 필요한 이미지 캐시 ID |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -223,7 +232,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -235,7 +247,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -245,7 +257,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registryNameOrId | URL | String | O | 레지스트리 이름 또는 ID, 이름이 숫자로만 되어 있으면 X-Is-Resource-Name 값 true 설정 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -257,7 +269,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -273,7 +285,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | cve\_allowlist.items | Body | Object List | 설정되어 있을 시 필수 | CVE 목록 |
 | cve\_allowlist.items.cve\_id | Body | String | 설정되어 있을 시 필수 | CVE ID |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -290,7 +303,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -302,7 +318,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -313,7 +329,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -327,7 +343,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 | immutable\_tag\_rules.tag.include | Body | Boolean | O | 태그에 대한 보호 정책 설정 여부 |
 | immutable\_tag\_rules.tag.pattern | Body | String | O | 보호 대상 태그 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -353,6 +370,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 }
 ```
 
+</p>
+</details>
+
 ### 이미지 보호 정책 생성하기
 
 이미지 보호 정책을 생성합니다.
@@ -361,7 +381,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -374,7 +394,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 | tag.include | Body | Boolean | X | 태그에 대한 보호 정책 설정 여부 |
 | tag.pattern | Body | String | X | 보호 대상 태그<br>전체 태그 대상: \*\* 입력 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -385,7 +406,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -397,7 +421,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -407,7 +431,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rul
 | registryId | URL | String | O | 레지스트리 ID |
 | rule\_id | URL | String | O | 이미지 보호 정책 ID |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -419,7 +443,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rul
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -434,7 +458,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_i
 | tag.include | Body | Boolean | O | 태그에 대한 보호 정책 설정 여부 |
 | tag.pattern | Body | String | O | 보호 대상 태그 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -450,7 +475,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_i
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -462,7 +490,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_i
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -473,7 +501,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -494,7 +522,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | retention\_rules.scope.include | Body | Boolean | O | 이미지에 대한 정리 정책 설정 여부 |
 | retention\_rules.scope.pattern | Body | String | O | 정리 대상 이미지 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -524,6 +553,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 }
 ```
 
+</p>
+</details>
+
 ### 이미지 정리 정책 생성하기
 
 이미지 정리 정책을 생성합니다.
@@ -532,7 +564,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -553,7 +585,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | parameters.n\_days\_since\_last\_pull | Body | Integer | X | Push한 날짜가 n일인 아티팩트만 보관 |
 | parameters.n\_days\_since\_last\_push | Body | Integer | X | Pull한 날짜가 n일인 아티팩트만 보관 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -567,7 +600,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -579,7 +615,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -589,7 +625,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | registryId | URL | String | O | 레지스트리 ID |
 | id | Query | Integer | O | 이미지 정리 정책 ID |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -601,7 +637,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -623,7 +659,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 | parameters.n\_days\_since\_last\_pull | Body | Integer | 설정되어 있을 시 필수 | Push한 날짜가 n일인 아티팩트만 보관 |
 | parameters.n\_days\_since\_last\_push | Body | Integer | 설정되어 있을 시 필수 | Pull한 날짜가 n일인 아티팩트만 보관 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -643,7 +680,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -655,7 +695,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -666,7 +706,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -678,7 +718,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 | executions.end\_time | Body | String | O | 이미지 정리 종료 시간 |
 | executions.status | Body | String | O | 이미지 정리 상태 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -700,6 +741,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 }
 ```
 
+</p>
+</details>
+
 ### 이미지 정리 히스토리 상세 보기
 
 이미지 정리 히스토리를 조회합니다.
@@ -708,7 +752,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{executionId}/tasks
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -720,7 +764,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -733,7 +777,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 | tasks.end\_time | Body | String | O | 정리 종료 시간 |
 | tasks.status | Body | String | O | 태스크 상태 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -756,6 +801,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 }
 ```
 
+</p>
+</details>
+
 ### 이미지 정리 히스토리 로그 보기
 
 이미지 정리 히스토리 로그를 조회합니다.
@@ -764,7 +812,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{executionId}/tasks/{taskId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -775,7 +823,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 | executionId | URL | String | O | 이미지 정리 히스토리 ID |
 | taskId | URL | String | O | 이미지 정리 태스크 ID |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -789,7 +837,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -797,7 +845,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 | registryId | URL | String | O | 레지스트리 ID |
 | dry\_run | Body | Boolean | X | 테스트 실행 여부 |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -809,7 +857,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -818,7 +866,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 | appKey | URL | String | O | 서비스 Appkey |
 | registryId | URL | String | O | 레지스트리 ID |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -827,7 +875,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 | trigger.settings | Body | Object | O | 이미지 정리 주기 설정 |
 | trigger.settings.cron | Body | String | O | 이미지 정리 주기 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -845,6 +894,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 }
 ```
 
+</p>
+</details>
+
 ### 이미지 정리 주기 생성하기
 
 이미지 정리 주기를 생성합니다.
@@ -853,7 +905,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -862,7 +914,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 | settings | Body | Object | O | 이미지 정리 주기 설정 |
 | settings.cron | Body | String | O | 이미지 정리 주기 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -872,7 +925,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -884,7 +940,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -896,7 +952,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -914,7 +970,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | policies.targets.skip\_cert\_verify | Body | Boolean | X | 인증서 검증 여부 |
 | policies.update\_time | Body | String | O | 웹훅 변경 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -948,6 +1005,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 }
 ```
 
+</p>
+</details>
+
 ### 웹훅 보기
 
 웹훅을 조회합니다.
@@ -956,7 +1016,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{policyId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -967,7 +1027,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -985,7 +1045,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | policy.targets.skip\_cert\_verify | Body | Boolean | X | 인증서 검증 여부 |
 | policy.update\_time | Body | String | O | 웹훅 변경 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1017,6 +1078,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 }
 ```
 
+</p>
+</details>
+
 ### 웹훅 생성하기
 
 웹훅을 생성합니다.
@@ -1025,7 +1089,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1041,7 +1105,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | targets.auth\_header | Body | String | X | 인증 헤더 |
 | targets.skip\_cert\_verify | Body | Boolean | X | 인증서 검증 여부 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1061,7 +1126,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1073,7 +1141,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{policyId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1084,7 +1152,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | X-Is-Resource-Name | Header | String | X | registryNameOrId 값 이름 여부, true/false |
 | policyId | URL | String | O | 웹훅 ID |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1096,7 +1164,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{policyId}
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1113,7 +1181,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | targets.auth\_header | Body | String | X | 인증 헤더 |
 | targets.skip\_cert\_verify | Body | Boolean | X | 인증서 검증 여부 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1130,7 +1199,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1144,7 +1216,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1155,7 +1227,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1168,7 +1240,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 | images.creation\_time | Body | String | O | 컨테이너 이미지 생성 시간 |
 | images.update\_time | Body | String | O | 컨테이너 이미지 변경 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1192,6 +1265,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 }
 ```
 
+</p>
+</details>
+
 ### 컨테이너 이미지 보기
 
 컨테이너 이미지를 조회합니다.
@@ -1200,7 +1276,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1210,7 +1286,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 | registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1223,7 +1299,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 | image.creation\_time | Body | String | O | 컨테이너 이미지 생성 시간 |
 | image.update\_time | Body | String | O | 컨테이너 이미지 변경 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1245,6 +1322,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 }
 ```
 
+</p>
+</details>
+
 ### 컨테이너 이미지 삭제하기
 
 컨테이너 이미지를 삭제합니다.
@@ -1253,7 +1333,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1263,7 +1343,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 | registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1275,7 +1355,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1289,7 +1369,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | with\_scan\_overview | Query | String | X | 취약점 정보 조회 여부 |
 | with\_accessory | Query | String | X | 인증 정보 조회 여부 |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1304,7 +1384,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | artifacts.pull\_time | Body | String | O | 아티팩트 pull 시간 |
 | artifacts.push\_time | Body | String | O | 아티팩트 push 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1360,6 +1441,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 }
 ```
 
+</p>
+</details>
+
 ### 아티팩트 보기
 
 아티팩트를 조회합니다.
@@ -1368,7 +1452,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1381,7 +1465,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | with\_scan\_overview | Query | String | X | 취약점 정보 조회 여부 |
 | with\_accessory | Query | String | X | 인증 정보 조회 여부 |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1396,7 +1480,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | artifact.pull\_time | Body | String | O | 아티팩트 pull 시간 |
 | artifact.push\_time | Body | String | O | 아티팩트 push 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1450,6 +1535,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 }
 ```
 
+</p>
+</details>
+
 ### 아티팩트 삭제하기
 
 아티팩트를 삭제합니다.
@@ -1458,7 +1546,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1469,7 +1557,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1481,7 +1569,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1494,7 +1582,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1504,7 +1592,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | tags.pull\_time | Body | String | O | 아티팩트 태그 pull 시간 |
 | tags.push\_time | Body | String | O | 아티팩트 태그 push 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1528,6 +1617,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 }
 ```
 
+</p>
+</details>
+
 ### 아티팩트 태그 생성하기
 
 아티팩트 태그를 생성합니다.
@@ -1536,7 +1628,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1546,7 +1638,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 | reference | URL | String | O | 아티팩트 이름 |
 | name | Body | String | O | 아티팩트 태그 이름 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1554,7 +1647,10 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1566,7 +1662,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags/{tagName}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1578,7 +1674,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 | reference | URL | String | O | 아티팩트 이름 |
 | tagName | URL | String | O | 아티팩트 태그 이름 |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1590,7 +1686,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1601,13 +1697,14 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | vulnerability | Body | Object | O | 취약점 정보 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1664,6 +1761,9 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 }
 ```
 
+</p>
+</details>
+
 ### 아티팩트 스캔하기
 
 아티팩트를 스캔합니다.
@@ -1672,7 +1772,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/scan
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1683,7 +1783,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
 | reference | URL | String | O | 아티팩트 이름 |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1697,7 +1797,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1707,7 +1807,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1732,7 +1832,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.name | Body | String | O | 복제 이름 |
 | policies.dest\_project\_id | Body | String | O | 복제 대상 프로젝트 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1802,6 +1903,9 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 }
 ```
 
+</p>
+</details>
+
 ### 복제 보기
 
 복제를 조회합니다.
@@ -1810,7 +1914,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1819,7 +1923,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | appKey | URL | String | O | 서비스 Appkey |
 | policyId | URL | String | O | 복제 ID |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1844,7 +1948,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.name | Body | String | O | 복제 이름 |
 | policy.dest\_project\_id | Body | String | O | 복제 대상 프로젝트 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1912,6 +2017,9 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 }
 ```
 
+</p>
+</details>
+
 ### 복제 생성하기
 
 복제를 생성합니다.
@@ -1920,7 +2028,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -1943,7 +2051,8 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | name | Body | String | O | 복제 이름 |
 | dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -1958,7 +2067,10 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1970,7 +2082,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -1979,7 +2091,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | appKey | URL | String | O | 서비스 Appkey |
 | policyId | URL | String | O | 복제 ID |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -1991,7 +2103,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2017,7 +2129,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | name | Body | String | O | 복제 이름 |
 | dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2032,7 +2145,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -2044,7 +2160,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2054,7 +2170,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2067,7 +2183,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 | executions.id | Body | Integer | O | 복제 히스토리 ID |
 | executions.policy\_id | Body | Integer | O | 복제 ID |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2090,6 +2207,9 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 }
 ```
 
+</p>
+</details>
+
 ### 복제 히스토리 보기
 
 복제 히스토리를 조회합니다.
@@ -2098,7 +2218,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2109,7 +2229,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2122,7 +2242,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 | tasks.execution\_id | Body | Integer | O | 복제 히스토리 ID |
 | tasks.end\_time | Body | String | O | 복제 종료 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2148,6 +2269,9 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 }
 ```
 
+</p>
+</details>
+
 ### 복제 히스토리 로그 보기
 
 복제 히스토리 로그를 조회합니다.
@@ -2156,7 +2280,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks/{taskId}/log
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2166,7 +2290,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks/{task
 | executionId | URL | String | O | 복제 히스토리 ID |
 | taskId | URL | String | O | 복제 히스토리 task ID |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2180,14 +2304,15 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks/{task
 POST /ncr/v2.0/appkeys/{appKey}/replications/executions
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 | policy\_id | Body | Integer | O | 복제 ID |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2195,7 +2320,10 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/executions
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -2209,7 +2337,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/executions
 GET /ncr/v2.0/appkeys/{appKey}/endpoints
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2219,7 +2347,7 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 | page | Query | Integer | X | 조회할 페이지 번호 |
 | page\_size | Query | Integer | X | 조회할 페이지 크기(default: 10) |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2237,7 +2365,8 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 | endpoints.id | Body | Integer | O | 이미지 캐시 ID |
 | endpoints.description | Body | Integer | O | 이미지 캐시 설명 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2267,6 +2396,9 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 }
 ```
 
+</p>
+</details>
+
 ### 이미지 캐시 생성하기
 
 이미지 캐시를 생성합니다
@@ -2275,7 +2407,7 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 POST /ncr/v2.0/appkeys/{appKey}/endpoints
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2288,7 +2420,8 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 | credential.access\_secret | Body | String | O | 소스 레지스트리 access secret |
 | insecure | Body | Boolean | X | 인증서 검증 여부 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2302,7 +2435,10 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -2314,7 +2450,7 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2323,7 +2459,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 | appKey | URL | String | O | 서비스 Appkey |
 | endpointId | URL | String | O | 이미지 캐시 ID |
 
-### 응답
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -2335,7 +2471,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2347,7 +2483,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 | access\_secret | Body | String | X | 소스 레지스트리 access secret |
 | insecure | Body | Boolean | X | 인증서 검증 여부 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2358,7 +2495,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -2372,7 +2512,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2380,7 +2520,7 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2393,7 +2533,8 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 | schedule.creation\_time | Body | String | O | 생성 시간 |
 | schedule.update\_time | Body | String | O | 변경 시간 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2415,6 +2556,9 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 }
 ```
 
+</p>
+</details>
+
 ### 스캔 주기 설정하기
 
 스캔 주기를 설정합니다.
@@ -2423,7 +2567,7 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2432,7 +2576,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 | schedule.cron | Body | String | O | 스캔 주기의 cron 형식 |
 | schedule.type | Body | String | O | 스캔 주기 유형 |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2443,7 +2588,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 }
 ```
 
-### 응답
+</p>
+</details>
+
+#### 응답
 
 이 API는 공통 정보만 응답합니다.
 
@@ -2455,7 +2603,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 ```
 
-### 요청
+#### 요청
 
 이 API는 요청 본문을 요구하지 않습니다.
 
@@ -2463,7 +2611,7 @@ GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | 서비스 Appkey |
 
-### 응답
+#### 응답
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2472,7 +2620,8 @@ GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 | cve\_allowlist.items | Body | Object List | O | 허용 목록 |
 | cve\_allowlist.items.cve\_id | Body | String | X | CVE ID |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2493,6 +2642,9 @@ GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 }
 ```
 
+</p>
+</details>
+
 ### 공통 CVE 허용 목록 변경하기
 
 공통 CVE 허용 목록을 변경합니다.
@@ -2501,7 +2653,7 @@ GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 PUT /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 ```
 
-### 요청
+#### 요청
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
@@ -2509,7 +2661,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 | items | Body | Object List | O | 허용 목록 |
 | items.cve\_id | Body | String | O | CVE ID |
 
-예시
+<details><summary>예시</summary>
+<p>
 
 ```json
 {
@@ -2518,3 +2671,10 @@ PUT /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
     }]
 }
 ```
+
+</p>
+</details>
+
+#### 응답
+
+이 API는 공통 정보만 응답합니다.
