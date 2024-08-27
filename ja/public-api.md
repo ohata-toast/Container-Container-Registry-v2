@@ -10,10 +10,10 @@ APIドメインは次のとおりです。
 
 | リージョン | ドメイン |
 | --- | --- |
-| 韓国(パンギョ)リージョン | [https://kr1-ncr.api.nhncloudservice.com](https://kr1-ncr.api.nhncloudservice.com) |
-| 韓国(ピョンチョン)リージョン | [https://kr2-ncr.api.nhncloudservice.com](https://kr2-ncr.api.nhncloudservice.com) |
-| 韓国(光州)リージョン | [https://kr3-ncr.api.nhncloudservice.com](https://kr3-ncr.api.nhncloudservice.com) |
-| 韓国(竹田_新韓)リージョン | [https://pj1-ncr.api.nhncloudservice.com](https://pj1-ncr.api.nhncloudservice.com) |
+| 韓国(パンギョ)リージョン | https://kr1-ncr.api.nhncloudservice.com |
+| 韓国(ピョンチョン)リージョン | https://kr2-ncr.api.nhncloudservice.com |
+| 韓国(光州)リージョン | https://kr3-ncr.api.nhncloudservice.com |
+| 韓国(竹田_新韓)リージョン | https://pj1-ncr.api.nhncloudservice.com |
 
 APIヘッダは次のとおりです。
 
@@ -46,7 +46,7 @@ APIヘッダは次のとおりです。
 GET /ncr/v2.0/appkeys/{appKey}/registries
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -56,7 +56,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -125,7 +125,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -135,7 +135,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registryNameOrId | URL | String | O | レジストリ名またはID、名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId値の名前かどうか、true/false |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -202,7 +202,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 POST /ncr/v2.0/appkeys/{appKey}/registries
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -223,7 +223,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -235,7 +235,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -245,7 +245,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registryNameOrId | URL | String | O | レジストリ名またはID、名前が数字だけの場合はX-Is-Resource-Name値をtrueに設定 |
 | X-Is-Resource-Name | Header | String | X | registryNameOrId値の名前かどうか、true/false |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -257,7 +257,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -290,7 +290,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -302,7 +302,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -313,7 +313,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -361,7 +361,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -386,7 +386,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -398,7 +398,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -408,7 +408,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rul
 | registryId  | URL | String | O | レジストリID |
 | rule\_id | URL | String | O | イメージ保護ポリシーID |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -420,7 +420,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rul
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -451,7 +451,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_i
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -463,7 +463,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_i
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -474,7 +474,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -533,7 +533,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -568,7 +568,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -580,7 +580,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -590,7 +590,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 | registryId | URL | String | O | レジストリID |
 | id | Query | Integer | O | イメージクリーンアップポリシーID |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -602,7 +602,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -644,7 +644,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -656,7 +656,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/{rule_id}
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -667,7 +667,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -709,7 +709,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{executionId}/tasks
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -721,7 +721,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -765,7 +765,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{executionId}/tasks/{taskId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -776,7 +776,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 | executionId | URL | String | O | イメージクリーンアップヒストリーID |
 | taskId | URL | String | O | イメージクリーンアップタスクID |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -790,7 +790,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions/{ex
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -798,7 +798,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 | registryId | URL | String | O | レジストリID |
 | dry\_run | Body | Boolean | X | テスト実行有無 |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -810,7 +810,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/executions
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -819,7 +819,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 | appKey | URL | String | O | サービスAppkey |
 | registryId | URL | String | O | レジストリID |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -854,7 +854,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -873,7 +873,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/retentions/schedule
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -885,7 +885,7 @@ Webフックリストを照会します。
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -897,7 +897,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -957,7 +957,7 @@ Webフックを照会します。
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{policyId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -968,7 +968,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | policyId | URL | String | O | WebフックID |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1026,7 +1026,7 @@ Webフックを作成します。
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1062,7 +1062,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1074,7 +1074,7 @@ Webフックを削除します。
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{policyId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1085,7 +1085,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | X-Is-Resource-Name | Header | String | X | registryNameOrId値が名前かどうか。true/false |
 | policyId | URL | String | O | WebフックID |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1097,7 +1097,7 @@ Webフックを変更します。
 PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{policyId}
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1131,7 +1131,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1145,7 +1145,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1156,7 +1156,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1201,7 +1201,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1211,7 +1211,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 | registryNameOrId | URL | String | O | レジストリ名またはID |
 | imageName | URL | String | O | コンテナイメージ名 |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1254,7 +1254,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1264,7 +1264,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 | registryName | URL | String | O | レジストリ名 |
 | imageName | URL | String | O | コンテナイメージ名 |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1276,7 +1276,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1290,7 +1290,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 | with\_scan\_overview | Query | String | X | 脆弱性情報を照会するかどうか |
 | with\_accessory | Query | String | X | 認証情報を照会するかどうか |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1369,7 +1369,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1382,7 +1382,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | with\_scan\_overview | Query | String | X | 脆弱性情報を照会するかどうか |
 | with\_accessory | Query | String | X | 認証情報を照会するかどうか |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1459,7 +1459,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1470,7 +1470,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1482,7 +1482,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1495,7 +1495,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1537,7 +1537,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1555,7 +1555,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1567,7 +1567,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags/{tagName}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1579,7 +1579,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 | reference | URL | String | O | アーティファクト名 |
 | tagName | URL | String | O | アーティファクトタグ名 |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1591,7 +1591,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1602,7 +1602,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1673,7 +1673,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/arti
 POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/scan
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1684,7 +1684,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 | imageName | URL | String | O | コンテナイメージ名 |
 | reference | URL | String | O | アーティファクト名 |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1698,7 +1698,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/art
 GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1708,7 +1708,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1811,7 +1811,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1820,7 +1820,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | appKey | URL | String | O | サービスAppkey |
 | policyId | URL | String | O | 複製ID |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1921,7 +1921,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -1959,7 +1959,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1971,7 +1971,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -1980,7 +1980,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | appKey | URL | String | O | サービスAppkey |
 | policyId | URL | String | O | 複製ID |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -1992,7 +1992,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2033,7 +2033,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -2045,7 +2045,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2055,7 +2055,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2099,7 +2099,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2110,7 +2110,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2157,7 +2157,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks
 GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks/{taskId}/log
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2167,7 +2167,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks/{task
 | executionId | URL | String | O | 複製ヒストリーID |
 | taskId | URL | String | O | 複製ヒストリーtask ID |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2181,7 +2181,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/executions/{executionId}/tasks/{task
 POST /ncr/v2.0/appkeys/{appKey}/replications/executions
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2196,7 +2196,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/executions
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -2210,7 +2210,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/executions
 GET /ncr/v2.0/appkeys/{appKey}/endpoints
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2220,7 +2220,7 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 | page | Query | Integer | X | 照会するページ番号 |
 | page\_size | Query | Integer | X | 照会するページサイズ(default: 10) |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2276,7 +2276,7 @@ GET /ncr/v2.0/appkeys/{appKey}/endpoints
 POST /ncr/v2.0/appkeys/{appKey}/endpoints
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2303,7 +2303,7 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -2315,7 +2315,7 @@ POST /ncr/v2.0/appkeys/{appKey}/endpoints
 DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2324,7 +2324,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 | appKey | URL | String | O | サービスAppkey |
 | endpointId | URL | String | O | イメージキャッシュID |
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -2336,7 +2336,7 @@ DELETE /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2359,7 +2359,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -2373,7 +2373,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/endpoints/{endpointId}
 GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2381,7 +2381,7 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2424,7 +2424,7 @@ GET /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2444,7 +2444,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 }
 ```
 
-### レスポンス
+#### レスポンス
 
 このAPIは共通情報のみレスポンスします。
 
@@ -2456,7 +2456,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/scanAll/schedule
 GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 ```
 
-### リクエスト
+#### リクエスト
 
 このAPIはリクエスト本文を要求しません。
 
@@ -2464,7 +2464,7 @@ GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | サービスAppkey |
 
-### レスポンス
+#### レスポンス
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2502,7 +2502,7 @@ GET /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 PUT /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
 ```
 
-### リクエスト
+#### リクエスト
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
@@ -2519,3 +2519,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/CVEAllowlist
     }]
 }
 ```
+
+#### レスポンス
+
+このAPIは共通情報のみレスポンスします。
