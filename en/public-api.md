@@ -1,6 +1,7 @@
 ## Container > NHN Container Registry(NCR) > API Guide
 
 This document explains the APIs required for configuring container registries.
+To use the APIs, you need a User Access Key and Secret Access Key. User Access Key and Secret Access Key are created on the Account > API Security Settings page of NHN Cloud Console.
 
 ### API Common Request Information
 
@@ -11,6 +12,15 @@ The API domain is as follows.
 | --- | --- |
 | Korea (Pangyo) region | [https://kr1-ncr.api.nhncloudservice.com](https://kr1-ncr.api.nhncloudservice.com) |
 | Korea (Pyeongchon) region | [https://kr2-ncr.api.nhncloudservice.com](https://kr2-ncr.api.nhncloudservice.com) |
+| Korea (Gwangju) region | [https://kr3-ncr.api.nhncloudservice.com](https://kr3-ncr.api.nhncloudservice.com) |
+| Korea (Jukjeon_Shinhan) region | [https://pj1-ncr.api.nhncloudservice.com](https://pj1-ncr.api.nhncloudservice.com) |
+
+The API headers are as follows.
+
+| Name | Type | Format | Required | Description |
+| --- | --- | --- | --- | --- |
+| X-TC-AUTHENTICATION-ID | Header | String | O | User Access Key |
+| X-TC-AUTHENTICATION-SECRET | Header | String | X (Required when created) | Secret Access Key |
 
 ### Common API Information
 
@@ -289,7 +299,7 @@ This API responds with common information.
 Retrieves image protection policies.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
 ### Request
@@ -299,7 +309,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryId | URL | String | O | Registry ID |
 | page | Query | Integer | X | Page number to search |
 | page_size | Query | Integer | X | Page size to query (default: 10) |
 
@@ -348,7 +358,7 @@ Example
 Creates an Image protection policy.
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules
 ```
 
 ### Request
@@ -356,7 +366,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryId | URL | String | O | Registry ID |
 | scope | Body | Object | X | Image protection policy information |
 | scope.include | Body | Boolean | X | Image protection policy is set or not |
 | scope.pattern | Body | String | X | Image to be protected<br>For overall images :enter \**  |
@@ -384,7 +394,7 @@ This API responds with common information.
 Deletes an image protection policy.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{rule_id}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
 ### Request
@@ -394,7 +404,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryId | URL | String | O | Registry ID |
 | rule_id | URL | String | O | Image protection policy ID |
 
 ### Response
@@ -406,7 +416,7 @@ This API responds with common information.
 Change an image protection policy.
 
 ```
-PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{rule_id}
+PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryId}/immutabletagrules/{rule_id}
 ```
 
 ### Request
@@ -414,7 +424,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/immutabletagrules/{
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryId | URL | String | O | Registry ID |
 | rule_id | URL | String | O | Image protection policy ID |
 | disabled | Body | Boolean | X | Image protection policy activated or not |
 | scope | Body | Object | O | Image protection policy information |
@@ -881,7 +891,8 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryNameOrId | URL | String | O | Registry name or ID, if the name only consists of numbers, set the value for X-Is-Resource-Name to true |
+| X-Is-Resource-Name | Header | String | X | Whether the value for registryNameOrId is name, true/false |
 | page | Query | Integer | X | Page number to search |
 | page_size | Query | Integer | X | Page size to query (default: 10) |
 
@@ -952,7 +963,8 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryNameOrId | URL | String | O | Registry name or ID, if the name only consists of numbers, set the value for X-Is-Resource-Name to true |
+| X-Is-Resource-Name | Header | String | X | Whether the value for registryNameOrId is name, true/false |
 | policyId | URL | String | O | Webhook ID |
 
 ### Response
@@ -1018,7 +1030,8 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryNameOrId | URL | String | O | Registry name or ID, if the name only consists of numbers, set the value for X-Is-Resource-Name to true |
+| X-Is-Resource-Name | Header | String | X | Whether the value for registryNameOrId is name, true/false |
 | enabled | Body | Boolean | X | Webhook activated or not<br>Set to false if not entered |
 | event_types | Body | String List | O | Webhook event type, PUSH_ARTIFACT/PULL_ARTIFACT/DELETE_ARTIFACT |
 | name | Body | String | X | Webhook name |
@@ -1067,7 +1080,8 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryNameOrId | URL | String | O | Registry name or ID, if the name only consists of numbers, set the value for X-Is-Resource-Name to true |
+| X-Is-Resource-Name | Header | String | X | Whether the value for registryNameOrId is name, true/false |
 | policyId | URL | String | O | Webhook ID |
 
 ### Response
@@ -1087,7 +1101,8 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/webhook/policies/{p
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryNameOrId | URL | String | O | Registry name or ID, if the name only consists of numbers, set the value for X-Is-Resource-Name to true |
+| X-Is-Resource-Name | Header | String | X | Whether the value for registryNameOrId is name, true/false |
 | policyId | URL | String | O | Webhook ID |
 | enabled | Body | Boolean | X | Webhook activated or not |
 | event_types | Body | String List | O | Webhook event type, PUSH_ARTIFACT/PULL_ARTIFACT/DELETE_ARTIFACT |
@@ -1126,7 +1141,7 @@ This API responds with common information.
 List container images.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images
 ```
 
 ### Request
@@ -1136,7 +1151,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | page | Query | Integer | X | Page number to search |
 | page_size | Query | Integer | X | Page size to query (default: 10) |
 
@@ -1182,7 +1197,7 @@ Example
 Retrieve a container Image.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
 ### Request
@@ -1192,7 +1207,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 
 ### Response
@@ -1235,7 +1250,7 @@ Example
 Delete a container image.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}
 ```
 
 ### Request
@@ -1245,7 +1260,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 
 ### Response
@@ -1257,7 +1272,7 @@ This API responds with common information.
 List artifacts.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts
 ```
 
 ### Request
@@ -1267,7 +1282,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | page | Query | Integer | X | Page number to search |
 | page_size | Query | Integer | X | Page size to query (default: 10) |
@@ -1350,7 +1365,7 @@ Example
 Retrieve artifacts.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
 ### Request
@@ -1360,7 +1375,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 | with_scan_overview | Query | String | X | Whether or not to retrieve vulnerability information |
@@ -1440,7 +1455,7 @@ Example
 Deletes an artifact.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}
 ```
 
 ### Request
@@ -1450,7 +1465,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 
@@ -1463,7 +1478,7 @@ This API responds with common information.
 List artifact tags.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
 ### Request
@@ -1473,7 +1488,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry Name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 | page | Query | Integer | X | Page number to search |
@@ -1518,7 +1533,7 @@ Example
 Create an artifact tag.
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags
 ```
 
 ### Request
@@ -1526,7 +1541,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 | name | Body | String | O | Artifact tag name |
@@ -1548,7 +1563,7 @@ This API responds with common information.
 Delete an artifact tag.
 
 ```
-DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/tags/{tagName}
+DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/tags/{tagName}
 ```
 
 ### Request
@@ -1558,7 +1573,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 | tagName | URL | String | O | Artifact tag name |
@@ -1572,7 +1587,7 @@ This API responds with common information.
 Retrieve artifact vulnerability information.
 
 ```
-GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
+GET /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/additions/vulnerabilities
 ```
 
 ### Request
@@ -1582,7 +1597,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 
@@ -1654,7 +1669,7 @@ Example
 Scan an artifact.
 
 ```
-POST /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}/images/{imageName}/artifacts/{reference}/scan
+POST /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/artifacts/{reference}/scan
 ```
 
 ### Request
@@ -1664,7 +1679,7 @@ This API does not require a request body.
 | Name | Type | Format | Required | Description |
 | --- | --- | --- | --- | --- |
 | appKey | URL | String | O | Service Appkey |
-| registryNameOrId | URL | String | O | Registry name or ID |
+| registryName | URL | String | O | Registry name |
 | imageName | URL | String | O | Container image name |
 | reference | URL | String | O | Artifact name |
 
@@ -1715,6 +1730,7 @@ This API does not require a request body.
 | policies.id | Body | Integer | O | Replication ID |
 | policies.enabled | Body | Boolean | O | Replication activated or not |
 | policies.name | Body | String | O | Replication name |
+| policies.dest\_project\_id | Body | String | O | Project to replicate |
 
 Example
 
@@ -1779,7 +1795,8 @@ Example
             },
             "id": 3,
             "enabled": true,
-            "name": "test"
+            "name": "test",
+            "dest_project_id": "8x5SEWjM"
         }
     ]
 }
@@ -1825,6 +1842,7 @@ This API does not require a request body.
 | policy.id | Body | Integer | O | Replication ID |
 | policy.enabled | Body | Boolean | O | Replication activated or not |
 | policy.name | Body | String | O | Replication name |
+| policy.dest\_project\_id | Body | String | O | Project to target |
 
 Example
 
@@ -1888,7 +1906,8 @@ Example
         },
         "id": 12,
         "enabled": true,
-        "name": "test"
+        "name": "test",
+        "dest_project_id": "8x5SEWjM"
     }
 }
 ```
@@ -1922,6 +1941,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | filters.value | Body | String | X | Value to be filtered |
 | filters.decoration | Body | String | X | Setting when the filter type is tag, matches (matching) /excludes (excluding) |
 | name | Body | String | O | Replication name |
+| dest\_project\_id | Body | String | X | Project to target |
 
 Example
 
@@ -1995,6 +2015,7 @@ This API does not require a request body.
 | filters.value | Body | String | Required when set | Value to be filtered |
 | filters.decoration | Body | String | Required when set | Setting when the filter type is tag, matches (matching) /excludes (excluding) |
 | name | Body | String | O | Replication name |
+| dest\_project\_id | Body | String | X | Project to target |
 
 Example
 
