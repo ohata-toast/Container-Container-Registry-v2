@@ -573,7 +573,7 @@ The supported source registry type, URL, Access ID, and Access Secret are as fol
 | Amazon Elastic Container Registry | `https://$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazoneaws.com` | IAM Access Key ID | IAM Secret Access Key |
 | Azure Container Registry | `https://$REGISTRY_NAME.azurecr.io` | Access Key User Name | Access Key Password |
 | Google Cloud Container Registry | `https://$REGION` | \_json_key | Private key of service account (JSON type) |
-| Docker Hub | `https://hub.docker.com` | Username | Password |
+| Docker Hub | `https://hub.docker.com` | Username | Password or Personal access token |
 | Docker Registry | `docker-registry address` | Username | Password |
 | Harbor | `Harbor address` | Username | Password |
 | Quay | `https://quay.io` | json_file | {<br>"account_name": "$사용자 계정",<br>"docker_cli_password": "$Quay에서 생성한 암호화된 Password"<br>} |
