@@ -574,7 +574,7 @@ NCR에서 제공하는 복제 기능은 리전 간 이미지를 복제합니다.
 | Amazon Elastic Container Registry | `https://$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazoneaws.com` | IAM 액세스키 ID | IAM 비밀 액세스 키 |
 | Azure Container Registry | `https://$REGISTRY_NAME.azurecr.io` | 액세스 키 사용자 이름 | 액세스 키 암호 |
 | Google Cloud Container Registry | `https://$REGION` | \_json\_key | 서비스 계정의 비공개 키(JSON 유형) |
-| Docker Hub | `https://hub.docker.com` | Username | Password |
+| Docker Hub | `https://hub.docker.com` | Username | Password 또는 Personal access token |
 | Docker Registry | `docker-registry 주소` | Username | Password |
 | Harbor | `Harbor 주소` | Username | Password |
 | Quay | `https://quay.io` | json\_file | {<br>"account\_name": "$사용자 계정",<br>"docker\_cli\_password": "$Quay에서 생성한 암호화된 Password"<br>} |
