@@ -572,7 +572,7 @@ NCRで提供する複製機能はリージョン間イメージを複製しま�
 | Amazon Elastic Container Registry | `https://$AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazoneaws.com` | IAMアクセスキーID | IAM秘密アクセスキー |
 | Azure Container Registry | `https://$REGISTRY_NAME.azurecr.io` | アクセスキーユーザー名 | アクセスキー暗号 |
 | Google Cloud Container Registry | `https://$REGION` | \_json\_key | サービスアカウントの秘密鍵(JSONタイプ) |
-| Docker Hub | `https://hub.docker.com` | Username | Password |
+| Docker Hub | `https://hub.docker.com` | Username | Password or Personal access token |
 | Docker Registry | `docker-registryアドレス` | Username | Password |
 | Harbor | `Harborアドレス` | Username | Password |
 | Quay | `https://quay.io` | json\_file | {<br>"account\_name": "$ユーザーアカウント"、<br>"docker\_cli\_password": "$Quayで作成した暗号化されたPassword"<br>} |
