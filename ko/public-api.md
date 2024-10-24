@@ -12,8 +12,6 @@ API 도메인은 다음과 같습니다.
 | --- | --- |
 | 한국(판교) 리전 | https://kr1-ncr.api.nhncloudservice.com |
 | 한국(평촌) 리전 | https://kr2-ncr.api.nhncloudservice.com |
-| 한국(광주) 리전 | https://kr3-ncr.api.nhncloudservice.com |
-| 한국(죽전_신한) 리전 | https://pj1-ncr.api.nhncloudservice.com |
 
 API 헤더는 다음과 같습니다
 
