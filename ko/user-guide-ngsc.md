@@ -497,7 +497,7 @@ NCR에 있는 이미지에 서명하고 서명을 검증하여 이미지의 무�
 ### 사전 준비
 
 NCR은 sigstore/cosign 솔루션을 이용하여 이미지 서명 기능을 제공합니다. 이미지 신뢰 기능을 사용하려면 sigstore/cosign 클라이언트가 설치되어 있어야 합니다.
-[sigstore/cosign](https://docs.sigstore.dev/cosign/installation/)를 참고하여 설치합니다.
+[sigstore/cosign](https://docs.sigstore.dev/cosign/system_config/installation/)를 참고하여 설치합니다.
 
 **Windows**
 [Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe)를 다운로드해 설치합니다.
