@@ -600,7 +600,7 @@ You can verify the integrity of an image by signing the image in NCR and verifyi
 ### Prerequisites
 
 NCR provides the image signature feature by using the sigstore/cosign solution. To use the image trust feature, you must install the sigstore/cosign client.
-Refer to [sigstore/cosign](https://docs.sigstore.dev/cosign/installation/) to install the client.
+Refer to [sigstore/cosign](https://docs.sigstore.dev/cosign/system_config/installation/) to install the client.
 
 **Windows**
 Downloand and install [Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe).
