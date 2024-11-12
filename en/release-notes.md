@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### November 26, 2024
+
+#### Feature Updates
+
+* Multi platform images are available from the NCR console.
+  
 ### August 27, 2024
 
 #### Added Features
