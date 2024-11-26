@@ -12,8 +12,6 @@ APIドメインは次のとおりです。
 | --- | --- |
 | 韓国(パンギョ)リージョン | https://kr1-ncr.api.nhncloudservice.com |
 | 韓国(ピョンチョン)リージョン | https://kr2-ncr.api.nhncloudservice.com |
-| 韓国(光州)リージョン | https://kr3-ncr.api.nhncloudservice.com |
-| 韓国(竹田_新韓)リージョン | https://pj1-ncr.api.nhncloudservice.com |
 
 APIヘッダは次のとおりです。
 

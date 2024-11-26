@@ -12,8 +12,6 @@ The API domain is as follows.
 | --- | --- |
 | Korea (Pangyo) region | https://kr1-ncr.api.nhncloudservice.com |
 | Korea (Pyeongchon) region | https://kr2-ncr.api.nhncloudservice.com |
-| Korea (Gwangju) region | https://kr3-ncr.api.nhncloudservice.com |
-| Korea (Jukjeon_Shinhan) region | https://pj1-ncr.api.nhncloudservice.com |
 
 The API headers are as follows.
 

@@ -722,7 +722,7 @@ NCRにあるイメージに署名し、署名を検証してイメージの整�
 ### 事前準備
 
 NCRはsigstore/cosignソリューションを利用してイメージ署名機能を提供します。イメージ信頼機能を使用するにはsigstore/cosignクライアントがインストールされている必要があります。
-[sigstore/cosign](https://docs.sigstore.dev/cosign/installation/)を参照してインストールします。
+[sigstore/cosign](https://docs.sigstore.dev/cosign/system_config/installation/)を参照してインストールします。
 
 **Windows**
 [Cosign for Windows](https://github.com/sigstore/cosign/releases/download/v2.0.0/cosign-windows-amd64.exe)をダウンロードしてインストールします。
