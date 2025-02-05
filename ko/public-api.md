@@ -69,6 +69,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | registries.metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | registries.metadata.prevent\_vul | Body | String | O | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | registries.metadata.reuse\_sys\_cve\_allowlist | Body | String | O | 공통 CVE 허용 목록 사용 여부: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 미인증 이미지 pull 방지 설정 여부: true/false |
 | registries.cve\_allowlist | Body | Object | O | 취약점 허용 목록 |
 | registries.cve\_allowlist.id | Body | Integer | O | 취약점 허용 목록 ID |
 | registries.cve\_allowlist.items | Body | Object List | O | CVE 목록 |
@@ -100,7 +101,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
                 "prevent_vul": "true",
                 "public": "false",
                 "retention_id": "1",
-                "severity": "critical"
+                "severity": "critical",
+                "enable_content_trust_cosign": "true"
             },
             "cve_allowlist": {
                 "id": 2,
@@ -152,6 +154,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registry.metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | registry.metadata.prevent\_vul | Body | String | O | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | registry.metadata.reuse\_sys\_cve\_allowlist | Body | String | O | 공통 CVE 허용 목록 사용 여부: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 미인증 이미지 pull 방지 설정 여부: true/false |
 | registry.cve\_allowlist | Body | Object | O | 취약점 허용 목록 |
 | registry.cve\_allowlist.id | Body | Integer | O | 취약점 허용 목록 ID |
 | registry.cve\_allowlist.items | Body | Object List | O | CVE 목록 |
@@ -182,7 +185,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
             "prevent_vul": "true",
             "public": "false",
             "retention_id": "1",
-            "severity": "critical"
+            "severity": "critical",
+            "enable_content_trust_cosign": "true"
         },
         "cve_allowlist": {
             "id": 2,
@@ -219,6 +223,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 | metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | metadata.prevent\_vul | Body | String | X | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 공통 CVE 허용 목록 사용 여부: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 미인증 이미지 pull 방지 설정 여부: true/false |
 | registry\_id | Body | Integer | X | 이미지 캐시 유형의 레지스트리 생성 시 필요한 이미지 캐시 ID |
 
 <details><summary>예시</summary>
@@ -279,6 +284,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | metadata.severity | Body | String | X | 취약점 심각도: critical/medium/high/low/none |
 | metadata.prevent\_vul | Body | String | X | 이미지의 취약점 심각도에 따라 pull 방지 설정 여부: true/false |
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 공통 CVE 허용 목록 사용 여부: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 미인증 이미지 pull 방지 설정 여부: true/false |
 | cve\_allowlist | Body | Object | 설정되어 있을 시 필수 | 취약점 허용 목록 |
 | cve\_allowlist.items | Body | Object List | 설정되어 있을 시 필수 | CVE 목록 |
 | cve\_allowlist.items.cve\_id | Body | String | 설정되어 있을 시 필수 | CVE ID |
@@ -1829,6 +1835,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.enabled | Body | Boolean | O | 복제 활성화 여부 |
 | policies.name | Body | String | O | 복제 이름 |
 | policies.dest\_project\_id | Body | String | O | 복제 대상 프로젝트 |
+| policies.override | Body | Boolean | X | 중복 이미지 덮어쓰기 여부 |
 
 <details><summary>예시</summary>
 <p>
@@ -1895,7 +1902,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
             "id": 3,
             "enabled": true,
             "name": "test",
-            "dest_project_id": "8x5SEWjM"
+            "dest_project_id": "8x5SEWjM",
+            "override": true
         }
     ]
 }
@@ -1945,6 +1953,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.enabled | Body | Boolean | O | 복제 활성화 여부 |
 | policy.name | Body | String | O | 복제 이름 |
 | policy.dest\_project\_id | Body | String | O | 복제 대상 프로젝트 |
+| policy.override | Body | Boolean | X | 중복 이미지 덮어쓰기 여부 |
 
 <details><summary>예시</summary>
 <p>
@@ -2010,7 +2019,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
         "id": 12,
         "enabled": true,
         "name": "test",
-        "dest_project_id": "8x5SEWjM"
+        "dest_project_id": "8x5SEWjM",
+        "override": true
     }
 }
 ```
@@ -2048,6 +2058,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | filters.decoration | Body | String | X | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
 | dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
+| override | Body | Boolean | X | 중복 이미지 덮어쓰기 여부 |
 
 <details><summary>예시</summary>
 <p>
@@ -2126,6 +2137,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | filters.decoration | Body | String | 설정되어 있을 시 필수 | 필터 유형이 tag일 때 설정, matches(해당하는)/excludes(제외한) |
 | name | Body | String | O | 복제 이름 |
 | dest\_project\_id | Body | String | X | 복제 대상 프로젝트 |
+| override | Body | Boolean | X | 중복 이미지 덮어쓰기 여부 |
 
 <details><summary>예시</summary>
 <p>
