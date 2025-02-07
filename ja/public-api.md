@@ -69,6 +69,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
 | registries.metadata.severity | Body | String | X | 脆弱性の深刻度: critical/medium/high/low/none |
 | registries.metadata.prevent\_vul | Body | String | O | イメージの脆弱性深刻度に応じてpull防止設定を行うかどうか：true/false |
 | registries.metadata.reuse\_sys\_cve\_allowlist | Body | String | O | 共通CVE許可リストを使用するかどうか：true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 未認証イメージpull防止設定有無: true/false |
 | registries.cve\_allowlist | Body | Object | O | 脆弱性許可リスト |
 | registries.cve\_allowlist.id | Body | Integer | O | 脆弱性許可リストID |
 | registries.cve\_allowlist.items | Body | Object List | O | CVEリスト |
@@ -99,7 +100,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries
                 "prevent_vul": "true",
                 "public": "false",
                 "retention_id": "1",
-                "severity": "critical"
+                "severity": "critical",
+                "enable_content_trust_cosign": "true"
             },
             "cve_allowlist": {
                 "id": 2,
@@ -148,6 +150,7 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | registry.metadata.severity | Body | String | X | 脆弱性の深刻度: critical/medium/high/low/none |
 | registry.metadata.prevent\_vul | Body | String | O | イメージの脆弱性の深刻度に応じてpull防止設定を行うかどうか：true/false |
 | registry.metadata.reuse\_sys\_cve\_allowlist | Body | String | O | 共通CVE許可リストを使用するかどうか：true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 未認証イメージpull防止設定有無: true/false |
 | registry.cve\_allowlist | Body | Object | O | 脆弱性許可リスト |
 | registry.cve\_allowlist.id | Body | Integer | O | 脆弱性許可リストID |
 | registry.cve\_allowlist.items | Body | Object List | O | CVEリスト |
@@ -177,7 +180,8 @@ GET /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
             "prevent_vul": "true",
             "public": "false",
             "retention_id": "1",
-            "severity": "critical"
+            "severity": "critical",
+            "enable_content_trust_cosign": "true"
         },
         "cve_allowlist": {
             "id": 2,
@@ -211,6 +215,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 | metadata.severity | Body | String | X | 脆弱性の深刻度：critical/medium/high/low/none |
 | metadata.prevent\_vul | Body | String | X | イメージの脆弱性の深刻度に応じてpull防止設定を行うかどうか：true/false |
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 共通CVE許可リストを使用するかどうか：true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 未認証イメージpull防止設定有無: true/false |
 | registry\_id | Body | Integer | X | イメージキャッシュタイプのレジストリ作成時に必要なイメージキャッシュID |
 
 例
@@ -267,6 +272,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | metadata.severity | Body | String | X | 脆弱性の深刻度：critical/medium/high/low/none |
 | metadata.prevent\_vul | Body | String | X | イメージの脆弱性の深刻度に応じてpull防止設定を行うかどうか：true/false |
 | metadata.reuse\_sys\_cve\_allowlist | Body | String | X | 共通CVE許可リストを使用するかどうか：true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | 未認証イメージpull防止設定有無: true/false |
 | cve\_allowlist | Body | Object | 設定されている時は必須 | 脆弱性許可リスト |
 | cve\_allowlist.items | Body | Object List | 設定されている時は必須 | CVEリスト |
 | cve\_allowlist.items.cve\_id | Body | String | 設定されている時は必須 | CVE ID |
@@ -1730,6 +1736,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies
 | policies.enabled | Body | Boolean | O | 複製が有効かどうか |
 | policies.name | Body | String | O | 複製名 |
 | policies.dest\_project\_id | Body | String | O | 複製対象プロジェクト |
+| policies.override | Body | Boolean | X | 重複イメージを上書きするかどうか |
 
 例
 
@@ -1842,6 +1849,7 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | policy.enabled | Body | Boolean | O | 複製が有効かどうか |
 | policy.name | Body | String | O | 複製名 |
 | policy.dest\_project\_id | Body | String | O | 複製対象プロジェクト |
+| policies.override | Body | Boolean | X | 重複イメージを上書きするかどうか |
 
 例
 
@@ -1906,7 +1914,8 @@ GET /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
         "id": 12,
         "enabled": true,
         "name": "test",
-        "dest_project_id": "8x5SEWjM"
+            "dest_project_id": "8x5SEWjM",
+            "override": true
     }
 }
 ```
@@ -1941,6 +1950,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | filters.decoration | Body | String | X | フィルタタイプがtagの場合は設定、matches(該当する)/excludes(除外した) |
 | name | Body | String | O | 複製名 |
 | dest\_project\_id | Body | String | X | 複製対象プロジェクト |
+| override | Body | Boolean | X | 重複イメージを上書きするかどうか |
 
 例
 
@@ -2015,6 +2025,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/replications/policies/{policyId}
 | filters.decoration | Body | String | 設定されている場合は必須 | フィルタタイプがtagの場合は設定、matches(該当する)/excludes(除外した) |
 | name | Body | String | O | 複製名 |
 | dest\_project\_id | Body | String | X | 複製対象プロジェクト |
+| override | Body | Boolean | X | 重複イメージを上書きするかどうか |
 
 例
 
