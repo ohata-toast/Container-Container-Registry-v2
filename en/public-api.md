@@ -69,6 +69,7 @@ This API does not require a request body.
 | registries.metadata.severity | Body | String | X | Vulnerability degree: critical/medium/high/low/none |
 | registries.metadata.prevent_vul | Body | String | O | Whether or not to set pull prevention according to the vulnerability severity of the image: true/false |
 | registries.metadata.reuse_sys_cve_allowlist | Body | String | O | common CVE allow list used or not: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | Prevent pulling unauthenticated images or not: true/false |
 | registries.cve_allowlist | Body | Object | O | Vulnerability allow list |
 | registries.cve_allowlist.id | Body | Integer | O | Vulnerability allow list ID |
 | registries.cve_allowlist.items | Body | Object List | O | CVE list |
@@ -99,7 +100,8 @@ Example
                 "prevent_vul": "true",
                 "public": "false",
                 "retention_id": "1",
-                "severity": "critical"
+                "severity": "critical",
+                "enable_content_trust_cosign": "true"
             },
             "cve_allowlist": {
                 "id": 2,
@@ -148,6 +150,7 @@ This API does not require a request body.
 | registry.metadata.severity | Body | String | X | Vulnerability degree: critical/medium/high/low/none |
 | registry.metadata.prevent_vul | Body | String | O | Whether or not to set pull prevention according to the vulnerability severity of the image: true/false |
 | registry.metadata.reuse_sys_cve_allowlist | Body | String | O | common CVE allow list used or not: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | Prevent pulling unauthenticated images or not: true/false |
 | registry.cve_allowlist | Body | Object | O | Vulnerability allow list |
 | registry.cve_allowlist.id | Body | Integer | O | Vulnerability allow list ID |
 | registry.cve_allowlist.items | Body | Object List | O | CVE list |
@@ -177,7 +180,8 @@ Example
             "prevent_vul": "true",
             "public": "false",
             "retention_id": "1",
-            "severity": "critical"
+            "severity": "critical",
+            "enable_content_trust_cosign": "true"
         },
         "cve_allowlist": {
             "id": 2,
@@ -211,6 +215,7 @@ POST /ncr/v2.0/appkeys/{appKey}/registries
 | metadata.severity | Body | String | X | Vulnerability degree: critical/medium/high/low/none |
 | metadata.prevent_vul | Body | String | X | Whether or not to set pull prevention according to the vulnerability severity of the image: true/false |
 | metadata.reuse_sys_cve_allowlist | Body | String | X | common CVE allow list used or not: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | Prevent pulling unauthenticated images or not: true/false |
 | registry_id | Body | Integer | X | Image cache ID required when creating a registry of image cache types |
 
 Example
@@ -267,6 +272,7 @@ PUT /ncr/v2.0/appkeys/{appKey}/registries/{registryNameOrId}
 | metadata.severity | Body | String | X | Vulnerability degree: critical/medium/high/low/none |
 | metadata.prevent_vul | Body | String | X | Whether or not to set pull prevention according to the vulnerability severity of the image: true/false |
 | metadata.reuse_sys_cve_allowlist | Body | String | X | common CVE allow list used or not: true/false |
+| registries.metadata.enable_content_trust_cosign | Body | String | X | Prevent pulling unauthenticated images or not: true/false |
 | cve_allowlist | Body | Object | Required when set | Vulnerability allow list |
 | cve_allowlist.items | Body | Object List | Required when set | CVE list |
 | cve_allowlist.items.cve_id | Body | String | Required when set | CVE ID |
@@ -1841,6 +1847,7 @@ This API does not require a request body.
 | policy.enabled | Body | Boolean | O | Replication activated or not |
 | policy.name | Body | String | O | Replication name |
 | policy.dest\_project\_id | Body | String | O | Project to target |
+| policies.override | Body | Boolean | X | Override duplicate image or not |
 
 Example
 
@@ -1905,7 +1912,8 @@ Example
         "id": 12,
         "enabled": true,
         "name": "test",
-        "dest_project_id": "8x5SEWjM"
+        "dest_project_id": "8x5SEWjM",
+        "override": true
     }
 }
 ```
@@ -1940,6 +1948,7 @@ POST /ncr/v2.0/appkeys/{appKey}/replications/policies
 | filters.decoration | Body | String | X | Setting when the filter type is tag, matches (matching) /excludes (excluding) |
 | name | Body | String | O | Replication name |
 | dest\_project\_id | Body | String | X | Project to target |
+| policy.override | Body | Boolean | X | Override duplicate image or not |
 
 Example
 
@@ -2014,6 +2023,7 @@ This API does not require a request body.
 | filters.decoration | Body | String | Required when set | Setting when the filter type is tag, matches (matching) /excludes (excluding) |
 | name | Body | String | O | Replication name |
 | dest\_project\_id | Body | String | X | Project to target |
+| policy.override | Body | Boolean | X | Override duplicate image or not |
 
 Example
 
