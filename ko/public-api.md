@@ -2,18 +2,19 @@
 
 컨테이너 레지스트리를 구성하기 위한 API를 기술합니다.
 
-### API 요청 공통 정보
-
-API를 사용하려면 User Access Key와 Secret Access Key, 토큰, 서비스 Appkey 등이 필요합니다.
-User Access Key와 Secret Access Key는 NHN Cloud 콘솔의 계정 > **API 보안 설정** 페이지에서 생성합니다.
-토큰은 [API 호출 및 인증](/nhncloud/ko/public-api/api-authentication)을 참고하여 생성합니다.
-서비스 Appkey는 콘솔 상단 <strong>URL & Appkey</strong> 메뉴에서 확인이 가능합니다.<br>
 API 도메인은 다음과 같습니다.
 
 | 리전 | 도메인 |
 | --- | --- |
 | 한국(판교) 리전 | https://kr1-ncr.api.nhncloudservice.com |
 | 한국(평촌) 리전 | https://kr2-ncr.api.nhncloudservice.com |
+
+### API 요청 공통 정보
+
+API를 사용하려면 다음과 같은 정보가 필요합니다.
+* User Access Key와 Secret Access Key: NHN Cloud 콘솔의 계정 > **API 보안 설정** 페이지에서 생성합니다.
+* 토큰: [API 호출 및 인증](/nhncloud/ko/public-api/api-authentication)을 참고하여 생성합니다.
+* 서비스 Appkey: 콘솔 상단 <strong>URL & Appkey</strong> 메뉴에서 확인이 가능합니다.<br>
 
 User Access Key와 Secret Access Key를 사용하는 경우 API 헤더는 다음과 같습니다
 
