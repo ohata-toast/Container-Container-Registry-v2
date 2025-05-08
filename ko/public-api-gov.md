@@ -14,7 +14,7 @@ API를 사용하려면 다음과 같은 정보가 필요합니다.
 
 * User Access Key와 Secret Access Key: NHN Cloud 콘솔의 계정 > **API 보안 설정** 페이지에서 생성합니다.
 
-* 토큰: [API 호출 및 인증](/nhncloud/ko/public-api/api-authentication)을 참고하여 생성합니다.
+* 토큰: [API 호출 및 인증](/nhncloud/ko/public-api/api-authentication-gov)을 참고하여 생성합니다.
 
 * 서비스 Appkey: 콘솔 상단 <strong>URL & Appkey</strong> 메뉴에서 확인이 가능합니다.<br>
 
