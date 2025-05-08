@@ -1,11 +1,7 @@
 ## Container > NHN Container Registry(NCR) > API 가이드
 
 컨테이너 레지스트리를 구성하기 위한 API를 기술합니다.
-API를 사용하려면 User Access Key와 Secret Access Key가 필요합니다. User Access Key와 Secret Access Key는 NHN Cloud 콘솔의 계정 > **API 보안 설정** 페이지에서 생성합니다.
 
-### API 요청 공통 정보
-
-API를 사용하려면 서비스 AppKey가 필요합니다. 서비스 Appkey는 콘솔 상단 <strong>URL & Appkey</strong> 메뉴에서 확인이 가능합니다.
 API 도메인은 다음과 같습니다.
 
 | 리전 | 도메인 |
@@ -13,12 +9,28 @@ API 도메인은 다음과 같습니다.
 | 한국(판교) 리전 | https://kr1-ncr.api.nhncloudservice.com |
 | 한국(평촌) 리전 | https://kr2-ncr.api.nhncloudservice.com |
 
-API 헤더는 다음과 같습니다
+### API 요청 공통 정보
+
+API를 사용하려면 다음과 같은 정보가 필요합니다.
+
+* User Access Key와 Secret Access Key: NHN Cloud 콘솔의 계정 > **API 보안 설정** 페이지에서 생성합니다.
+
+* 토큰: [API 호출 및 인증](/nhncloud/ko/public-api/api-authentication)을 참고하여 생성합니다.
+
+* 서비스 Appkey: 콘솔 상단 <strong>URL & Appkey</strong> 메뉴에서 확인이 가능합니다.<br>
+
+User Access Key와 Secret Access Key를 사용하는 경우 API 헤더는 다음과 같습니다.
 
 | 이름 | 종류 | 형식 | 필수 | 설명 |
 | --- | --- | --- | --- | --- |
 | X-TC-AUTHENTICATION-ID | Header | String | O | User Access Key |
 | X-TC-AUTHENTICATION-SECRET | Header | String | X (생성하였을 경우 필수) | Secret Access Key |
+
+토큰을 사용하는 경우 API 헤더는 다음과 같습니다.
+
+| 이름 | 종류 | 형식 | 필수 | 설명 |
+| --- | --- | --- | --- | --- |
+| x-nhn-authorization | Header | String | O | 토큰 |
 
 ### API 응답 공통 정보
 
