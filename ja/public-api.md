@@ -1,11 +1,7 @@
 ## Container > NHN Container Registry(NCR) > APIガイド
 
 コンテナレジストリを構成するためのAPIを記述します。
-APIを使用するには、User Access KeyとSecret Access Keyが必要です。 User Access KeyとSecret Access KeyはNHN Cloudコンソールのアカウント > **APIセキュリティ設定** ページで作成します。
 
-### APIリクエスト共通情報
-
-APIを使用するにはサービスAppKeyが必要です。サービスAppkeyはコンソール上部の<strong>URL & Appkey</strong> メニューで確認が可能です。
 APIドメインは次のとおりです。
 
 | リージョン | ドメイン |
@@ -13,12 +9,28 @@ APIドメインは次のとおりです。
 | 韓国(パンギョ)リージョン | https://kr1-ncr.api.nhncloudservice.com |
 | 韓国(ピョンチョン)リージョン | https://kr2-ncr.api.nhncloudservice.com |
 
-APIヘッダは次のとおりです。
+### APIリクエスト共通情報
+
+APIを使用するには、次の情報が必要です。
+
+* User Access KeyとSecret Access Key：NHN Cloudコンソールのアカウント > **APIセキュリティ設定**ページで作成します。
+
+* トークン：[API呼び出し及び認証](/nhncloud/ko/public-api/api-authentication)を参考にして作成します。
+
+* サービスAppkey：コンソール上部の<strong>URL & Appkey</strong> メニューで確認できます。<br>
+
+User Access KeyとSecret Access Keyを使用する場合のAPIヘッダは次のとおりです。
 
 | 名前 | 種類 | 形式 | 必須 | 説明 |
 | --- | --- | --- | --- | --- |
 | X-TC-AUTHENTICATION-ID | Header | String | O | User Access Key |
 | X-TC-AUTHENTICATION-SECRET | Header | String | X (作成した場合は必須) | Secret Access Key |
+
+トークンを使用する場合のAPIヘッダは次のとおりです。
+
+| 名前 | 種類 | 形式 | 必須 | 説明 |
+| --- | --- | --- | --- | --- |
+| x-nhn-authorization | Header | String | O | トークン |
 
 ### APIレスポンス共通情報
 
