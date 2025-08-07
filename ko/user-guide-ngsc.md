@@ -572,6 +572,15 @@ The following checks were performed on each of these signatures:
 [{"critical":{"identity":{"docker-reference":"517a8ef5-kr1-registry.container.nhncloud.com/hy/busybox"},"image":{"docker-manifest-digest":"sha256:5e42fbc46b177f10319e8937dd39702e7891ce6d8a42d60c1b4f433f94200bd2"},"type":"cosign container image signature"},"optional":{"Bundle":{"SignedEntryTimestamp":"MEYCIQDw+fMYgkFqzoAT2LOJaLogLyGKMzhcz31RZEcdc1+84wIhAJ46+JqazStGtkqaJWRcmRkk97/nJ4L0wrNXhj1JCifO","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiI1YzMxNmNjYjRmMTBjMDhkNmY4ODVjMDVkNzhlZjMyODliZDMxYjhhMTliMDAwZTAwOTkwMzcxM2Y0ZGRmYTViIn19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FWUNJUUR5WEtYSEpzamZNZDJIMjRxWkliTDFSOE1XTFV3K0pKdHg3Z1J5T1JEYTd3SWhBSXAvalNWQkhMdm5NczY4ZWVSMFBVUkZtQjI0b0VFRVN5NmZKVHhXT0JXVyIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCUVZVSk1TVU1nUzBWWkxTMHRMUzBLVFVacmQwVjNXVWhMYjFwSmVtb3dRMEZSV1VsTGIxcEplbW93UkVGUlkwUlJaMEZGWTBWcEsyMU9UR05wYzBaSWQyVXlOamRhUzJsc01ERkNRMk0xTWdwTlowTkdVWGhDYkRsa2NGTlJOakowVmtrMFNsQmxLMGxRVjJ0VFFXc3JNRzlKWmtZMU9GRjJVMUpxTm1OcU1XSm1SWEpKUVhOVGNWVm5QVDBLTFMwdExTMUZUa1FnVUZWQ1RFbERJRXRGV1MwdExTMHRDZz09In19fX0=","integratedTime":1679898462,"logIndex":16394784,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}}}}]
 ```
 
+### 레지스트리 설정
+
+레지스트리별로 서명되지 않은 이미지의 배포를 차단할 수 있습니다.
+**Container** > **NHN Container Registry(NCR)** 페이지의 레지스트리 목록에서 레지스트리를 선택한 후 **미인증 이미지 Pull 방지**의 **변경**을 클릭하여 설정합니다.
+
+> [참고]
+이 설정을 활성화하면, 기존에 업로드된 미서명 이미지는 pull이 차단되며, 미서명 이미지와 동일한 이름과 태그로 이미지 업로드시에도 업로드가 실패할 수 있습니다.
+설정을 활성화 하기 전에 기존 이미지에 서명을 완료하면, 이후에도 정상적으로 사용할 수 있습니다.
+
 > [참고]
 > 다른 키로 여러 번 서명할 경우 모든 키로 검증이 가능합니다.
 
@@ -587,7 +596,7 @@ NCR 서비스 이용 권한은 다음과 같습니다.
 | --- | --- |
 | Project Admin<br>Project Member<br>Service Admin | NHN Container Registry(NCR) 서비스 Create(생성), Read(읽기), Update(갱신), Delete(삭제) |
 | Service Viewer | NHN Container Registry(NCR) 서비스 Read(읽기) |
-| Image Uploader | NHN Container Registry(NCR) 서비스 Read(읽기), 이미지 Create(생성)) |
+| Image Uploader | NHN Container Registry(NCR) 서비스 Read(읽기), 이미지 Create(생성) |
 
 NCR 서비스 이용 권한에 의해 사용할 수 있는 기능은 다음과 같습니다.
 

@@ -1476,7 +1476,8 @@ DELETE /ncr/v2.0/appkeys/{appKey}/registries/{registryName}/images/{imageName}/a
 | appKey | URL | String | O | 서비스 Appkey |
 | registryName | URL | String | O | 레지스트리 이름 |
 | imageName | URL | String | O | 컨테이너 이미지 이름 |
-| reference | URL | String | O | 아티팩트 이름 |
+| reference | URL | String | O | 아티팩트 다이제스트 |
+| isDeleteTarget | Query | String | X | 복제 대상 NCR에서 동일한 아티팩트 함께 삭제 여부: true/false |
 
 #### 응답
 
