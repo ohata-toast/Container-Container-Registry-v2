@@ -820,6 +820,14 @@ The following checks were performed on each of these signatures:
 > [Note]
 > You can verify with any key if you sign multiple times with different keys.
 
+### Registry Settings
+You can block the deployment of unsigned images per registry.
+From the registry list of **Container > NHN Container Registry(NCR)** page, select the registry and click **Change** from **Prevent Pull of Unauthenticated Image** to set up.
+
+> [Note]
+The pull of an unauthenticated image already uploaded will be blocked if you enable the setting. The upload may fail if you upload an image with the same name and tag as an unsigned image.
+If you have signed on to the existing image before enabling the setting, you can use it normally in the future.
+
 ## Service Permission
 
 You can control the use of NCR for each user by using the service permissions.
