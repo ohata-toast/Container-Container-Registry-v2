@@ -820,7 +820,7 @@ NCRサービスの利用権限は次のとおりです。
 | --- | --- |
 | Project Admin<br>Project Member<br>Service Admin | NHN Container Registry(NCR)サービスCreate(作成)、Read(読み取り)、Update(更新)、Delete(削除) |
 | Service Viewer | NHN Container Registry(NCR)サービスRead(読み取り) |
-| Image Uploader | NHN Container Registry(NCR)サービスRead(読み取り)、イメージCreate(作成)) |
+| Image Uploader | NHN Container Registry(NCR)サービスRead(読み取り)、イメージCreate(作成) |
 
 NCRサービス利用権限により使用できる機能は次のとおりです。
 
