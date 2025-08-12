@@ -1,5 +1,11 @@
 ## Container > NHN Container Registry (NCR) > Release Notes
 
+### August 26, 2025
+
+#### Feature Updates
+
+* Added a feature to identify and delete images in the target NCR that are identical to images that exist in the source registry.
+
 ### November 26, 2024
 
 #### Feature Updates
